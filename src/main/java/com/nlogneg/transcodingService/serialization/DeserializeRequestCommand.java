@@ -10,7 +10,6 @@ import com.nlogneg.transcodingService.requests.Request;
 import com.nlogneg.transcodingService.requests.RequestProxy;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * Represents the deserialization of a request
@@ -20,8 +19,24 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class DeserializeRequestCommand extends SimpleCommand{
 
 	private static final Logger Log = LogManager.getLogger(DeserializeRequestCommand.class);
-	private static final XStream deserializer = new XStream(new DomDriver());
-
+	
+	private final XStream deserializer;
+	
+	/**
+	 * Constructs a new deserialize request command given the XStream deserializer
+	 * @param deserializer The deserializer
+	 */
+	public DeserializeRequestCommand(XStream deserializer){
+		this.deserializer = deserializer;
+	}
+	
+	/**
+	 * Constructs the default deserialize request command with the default XStream deserializer
+	 */
+	public DeserializeRequestCommand(){
+		this.deserializer = SerializerFactory.generateDefaultXStreamSerializer();
+	}
+	
 	public void Execute(INotification notification){
 		Facade facade = getFacade();
 		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);

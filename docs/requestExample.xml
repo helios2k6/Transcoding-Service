@@ -4,12 +4,16 @@
 	<destinationFile>/path/to/destination/file</destinationFile>
 	<encodingSettings>
 		<rateControl>
+			<type>ConstantRateFactor</type>
+			<setting>
 		</rateControl>
 		<estimation>
+			<motionEstimation>Hexagon</motionEstimation>
 		</estimation>
 		<profile>High</profile>
 		<level>4.1</level>
 		<compatibility>
+			<sampleAspectRatio>1:1</sampleAspectRatio>
 		</compatibility>
 		<psychoVisualSettings>
 		</psychoVisualSettings>
