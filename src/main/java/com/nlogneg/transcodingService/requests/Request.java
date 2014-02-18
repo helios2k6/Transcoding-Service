@@ -1,35 +1,28 @@
 package com.nlogneg.transcodingService.requests;
 
+import com.nlogneg.transcodingService.media.EncodingSettings;
+
 /**
  * Represents a transcoding request. 
  * @author anjohnson
  *
  */
-public abstract class Request{
-	public enum OutputType{
-		STANDARD_OUTPUT,
-		FILE,
-		SOCKET
-	}
+public class Request{
 	
 	private final String filePath;
 	private final String outputPath;
-	private final OutputType outputType;
+	private final EncodingSettings settings;
 
 	/**
 	 * Constructs a new, immutable request
 	 * @param filePath The file path
 	 * @param outputPath The output path
-	 * @param outputType The output type
+	 * @param settings The encoding settings for this request
 	 */
-	protected Request(String filePath, String outputPath, OutputType outputType){
+	protected Request(String filePath, String outputPath, EncodingSettings settings){
 		this.filePath = filePath;
 		this.outputPath = outputPath;
-		this.outputType = outputType;
-	}
-	
-	public OutputType getOutputType(){
-		return outputType;
+		this.settings = settings;
 	}
 	
 	/**
@@ -46,6 +39,14 @@ public abstract class Request{
 	 */
 	public String getOutputPath(){
 		return outputPath;
+	}
+	
+	/**
+	 * Gets the encoding settings for this request
+	 * @return The encoding settings
+	 */
+	public EncodingSettings getSettings(){
+		return settings;
 	}
 	
 	@Override

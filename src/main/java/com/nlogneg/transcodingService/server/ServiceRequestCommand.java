@@ -11,6 +11,8 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
+import com.nlogneg.transcodingService.serialization.SerializedRequestProxy;
+
 /**
  * Attempts to service one request 
  * @author anjohnson
@@ -37,6 +39,9 @@ public class ServiceRequestCommand extends SimpleCommand{
 			Log.error("Payload was null.");
 			return;
 		}
+		
+		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+		serializedRequestProxy.addSerializedRequest(requestPayload);
 		
 		try{
 			request.close();
