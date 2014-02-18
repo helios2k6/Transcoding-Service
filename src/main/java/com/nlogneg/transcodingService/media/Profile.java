@@ -11,21 +11,21 @@ public enum Profile implements Serializable{
 	/**
 	 * The main profile
 	 */
-	MainProfile,
+	Main,
 	/**
 	 * The high profile
 	 */
-	HighProfile,
+	High,
 	/**
 	 * The High 10-bit depth profile
 	 */
-	High10Profile,
+	High10,
 	/**
 	 * The High 10-bit depth capable 4:2:2 color space profile
 	 */
-	High422Profile,
+	High422,
 	/**
 	 * The High 10-bit depth capable 4:4:4 color space profile
 	 */
-	High444Profile
+	High444
 }

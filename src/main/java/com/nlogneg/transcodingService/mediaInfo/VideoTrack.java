@@ -92,6 +92,77 @@ public final class VideoTrack extends MediaTrack{
 	public void setFrameRate(String frameRate) {
 		this.frameRate = frameRate;
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime
+				* result
+				+ ((displayAspectRatio == null) ? 0 : displayAspectRatio
+						.hashCode());
+		result = prime * result
+				+ ((frameRate == null) ? 0 : frameRate.hashCode());
+		result = prime * result
+				+ ((frameRateMode == null) ? 0 : frameRateMode.hashCode());
+		result = prime * result + ((height == null) ? 0 : height.hashCode());
+		result = prime * result + ((width == null) ? 0 : width.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		VideoTrack other = (VideoTrack) obj;
+		if (displayAspectRatio == null) {
+			if (other.displayAspectRatio != null) {
+				return false;
+			}
+		} else if (!displayAspectRatio.equals(other.displayAspectRatio)) {
+			return false;
+		}
+		if (frameRate == null) {
+			if (other.frameRate != null) {
+				return false;
+			}
+		} else if (!frameRate.equals(other.frameRate)) {
+			return false;
+		}
+		if (frameRateMode == null) {
+			if (other.frameRateMode != null) {
+				return false;
+			}
+		} else if (!frameRateMode.equals(other.frameRateMode)) {
+			return false;
+		}
+		if (height == null) {
+			if (other.height != null) {
+				return false;
+			}
+		} else if (!height.equals(other.height)) {
+			return false;
+		}
+		if (width == null) {
+			if (other.width != null) {
+				return false;
+			}
+		} else if (!width.equals(other.width)) {
+			return false;
+		}
+		return true;
+	}
 }

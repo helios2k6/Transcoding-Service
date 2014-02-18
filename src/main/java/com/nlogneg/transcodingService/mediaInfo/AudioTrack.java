@@ -19,7 +19,7 @@ public class AudioTrack extends MediaTrack{
 	 * Get the number of channels
 	 * @return The number of channels
 	 */
-	public String getChannels() {
+	public String getChannels(){
 		return channels;
 	}
 	
@@ -27,7 +27,7 @@ public class AudioTrack extends MediaTrack{
 	 * Set the number of channels
 	 * @param channels The number of channels
 	 */
-	public void setChannels(String channels) {
+	public void setChannels(String channels){
 		this.channels = channels;
 	}
 	
@@ -35,7 +35,7 @@ public class AudioTrack extends MediaTrack{
 	 * Get the language
 	 * @return The language
 	 */
-	public String getLanguage() {
+	public String getLanguage(){
 		return language;
 	}
 	
@@ -43,9 +43,53 @@ public class AudioTrack extends MediaTrack{
 	 * Set the language
 	 * @param language The language
 	 */
-	public void setLanguage(String language) {
+	public void setLanguage(String language){
 		this.language = language;
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((channels == null) ? 0 : channels.hashCode());
+		result = prime * result
+				+ ((language == null) ? 0 : language.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj){
+		if (this == obj){
+			return true;
+		}
+		if (!super.equals(obj)){
+			return false;
+		}
+		if (getClass() != obj.getClass()){
+			return false;
+		}
+		AudioTrack other = (AudioTrack) obj;
+		if (channels == null){
+			if (other.channels != null){
+				return false;
+			}
+		} else if (!channels.equals(other.channels)){
+			return false;
+		}
+		if (language == null){
+			if (other.language != null){
+				return false;
+			}
+		} else if (!language.equals(other.language)){
+			return false;
+		}
+		return true;
+	}
 }

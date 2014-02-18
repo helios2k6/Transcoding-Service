@@ -5,17 +5,28 @@
 	<encodingSettings>
 		<rateControl>
 			<type>ConstantRateFactor</type>
-			<setting>
+			<setting>22</setting>
 		</rateControl>
 		<estimation>
 			<motionEstimation>Hexagon</motionEstimation>
+			<trellis>2</trellis>
+			<subpixelMotionEstimation>10</subpixelMotionEstimation>
 		</estimation>
 		<profile>High</profile>
-		<level>4.1</level>
+		<level>
+			<major>4</major>
+			<minor>1</minor>
+		</level>
 		<compatibility>
-			<sampleAspectRatio>1:1</sampleAspectRatio>
+			<sampleAspectRatio>
+				<width>1</width>
+				<height>1</height>
+			</sampleAspectRatio>
+			<useAccessUnitDelimiters>true</useAccessUnitDelimiters>
 		</compatibility>
 		<psychoVisualSettings>
+			<alpha>0.3</alpha>
+			<beta>0</beta>
 		</psychoVisualSettings>
 	</encodingSettings>
 </request>
