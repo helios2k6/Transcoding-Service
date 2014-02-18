@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<request>
+	<sourceFile>/path/to/source/file</sourceFile>
+	<destinationFile>/path/to/destination/file</destinationFile>
+	<encodingSettings>
+		<rateControl>
+		</rateControl>
+		<estimation>
+		</estimation>
+		<profile>High</profile>
+		<level>4.1</level>
+		<compatibility>
+		</compatibility>
+		<psychoVisualSettings>
+		</psychoVisualSettings>
+	</encodingSettings>
+</request>

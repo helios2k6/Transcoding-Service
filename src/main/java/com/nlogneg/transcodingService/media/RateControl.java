@@ -1,21 +1,28 @@
 package com.nlogneg.transcodingService.media;
 
+import java.io.Serializable;
+
 /**
  * Represents the rate control setting for Encoding settings
  * @author anjohnson
  *
  */
-public class RateControl{
+public class RateControl implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3650899713022263523L;
+
 	/**
 	 * The type of rate control to use
 	 * @author anjohnson
 	 *
 	 */
 	public enum Type{
-		CRF,
-		QP,
-		BIT_RATE
+		ConstantRateFactory,
+		QuantizationParameter,
+		BitRate,
 	}
 	
 	private final Type type;

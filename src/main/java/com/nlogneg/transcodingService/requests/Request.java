@@ -9,8 +9,8 @@ import com.nlogneg.transcodingService.media.EncodingSettings;
  */
 public class Request{
 	
-	private final String filePath;
-	private final String outputPath;
+	private final String sourceFile;
+	private final String destinationFile;
 	private final EncodingSettings settings;
 
 	/**
@@ -20,8 +20,8 @@ public class Request{
 	 * @param settings The encoding settings for this request
 	 */
 	protected Request(String filePath, String outputPath, EncodingSettings settings){
-		this.filePath = filePath;
-		this.outputPath = outputPath;
+		this.sourceFile = filePath;
+		this.destinationFile = outputPath;
 		this.settings = settings;
 	}
 	
@@ -29,16 +29,16 @@ public class Request{
 	 * Get the file path
 	 * @return
 	 */
-	public String getFilePath(){
-		return filePath;
+	public String getSourceFile(){
+		return sourceFile;
 	}
 
 	/**
 	 * Get the output path
 	 * @return
 	 */
-	public String getOutputPath(){
-		return outputPath;
+	public String getDestinationFile(){
+		return destinationFile;
 	}
 	
 	/**
@@ -51,6 +51,6 @@ public class Request{
 	
 	@Override
 	public String toString(){
-		return "Request[FilePath = " + filePath + ", OutputPath = " + outputPath + "]";
+		return "Request[FilePath = " + sourceFile + ", OutputPath = " + destinationFile + "]";
 	}
 }
