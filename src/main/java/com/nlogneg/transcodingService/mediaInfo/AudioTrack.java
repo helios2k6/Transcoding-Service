@@ -93,8 +93,4 @@ public final class AudioTrack extends MediaTrack{
 		}
 		return true;
 	}
-	
-	public void accept(TrackVisitor visitor){
-		visitor.visit(this);
-	}
 }

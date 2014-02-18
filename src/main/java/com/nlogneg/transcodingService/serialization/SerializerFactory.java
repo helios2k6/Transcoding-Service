@@ -69,7 +69,6 @@ public final class SerializerFactory {
 		xstream.alias("MediaInfo", MediaInfo.class);
 		xstream.alias("File", File.class);
 		
-		
 		return xstream;
 	}
 }

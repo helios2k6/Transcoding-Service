@@ -151,8 +151,4 @@ public final class VideoTrack extends MediaTrack{
 		}
 		return true;
 	}
-	
-	public void accept(TrackVisitor visitor){
-		visitor.visit(this);
-	}
 }

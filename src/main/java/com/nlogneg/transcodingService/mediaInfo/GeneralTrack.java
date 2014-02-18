@@ -68,11 +68,4 @@ public final class GeneralTrack extends Track{
 		}
 		return true;
 	}
-	
-	/**
-	 * Accept a visitor
-	 */
-	public void accept(TrackVisitor visitor){
-		visitor.visit(this);
-	}
 }
