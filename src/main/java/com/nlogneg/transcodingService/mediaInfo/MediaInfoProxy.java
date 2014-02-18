@@ -21,7 +21,21 @@ public class MediaInfoProxy extends Proxy{
 		map = new HashMap<String, MediaInfo>();
 	}
 	
+	/**
+	 * Puts a new mapping into the proxy
+	 * @param fileName The file name
+	 * @param mediaInfo The media info
+	 */
 	public void putMediaInfo(String fileName, MediaInfo mediaInfo){
 		map.put(fileName,  mediaInfo);
+	}
+	
+	/**
+	 * Gets the media info for the given string
+	 * @param fileName The file name
+	 * @return The MediaInfo for the given file
+	 */
+	public MediaInfo getMediaInfo(String fileName){
+		return map.get(fileName);
 	}
 }

@@ -64,5 +64,7 @@ public abstract class MediaTrack extends Track{
 		return true;
 	}
 	
-	
+	public void accept(TrackVisitor visitor){
+		visitor.visit(this);
+	}
 }

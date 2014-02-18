@@ -1,8 +1,6 @@
 package com.nlogneg.transcodingService.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 import org.apache.log4j.LogManager;
@@ -12,6 +10,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.serialization.SerializedRequestProxy;
+import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 
 /**
  * Attempts to service one request 
@@ -57,19 +56,10 @@ public class ServiceRequestCommand extends SimpleCommand{
 	 * @return The String payload from the socket
 	 */
 	private static String readFromSocket(Socket socket){
-		try(BufferedReader reader = new  BufferedReader(new InputStreamReader(socket.getInputStream()));){
-			StringBuffer stringBuffer = new StringBuffer();
-			String currentLine = reader.readLine();
-			
-			//Read in all the strings
-			while(currentLine != null){
-				stringBuffer.append(currentLine);
-				currentLine = reader.readLine();
-			}
-			
-			return stringBuffer.toString();
-		}catch (IOException e){
-			Log.error("Could not read from socket.", e);
+		try{
+			return InputStreamUtilities.ReadInputStreamToEnd(socket.getInputStream());
+		}catch(IOException exception){
+			Log.error("Could not read from socket", exception);
 		}
 		
 		return null;

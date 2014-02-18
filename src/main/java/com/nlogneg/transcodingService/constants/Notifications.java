@@ -15,4 +15,6 @@ public final class Notifications {
 	public static final String ListenForNewRequestCommandNotification = "ListenForNewRequestCommandNotification";
 	
 	public static final String ExitSystemCommandNotification = "ExitSystemCommandNotification";
+	
+	public static final String QueryMediaInfoCommandNotification = "QueryMediaInfoCommandNotification";
 }

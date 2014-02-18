@@ -7,6 +7,8 @@ import com.nlogneg.transcodingService.media.Level;
 import com.nlogneg.transcodingService.media.Profile;
 import com.nlogneg.transcodingService.media.PsychoVisualSettings;
 import com.nlogneg.transcodingService.media.RateControl;
+import com.nlogneg.transcodingService.mediaInfo.File;
+import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
 import com.nlogneg.transcodingService.requests.Request;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -19,10 +21,10 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public final class SerializerFactory {
 	
 	/**
-	 * Generates the default XStream serializer
-	 * @return
+	 * Generates the default Request serializer
+	 * @return The serializer
 	 */
-	public static final XStream generateDefaultXStreamSerializer(){
+	public static final XStream generateDefaultRequestSerializer(){
 		XStream xstream = new XStream(new DomDriver());
 		
 		mapBaseXmlAliases(xstream);
@@ -55,5 +57,19 @@ public final class SerializerFactory {
 	
 	private static void mapCompatibilityAliases(XStream xstream){
 		xstream.alias("sampleAspectRatio", Compatibility.SampleAspectRatio.class);
+	}
+	
+	/**
+	 * Generates the default MediaInfo serializer
+	 * @return The serializer
+	 */
+	public static final XStream generateDefaultMediaInfoSerializer(){
+		XStream xstream = new XStream(new DomDriver());
+		
+		xstream.alias("MediaInfo", MediaInfo.class);
+		xstream.alias("File", File.class);
+		
+		
+		return xstream;
 	}
 }

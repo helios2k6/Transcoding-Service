@@ -34,7 +34,7 @@ public class DeserializeRequestCommand extends SimpleCommand{
 	 * Constructs the default deserialize request command with the default XStream deserializer
 	 */
 	public DeserializeRequestCommand(){
-		this.deserializer = SerializerFactory.generateDefaultXStreamSerializer();
+		this.deserializer = SerializerFactory.generateDefaultRequestSerializer();
 	}
 	
 	public void Execute(INotification notification){
