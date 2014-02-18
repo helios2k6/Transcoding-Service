@@ -6,7 +6,15 @@ package com.nlogneg.transcodingService.mediaInfo;
  *
  */
 public class MediaInfo{
-	private File file;
+	private final File file;
+
+	/**
+	 * Constructs a new media info object
+	 * @param file The file XML section
+	 */
+	public MediaInfo(File file) {
+		this.file = file;
+	}
 
 	/**
 	 * Get the file XML section
@@ -14,14 +22,6 @@ public class MediaInfo{
 	 */
 	public File getFile(){
 		return file;
-	}
-
-	/**
-	 * Set the file XML section
-	 * @param file The file
-	 */
-	public void setFile(File file){
-		this.file = file;
 	}
 
 	/* (non-Javadoc)

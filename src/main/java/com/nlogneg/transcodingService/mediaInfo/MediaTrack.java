@@ -7,25 +7,19 @@ public abstract class MediaTrack extends Track{
 	 */
 	private static final long serialVersionUID = 8563336050612487821L;
 
-	private String formatInfo;
-	private String codecID;
+	private final String codecID;
 	
 	/**
-	 * Get the format info
-	 * @return The format info
+	 * Creates a new media track
+	 * @param format The format
+	 * @param formatInfo the format info
+	 * @param codecID The 
 	 */
-	public String getFormatInfo(){
-		return formatInfo;
+	public MediaTrack(String format, String codecID) {
+		super(format);
+		this.codecID = codecID;
 	}
-	
-	/**
-	 * Set the format info
-	 * @param formatInfo The format info
-	 */
-	public void setFormatInfo(String formatInfo){
-		this.formatInfo = formatInfo;
-	}
-	
+
 	/**
 	 * Get the codec ID
 	 * @return The codec ID
@@ -33,25 +27,15 @@ public abstract class MediaTrack extends Track{
 	public String getCodecID(){
 		return codecID;
 	}
-	
-	/**
-	 * Set the codec ID
-	 * @param codecID The codec ID
-	 */
-	public void setCodecID(String codecID){
-		this.codecID = codecID;
-	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((codecID == null) ? 0 : codecID.hashCode());
-		result = prime * result
-				+ ((formatInfo == null) ? 0 : formatInfo.hashCode());
 		return result;
 	}
 
@@ -59,31 +43,26 @@ public abstract class MediaTrack extends Track{
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj){
-		if (this == obj){
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)){
+		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()){
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		MediaTrack other = (MediaTrack) obj;
-		if (codecID == null){
-			if (other.codecID != null){
+		if (codecID == null) {
+			if (other.codecID != null) {
 				return false;
 			}
-		} else if (!codecID.equals(other.codecID)){
-			return false;
-		}
-		if (formatInfo == null){
-			if (other.formatInfo != null){
-				return false;
-			}
-		} else if (!formatInfo.equals(other.formatInfo)){
+		} else if (!codecID.equals(other.codecID)) {
 			return false;
 		}
 		return true;
 	}
+	
+	
 }

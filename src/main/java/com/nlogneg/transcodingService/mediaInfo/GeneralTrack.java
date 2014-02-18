@@ -12,7 +12,17 @@ public final class GeneralTrack extends Track{
 	 */
 	private static final long serialVersionUID = -1656903100542171365L;
 	
-	private String completeName;
+	private final String completeName;
+
+	/**
+	 * Creates a new General Track 
+	 * @param format The format
+	 * @param completeName The complete name
+	 */
+	public GeneralTrack(String format, String completeName) {
+		super(format);
+		this.completeName = completeName;
+	}
 
 	/**
 	 * Gets the complete name of the file
@@ -20,14 +30,6 @@ public final class GeneralTrack extends Track{
 	 */
 	public String getCompleteName(){
 		return completeName;
-	}
-
-	/**
-	 * Sets the complete name of the file
-	 * @param completeName The complete name of the file
-	 */
-	public void setCompleteName(String completeName){
-		this.completeName = completeName;
 	}
 
 	/* (non-Javadoc)

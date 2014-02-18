@@ -13,7 +13,15 @@ public abstract class Track implements Serializable{
 	 */
 	private static final long serialVersionUID = -5913948153707934965L;
 	
-	private String format;
+	private final String format;
+
+	/**
+	 * Creates a new track object
+	 * @param format
+	 */
+	public Track(String format) {
+		this.format = format;
+	}
 
 	/**
 	 * Gets the format
@@ -21,14 +29,6 @@ public abstract class Track implements Serializable{
 	 */
 	public String getFormat(){
 		return format;
-	}
-
-	/**
-	 * Sets the format
-	 * @param format The format
-	 */
-	public void setFormat(String format){
-		this.format = format;
 	}
 
 	/* (non-Javadoc)

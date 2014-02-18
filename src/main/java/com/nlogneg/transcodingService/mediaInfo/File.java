@@ -8,7 +8,15 @@ import java.util.List;
  *
  */
 public class File{
-	private List<Track> tracks;
+	private final List<Track> tracks;
+
+	/**
+	 * Constructs a File object
+	 * @param tracks The tracks of the File object
+	 */
+	public File(List<Track> tracks) {
+		this.tracks = tracks;
+	}
 
 	/**
 	 * Get the tracks
@@ -16,14 +24,6 @@ public class File{
 	 */
 	public List<Track> getTracks(){
 		return tracks;
-	}
-
-	/**
-	 * Set the tracks
-	 * @param tracks The tracks
-	 */
-	public void setTracks(List<Track> tracks){
-		this.tracks = tracks;
 	}
 
 	/* (non-Javadoc)

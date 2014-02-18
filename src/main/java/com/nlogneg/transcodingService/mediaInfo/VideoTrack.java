@@ -7,26 +7,44 @@ public final class VideoTrack extends MediaTrack{
 	 */
 	private static final long serialVersionUID = -8828400707334082736L;
 
-	private String width;
-	private String height;
-	private String displayAspectRatio;
-	private String frameRateMode;
-	private String frameRate;
+	private final String width;
+	private final String height;
+	private final String displayAspectRatio;
+	private final String frameRateMode;
+	private final String frameRate;
 	
+	/**
+	 * Constructs a new video track
+	 * @param format The format
+	 * @param codecID The codec ID
+	 * @param width The width of the video
+	 * @param height The height of the video
+	 * @param displayAspectRatio The display aspect ratio
+	 * @param frameRateMode The frame rate mode
+	 * @param frameRate The frame rate
+	 */
+	public VideoTrack(
+			String format, 
+			String codecID,
+			String width,
+			String height, 
+			String displayAspectRatio,
+			String frameRateMode,
+			String frameRate){
+		super(format, codecID);
+		this.width = width;
+		this.height = height;
+		this.displayAspectRatio = displayAspectRatio;
+		this.frameRateMode = frameRateMode;
+		this.frameRate = frameRate;
+	}
+
 	/**
 	 * Get the width
 	 * @return The width
 	 */
 	public String getWidth() {
 		return width;
-	}
-	
-	/**
-	 * Set the width
-	 * @param width The width
-	 */
-	public void setWidth(String width) {
-		this.width = width;
 	}
 	
 	/**
@@ -38,27 +56,11 @@ public final class VideoTrack extends MediaTrack{
 	}
 	
 	/**
-	 * Set the height
-	 * @param height The height
-	 */
-	public void setHeight(String height) {
-		this.height = height;
-	}
-	
-	/**
 	 * Get the display aspect ratio
 	 * @return The display aspect ratio
 	 */
 	public String getDisplayAspectRatio() {
 		return displayAspectRatio;
-	}
-	
-	/**
-	 * Set the display aspect ratio
-	 * @param displayAspectRatio The display aspect ratio
-	 */
-	public void setDisplayAspectRatio(String displayAspectRatio) {
-		this.displayAspectRatio = displayAspectRatio;
 	}
 	
 	/**
@@ -70,27 +72,11 @@ public final class VideoTrack extends MediaTrack{
 	}
 	
 	/**
-	 * Set the frame rate mode
-	 * @param frameRateMode The frame rate mode
-	 */
-	public void setFrameRateMode(String frameRateMode) {
-		this.frameRateMode = frameRateMode;
-	}
-	
-	/**
 	 * Get the frame rate 
 	 * @return The frame rate
 	 */
 	public String getFrameRate() {
 		return frameRate;
-	}
-	
-	/**
-	 * Set the frame rate
-	 * @param frameRate The frame rate
-	 */
-	public void setFrameRate(String frameRate) {
-		this.frameRate = frameRate;
 	}
 
 	/* (non-Javadoc)

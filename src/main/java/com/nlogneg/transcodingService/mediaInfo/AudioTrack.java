@@ -5,16 +5,33 @@ package com.nlogneg.transcodingService.mediaInfo;
  * @author anjohnson
  *
  */
-public class AudioTrack extends MediaTrack{
+public final class AudioTrack extends MediaTrack{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -327107175740055297L;
 
-	private String channels;
-	private String language;
+	private final String channels;
+	private final String language;
 	
+	/**
+	 * Constructs a new audio track
+	 * @param format The format
+	 * @param codecID The codec ID
+	 * @param channels The number of audio channels
+	 * @param language The language
+	 */
+	public AudioTrack(
+			String format, 
+			String codecID,
+			String channels,
+			String language){
+		super(format, codecID);
+		this.channels = channels;
+		this.language = language;
+	}
+
 	/**
 	 * Get the number of channels
 	 * @return The number of channels
@@ -24,27 +41,11 @@ public class AudioTrack extends MediaTrack{
 	}
 	
 	/**
-	 * Set the number of channels
-	 * @param channels The number of channels
-	 */
-	public void setChannels(String channels){
-		this.channels = channels;
-	}
-	
-	/**
 	 * Get the language
 	 * @return The language
 	 */
 	public String getLanguage(){
 		return language;
-	}
-	
-	/**
-	 * Set the language
-	 * @param language The language
-	 */
-	public void setLanguage(String language){
-		this.language = language;
 	}
 
 	/* (non-Javadoc)
