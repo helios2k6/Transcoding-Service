@@ -20,20 +20,20 @@ public class RateControl implements Serializable{
 	 *
 	 */
 	public enum Type{
-		ConstantRateFactory,
+		ConstantRateFactor,
 		QuantizationParameter,
 		BitRate,
 	}
 	
 	private final Type type;
-	private final String setting;
+	private final double setting;
 	
 	/**
 	 * Constructs a new Rate Control object
 	 * @param type The type of rate control
 	 * @param setting The setting for the rate control
 	 */
-	public RateControl(Type type, String setting){
+	public RateControl(Type type, double setting){
 		this.type = type;
 		this.setting = setting;
 	}
@@ -50,7 +50,7 @@ public class RateControl implements Serializable{
 	 * Get the setting for the rate control
 	 * @return The setting
 	 */
-	public String getSetting() {
+	public double getSetting() {
 		return setting;
 	}
 	

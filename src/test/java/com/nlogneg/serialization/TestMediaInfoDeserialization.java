@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
 import com.nlogneg.transcodingService.mediaInfo.File;
@@ -20,6 +22,7 @@ import com.nlogneg.transcodingService.serialization.SerializerFactory;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.thoughtworks.xstream.XStream;
 
+@RunWith(JUnit4.class)
 public class TestMediaInfoDeserialization{
 	
 	private class TestVerificationTrackVisitor implements TrackVisitor{
@@ -82,6 +85,7 @@ public class TestMediaInfoDeserialization{
 		
 		InputStream resourceStream = getClass().getResourceAsStream("/media_info_v_0_7_67.xml");
 		String resourceAsString = InputStreamUtilities.ReadInputStreamToEnd(resourceStream);
+		resourceStream.close();
 		
 		XStream deserializer = SerializerFactory.generateDefaultMediaInfoSerializer();
 		MediaInfo info = (MediaInfo)deserializer.fromXML(resourceAsString);

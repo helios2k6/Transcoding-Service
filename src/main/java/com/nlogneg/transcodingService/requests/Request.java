@@ -11,7 +11,7 @@ public class Request{
 	
 	private final String sourceFile;
 	private final String destinationFile;
-	private final EncodingSettings settings;
+	private final EncodingSettings encodingSettings;
 
 	/**
 	 * Constructs a new, immutable request
@@ -22,7 +22,7 @@ public class Request{
 	protected Request(String filePath, String outputPath, EncodingSettings settings){
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;
-		this.settings = settings;
+		this.encodingSettings = settings;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class Request{
 	 * @return The encoding settings
 	 */
 	public EncodingSettings getSettings(){
-		return settings;
+		return encodingSettings;
 	}
 	
 	@Override
