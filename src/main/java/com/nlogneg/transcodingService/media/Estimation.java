@@ -65,6 +65,48 @@ public final class Estimation implements Serializable{
 	public int getSubpixelMotionEstimation() {
 		return subpixelMotionEstimation;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((motionEstimation == null) ? 0 : motionEstimation.hashCode());
+		result = prime * result + subpixelMotionEstimation;
+		result = prime * result + trellis;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Estimation other = (Estimation) obj;
+		if (motionEstimation != other.motionEstimation) {
+			return false;
+		}
+		if (subpixelMotionEstimation != other.subpixelMotionEstimation) {
+			return false;
+		}
+		if (trellis != other.trellis) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 }

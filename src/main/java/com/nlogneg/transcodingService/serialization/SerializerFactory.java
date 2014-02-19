@@ -7,6 +7,7 @@ import com.nlogneg.transcodingService.media.Level;
 import com.nlogneg.transcodingService.media.Profile;
 import com.nlogneg.transcodingService.media.PsychoVisualSettings;
 import com.nlogneg.transcodingService.media.RateControl;
+import com.nlogneg.transcodingService.media.SampleAspectRatio;
 import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
 import com.nlogneg.transcodingService.mediaInfo.File;
 import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
@@ -50,7 +51,7 @@ public final class SerializerFactory {
 		xstream.alias("psychoVisualSettings", PsychoVisualSettings.class);
 		xstream.alias("type", RateControl.Type.class);
 		xstream.alias("motionEstimation", Estimation.MotionEstimation.class);
-		xstream.alias("sampleAspectRatio", Compatibility.SampleAspectRatio.class);
+		xstream.alias("sampleAspectRatio", SampleAspectRatio.class);
 	}
 	
 	/**

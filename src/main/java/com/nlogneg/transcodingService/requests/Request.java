@@ -45,7 +45,7 @@ public class Request{
 	 * Gets the encoding settings for this request
 	 * @return The encoding settings
 	 */
-	public EncodingSettings getSettings(){
+	public EncodingSettings getEncodingSettings(){
 		return encodingSettings;
 	}
 	

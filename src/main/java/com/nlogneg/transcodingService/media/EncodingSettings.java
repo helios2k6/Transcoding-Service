@@ -93,6 +93,86 @@ public final class EncodingSettings implements Serializable{
 	public PsychoVisualSettings getPsychoVisualSettings() {
 		return psychoVisualSettings;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((compatibility == null) ? 0 : compatibility.hashCode());
+		result = prime * result
+				+ ((estimation == null) ? 0 : estimation.hashCode());
+		result = prime * result + ((level == null) ? 0 : level.hashCode());
+		result = prime * result + ((profile == null) ? 0 : profile.hashCode());
+		result = prime
+				* result
+				+ ((psychoVisualSettings == null) ? 0 : psychoVisualSettings
+						.hashCode());
+		result = prime * result
+				+ ((rateControl == null) ? 0 : rateControl.hashCode());
+		return result;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		EncodingSettings other = (EncodingSettings) obj;
+		if (compatibility == null) {
+			if (other.compatibility != null) {
+				return false;
+			}
+		} else if (!compatibility.equals(other.compatibility)) {
+			return false;
+		}
+		if (estimation == null) {
+			if (other.estimation != null) {
+				return false;
+			}
+		} else if (!estimation.equals(other.estimation)) {
+			return false;
+		}
+		if (level == null) {
+			if (other.level != null) {
+				return false;
+			}
+		} else if (!level.equals(other.level)) {
+			return false;
+		}
+		if (profile != other.profile) {
+			return false;
+		}
+		if (psychoVisualSettings == null) {
+			if (other.psychoVisualSettings != null) {
+				return false;
+			}
+		} else if (!psychoVisualSettings.equals(other.psychoVisualSettings)) {
+			return false;
+		}
+		if (rateControl == null) {
+			if (other.rateControl != null) {
+				return false;
+			}
+		} else if (!rateControl.equals(other.rateControl)) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 }
