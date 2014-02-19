@@ -66,4 +66,12 @@ public abstract class Track implements Serializable{
 		}
 		return true;
 	}
+	
+	/**
+	 * Accepts a TrackVisitor
+	 * @param visitor The visitor
+	 */
+	public void accept(TrackVisitor visitor){
+		visitor.visit(this);
+	}
 }

@@ -96,6 +96,8 @@ public final class SerializerFactory {
 		xstream.aliasField("Display_aspect_ratio", VideoTrack.class, "displayAspectRatio");
 		xstream.aliasField("Frame_rate_mode", VideoTrack.class, "frameRateMode");
 		xstream.aliasField("Frame_rate", VideoTrack.class, "frameRate");
+		
+		xstream.aliasField("Language", TextTrack.class, "language");
 	}
 	
 	private static void mapMediaInfoImplicitCollections(XStream xstream){

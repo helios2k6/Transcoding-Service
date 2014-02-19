@@ -7,12 +7,74 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
+import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
+import com.nlogneg.transcodingService.mediaInfo.File;
+import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
 import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
+import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
+import com.nlogneg.transcodingService.mediaInfo.TextTrack;
+import com.nlogneg.transcodingService.mediaInfo.Track;
+import com.nlogneg.transcodingService.mediaInfo.TrackVisitor;
+import com.nlogneg.transcodingService.mediaInfo.VideoTrack;
 import com.nlogneg.transcodingService.serialization.SerializerFactory;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.thoughtworks.xstream.XStream;
 
 public class TestMediaInfoDeserialization{
+	
+	private class TestVerificationTrackVisitor implements TrackVisitor{
+
+		private void verifyBase(Track track){
+			assertNotNull(track.getFormat());
+		}
+		
+		private void verifyMediaBase(MediaTrack track){
+			assertNotNull(track.getCodecID());
+		}
+		
+		@Override
+		public void visit(Track track){
+			verifyBase(track);
+		}
+
+		@Override
+		public void visit(GeneralTrack track){
+			verifyBase(track);
+			assertNotNull(track.getCompleteName());
+		}
+
+		@Override
+		public void visit(MediaTrack track){
+			verifyBase(track);
+			verifyMediaBase(track);
+		}
+
+		@Override
+		public void visit(AudioTrack track){
+			verifyBase(track);
+			verifyMediaBase(track);
+			assertNotNull(track.getChannels());
+			assertNotNull(track.getLanguage());
+		}
+
+		@Override
+		public void visit(TextTrack track){
+			verifyBase(track);
+			verifyMediaBase(track);
+			assertNotNull(track.getLanguage());
+		}
+
+		@Override
+		public void visit(VideoTrack track){
+			verifyBase(track);
+			verifyMediaBase(track);
+			assertNotNull(track.getDisplayAspectRatio());
+			assertNotNull(track.getFrameRate());
+			assertNotNull(track.getFrameRateMode());
+			assertNotNull(track.getHeight());
+			assertNotNull(track.getWidth());
+		}
+	}
 	
 	@Test
 	public void deserializationOfVideoAudioTextTrack() throws IOException{
@@ -25,6 +87,14 @@ public class TestMediaInfoDeserialization{
 		MediaInfo info = (MediaInfo)deserializer.fromXML(resourceAsString);
 		
 		assertNotNull(info);
-		assertNotNull(info.getFile());
+		
+		File file = info.getFile();
+		assertNotNull(file);
+		assertNotNull(file.getTracks());
+		
+		TestVerificationTrackVisitor visitor = new TestVerificationTrackVisitor();
+		for(Track track : file.getTracks()){
+			track.accept(visitor);
+		}
 	}
 }
