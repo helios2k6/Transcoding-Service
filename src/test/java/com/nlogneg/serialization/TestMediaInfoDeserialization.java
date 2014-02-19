@@ -25,5 +25,6 @@ public class TestMediaInfoDeserialization{
 		MediaInfo info = (MediaInfo)deserializer.fromXML(resourceAsString);
 		
 		assertNotNull(info);
+		assertNotNull(info.getFile());
 	}
 }
