@@ -5,6 +5,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 /**
  * Represents the proxy object for all Requests
  * @author anjohnson
@@ -33,10 +35,10 @@ public class RequestProxy extends Proxy {
 	}
 	
 	/**
-	 * Gets the next requeset
-	 * @return The request or null if there aren't any more
+	 * Gets the next request
+	 * @return An optional representing the next Optional
 	 */
-	public Request getNextRequest(){
-		return requests.poll();
+	public Optional<Request> getNextRequest(){
+		return Optional.make(requests.poll());
 	}
 }

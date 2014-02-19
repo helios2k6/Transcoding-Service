@@ -8,6 +8,7 @@ import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.requests.Request;
 import com.nlogneg.transcodingService.requests.RequestProxy;
+import com.nlogneg.transcodingService.utilities.Optional;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 
@@ -40,15 +41,15 @@ public class DeserializeRequestCommand extends SimpleCommand{
 	public void Execute(INotification notification){
 		Facade facade = getFacade();
 		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
-		String request = serializedRequestProxy.getNextSerializedRequest();
+		Optional<String> request = serializedRequestProxy.getNextSerializedRequest();
 		
-		if(request == null){
+		if(request.isNone()){
 			Log.info("No requests to deserialize");
 			return;
 		}
 		
 		try{
-			Request deserializedRequest = (Request)deserializer.fromXML(request);
+			Request deserializedRequest = (Request)deserializer.fromXML(request.getValue());
 			RequestProxy requestProxy = (RequestProxy)facade.retrieveProxy(RequestProxy.PROXY_NAME);
 			requestProxy.addRequest(deserializedRequest);
 		}catch(XStreamException ex){

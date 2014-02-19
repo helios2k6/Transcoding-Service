@@ -16,17 +16,17 @@ public class Some<T> extends Optional<T>{
 	}
 	
 	@Override
-	protected boolean IsSome(){
+	public boolean isSome(){
 		return true;
 	}
 
 	@Override
-	protected boolean IsNone(){
+	public boolean isNone(){
 		return false;
 	}
 
 	@Override
-	protected T getValue(){
+	public T getValue(){
 		return t;
 	}
 	

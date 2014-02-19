@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.utilities;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Represents an optional value
@@ -13,13 +12,13 @@ public abstract class Optional<T>{
 	 * Gets whether this optional has a value
 	 * @return Whether this is some value
 	 */
-	protected abstract boolean IsSome();
+	public abstract boolean isSome();
 	
 	/**
 	 * Gets whether this optional has no value
 	 * @return Whether this is has no value
 	 */
-	protected abstract boolean IsNone();
+	public abstract boolean isNone();
 	
 	/**
 	 * Gets the value of this optional or throws a NoValueException if 
@@ -27,19 +26,19 @@ public abstract class Optional<T>{
 	 * @return The value
 	 * @throws NoValueException if there is no value
 	 */
-	protected abstract T getValue();
+	public abstract T getValue();
 	
 	/**
 	 * Creates a optional type given a value
-	 * @param t
-	 * @return
+	 * @param t The object to enhance
+	 * @return a new optional 
 	 */
-	public static<T> Optional<T> Make(T t){
+	public static<T> Optional<T> make(T t){
 		if(t == null){
-			
+			return new None<T>();
 		}
 		
-		throw new NotImplementedException();
+		return new Some<T>(t);
 	}
 	
 	public String toString(){

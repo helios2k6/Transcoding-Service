@@ -9,17 +9,17 @@ package com.nlogneg.transcodingService.utilities;
 public final class None<T> extends Optional<T>{
 
 	@Override
-	protected boolean IsSome(){
+	public boolean isSome(){
 		return false;
 	}
 
 	@Override
-	protected boolean IsNone(){
+	public boolean isNone(){
 		return true;
 	}
 
 	@Override
-	protected T getValue() {
+	public T getValue() {
 		throw new NoValueException("Cannot get value for None type");
 	}
 	

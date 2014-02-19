@@ -5,6 +5,8 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 /**
  * Stores raw media info string data
  * @author anjohnson
@@ -35,9 +37,9 @@ public class RawMediaInfoProxy extends Proxy{
 	/**
 	 * Get the media info for a specified file 
 	 * @param fileName The file name
-	 * @return the raw media info
+	 * @return An optional representing the raw MediaInfo
 	 */
-	public String get(String fileName){
-		return rawMediaInfoMap.get(fileName);
+	public Optional<String> get(String fileName){
+		return Optional.make(rawMediaInfoMap.get(fileName));
 	}
 }

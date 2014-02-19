@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 /**
  * Holds all of the MediaInfo objects
  * @author anjohnson
@@ -33,9 +35,9 @@ public class MediaInfoProxy extends Proxy{
 	/**
 	 * Gets the media info for the given string
 	 * @param fileName The file name
-	 * @return The MediaInfo for the given file
+	 * @return An optional representing the MediaInfo
 	 */
-	public MediaInfo getMediaInfo(String fileName){
-		return map.get(fileName);
+	public Optional<MediaInfo> getMediaInfo(String fileName){
+		return Optional.make(map.get(fileName));
 	}
 }

@@ -5,6 +5,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 /**
  * Holds all of the serialized requests that come in from clients
  * @author anjohnson
@@ -30,9 +32,9 @@ public class SerializedRequestProxy extends Proxy{
 	
 	/**
 	 * Removes the next serialized request
-	 * @return The serialized request or null if there isn't any
+	 * @return An optional representing the next serialized request
 	 */
-	public String getNextSerializedRequest(){
-		return serializedRequests.poll();
+	public Optional<String> getNextSerializedRequest(){
+		return Optional.make(serializedRequests.poll());
 	}
 }
