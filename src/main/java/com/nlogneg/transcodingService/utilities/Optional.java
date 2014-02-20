@@ -41,6 +41,14 @@ public abstract class Optional<T>{
 		return new Some<T>(t);
 	}
 	
+	/**
+	 * Returns a new None optional type
+	 * @return A new None optional type
+	 */
+	public static<T> Optional<T> none(){
+		return new None<T>();
+	}
+	
 	public String toString(){
 		return "Optional value";
 	}
