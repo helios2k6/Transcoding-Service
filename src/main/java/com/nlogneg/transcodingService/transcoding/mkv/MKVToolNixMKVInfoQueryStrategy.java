@@ -14,9 +14,9 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  *
  */
-public class MKVToolNixMKVInfoStrategy implements MKVInfoQueryStrategy<String, String>{
+public class MKVToolNixMKVInfoQueryStrategy implements MKVInfoQueryStrategy<String, String>{
 
-	private static final Logger Log = LogManager.getLogger(MKVToolNixMKVInfoStrategy.class);
+	private static final Logger Log = LogManager.getLogger(MKVToolNixMKVInfoQueryStrategy.class);
 	
 	private static final String TrackArgument = "--track-info";
 	

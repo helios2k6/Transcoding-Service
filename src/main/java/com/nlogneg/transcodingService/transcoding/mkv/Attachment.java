@@ -3,7 +3,7 @@ package com.nlogneg.transcodingService.transcoding.mkv;
 import javax.activation.MimeType;
 
 public final class Attachment{
-	private final int id;
+	private final long id;
 	private final String fileName;
 	private final MimeType mimeType;
 	private final long uid;
@@ -15,7 +15,7 @@ public final class Attachment{
 	 * @param mimeType The MIME type
 	 * @param uid The attachment UID
 	 */
-	public Attachment(int id, String fileName, MimeType mimeType, long uid){
+	public Attachment(long id, String fileName, MimeType mimeType, long uid){
 		this.id = id;
 		this.fileName = fileName;
 		this.mimeType = mimeType;
@@ -25,7 +25,7 @@ public final class Attachment{
 	/**
 	 * @return the id
 	 */
-	public int getId(){
+	public long getId(){
 		return id;
 	}
 
@@ -59,7 +59,7 @@ public final class Attachment{
 		int result = 1;
 		result = prime * result
 				+ ((fileName == null) ? 0 : fileName.hashCode());
-		result = prime * result + id;
+		result = prime * result + new Long(id).hashCode();
 		result = prime * result + (int) (uid ^ (uid >>> 32));
 		result = prime * result + mimeType.getBaseType().hashCode();
 		result = prime * result + mimeType.getSubType().hashCode();
