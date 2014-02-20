@@ -35,7 +35,7 @@ public class MKVToolNixRawMKVInfoDeserializerStrategy implements RawMKVInfoDeser
 
 		List<Attachment> attachments = new ArrayList<Attachment>();
 
-		long attachmentId = -1;
+		long attachmentId = 0;
 		Optional<String> fileName = Optional.none();
 		Optional<MimeType> mimeType = Optional.none();
 		Optional<Long> fileUID = Optional.none();
