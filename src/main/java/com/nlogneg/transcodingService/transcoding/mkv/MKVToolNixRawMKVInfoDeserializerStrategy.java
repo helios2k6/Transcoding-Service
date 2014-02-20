@@ -1,12 +1,7 @@
 package com.nlogneg.transcodingService.transcoding.mkv;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
@@ -26,84 +21,106 @@ public class MKVToolNixRawMKVInfoDeserializerStrategy implements RawMKVInfoDeser
 
 	private static final Logger Log = LogManager.getLogger(MKVToolNixRawMKVInfoDeserializerStrategy.class);
 
-	private static final String AttachmentsHeader = "\\+\\S+Attachments";
-	private static final String AttachedHeader = "\\+\\S+Attached";
-	private static final String FileNameLabel = "\\+\\S+File name:\\S*";
-	private static final String MimeLabel = "\\+\\S+Mime type:\\S*";
-	private static final String FileUIDLabel = "\\+\\S+File UID:\\S*";
+	private static final String AttachedHeader = "+ ATTACHED";
+	private static final String FileNameLabel = "+ FILE NAME:";
+	private static final String MimeLabel = "+ MIME TYPE:";
+	private static final String FileUIDLabel = "+ FILE UID:";
 
 	/**
 	 * Deserializes an MKVInfo from the given string, which is expected to be the 
 	 * actual raw input, not the name of a file
 	 */
-	public Optional<MKVInfo> deserializeRawMKVInfo(String t){
-		InputStream inputStream = new ByteArrayInputStream(t.getBytes());
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+	public Optional<MKVInfo> deserializeRawMKVInfo(String rawMkvInfo){
+		String[] splitString = rawMkvInfo.split("\\|");
 
 		List<Attachment> attachments = new ArrayList<Attachment>();
-		
-		//Close off the scanner when we're done
-		try(Scanner scanner = new Scanner(reader);){
-			if(scanner.hasNext(AttachmentsHeader)){
-				//Get the start of the first line
-				scanner.next(AttachmentsHeader);
-				
-				long attachmentId = 1;
-				while(scanner.hasNext(AttachedHeader)){
-					//Advance the pointer
-					scanner.next(AttachedHeader);
 
-					//Get the file name
-					Optional<String> fileName = tryGetNextLineAfterToken(scanner, FileNameLabel);
-					if(fileName.isNone()){
-						//Can't do anything cause we don't know how the file name
-						return Optional.none();
-					}
-					
-					//Get MIME
-					Optional<String> mime = tryGetNextLineAfterToken(scanner, MimeLabel);
-					MimeType mimeType = null;
-					if(mime.isSome()){
-						try {
-							mimeType = new MimeType(mime.getValue());
-						}catch (MimeTypeParseException e){
-							Log.error("Could not parse MIME type.", e);
-						}
-					}
-					
-					//File UID
-					Optional<String> fileUID = tryGetNextLineAfterToken(scanner, FileUIDLabel);
-					if(fileUID.isNone()){
-						//If there's no UID, something went wrong
-						Log.error("Could not get FileUID");
-						return Optional.none();
-					}
-					
-					long uid = -1;
-					try{
-						uid = Long.parseLong(fileUID.getValue());
-					}catch(NumberFormatException e){
-						Log.error("Could not parse FileUID");
-						return Optional.none();
-					}
-					
-					Attachment attachment = new Attachment(attachmentId, fileName.getValue(), mimeType, uid);
-					attachments.add(attachment);
-				}
+		long attachmentId = -1;
+		Optional<String> fileName = Optional.none();
+		Optional<MimeType> mimeType = Optional.none();
+		Optional<Long> fileUID = Optional.none();
+
+		for(String item : splitString){
+			String toUpper = item.toUpperCase().trim();
+
+			//Find attachment header
+			if(toUpper.contains(AttachedHeader)){
+				//Increment counter and reset all references
+				attachmentId++;
+				fileName = Optional.none();
+				mimeType = Optional.none();
+				fileUID = Optional.none();
+				continue;
+			}
+
+			//Found file name
+			if(toUpper.contains(FileNameLabel)){
+				fileName = tryParseDataFromTag(item);
+			}
+
+			//Found MIME type
+			if(toUpper.contains(MimeLabel)){
+				mimeType = tryParseMimeTypeFromTag(item);
+			}
+
+			if(toUpper.contains(FileUIDLabel)){
+				fileUID = tryParseFileUID(item);
+			}
+
+			//Check to see if we can make a new Attachment
+			if(fileName.isSome() && mimeType.isSome() && fileUID.isSome()){
+				Attachment attachment = new Attachment(attachmentId, fileName.getValue(), mimeType.getValue(), fileUID.getValue());
+				attachments.add(attachment);
+				
+				//Clear out these references
+				fileName = Optional.none();
+				mimeType = Optional.none();
+				fileUID = Optional.none();
 			}
 		}
 
-		return Optional.make(new MKVInfo(attachments));
+		if(attachments.size() > 0){
+			return Optional.make(new MKVInfo(attachments));
+		}
+		
+		return Optional.none();
 	}
 
-	private static Optional<String> tryGetNextLineAfterToken(Scanner scanner, String token){
-		if(scanner.hasNext(token)){
-			scanner.next(token);
-			if(scanner.hasNext()){
-				Optional.make(scanner.next());
-			}
+	private static Optional<Long> tryParseFileUID(String data){
+		Optional<String> rawParsedString = tryParseDataFromTag(data);
+		if(rawParsedString.isNone()){
+			return Optional.none();
 		}
 
+		try{
+			Long fileUID = Long.parseLong(rawParsedString.getValue());
+			return Optional.make(fileUID);
+		}catch(NumberFormatException e){
+			Log.error("Could not parse File UID.", e);
+			return Optional.none();
+		}
+	}
+
+	private static Optional<MimeType> tryParseMimeTypeFromTag(String data){
+		Optional<String> rawParsedString = tryParseDataFromTag(data);
+		if(rawParsedString.isNone()){
+			return Optional.none();
+		}
+
+		try {
+			MimeType mimeType = new MimeType(rawParsedString.getValue());
+			return Optional.make(mimeType);
+		} catch (MimeTypeParseException e) {
+			Log.error("Could not parse MIME type", e);
+			return Optional.none();
+		}
+	}
+
+	private static Optional<String> tryParseDataFromTag(String data){
+		String[] splitData = data.split(":");
+		if(splitData.length == 2){
+			return Optional.make(splitData[1].trim());
+		}
 		return Optional.none();
 	}
 }

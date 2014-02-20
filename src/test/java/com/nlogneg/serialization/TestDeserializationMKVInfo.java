@@ -30,5 +30,6 @@ public class TestDeserializationMKVInfo{
 		Optional<MKVInfo> info = strat.deserializeRawMKVInfo(resourceAsString);
 		
 		assertNotEquals(Optional.none(), info);
+		assertEquals(11, info.getValue().getAttachments().size());
 	}
 }
