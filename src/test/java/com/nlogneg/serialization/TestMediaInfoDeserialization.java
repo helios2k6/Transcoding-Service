@@ -84,7 +84,7 @@ public class TestMediaInfoDeserialization{
 		assertNotNull("Test file missing. Cannot perform test.", getClass().getResource("/media_info_v_0_7_67.xml"));
 		
 		InputStream resourceStream = getClass().getResourceAsStream("/media_info_v_0_7_67.xml");
-		String resourceAsString = InputStreamUtilities.ReadInputStreamToEnd(resourceStream);
+		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
 		
 		XStream deserializer = SerializerFactory.generateDefaultMediaInfoSerializer();

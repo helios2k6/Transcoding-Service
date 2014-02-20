@@ -33,7 +33,7 @@ public class TestRequestDeserialization{
 		assertNotNull("Test file missing. Cannot perform test.", getClass().getResource("/video_request.xml"));
 
 		InputStream resourceStream = getClass().getResourceAsStream("/video_request.xml");
-		String resourceAsString = InputStreamUtilities.ReadInputStreamToEnd(resourceStream);
+		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
 		
 		XStream xstream = SerializerFactory.generateDefaultRequestSerializer();

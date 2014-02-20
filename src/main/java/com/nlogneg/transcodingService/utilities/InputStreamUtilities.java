@@ -18,7 +18,7 @@ public final class InputStreamUtilities{
 	 * @return The string read from it
 	 * @throws IOException  
 	 */
-	public static final String ReadInputStreamToEnd(InputStream inputStream) throws IOException{
+	public static final String readInputStreamToEnd(InputStream inputStream) throws IOException{
 		if(inputStream == null) throw new NullPointerException();
 		
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));){

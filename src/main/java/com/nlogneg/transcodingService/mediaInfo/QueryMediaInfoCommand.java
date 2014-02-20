@@ -19,25 +19,25 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 public class QueryMediaInfoCommand extends SimpleCommand{
 	
 	private static final Logger Log = LogManager.getLogger(QueryMediaInfoCommand.class);
-	
+
 	private static final String MediaInfoProcessName = "mediainfo";
 	private static final String OutputArgument = "--output=XML";
 	
 	@Override
 	public void execute(INotification notification){
-		Request request = (Request)notification.getBody();
+		String sourceFile = (String)notification.getBody();
 		
-		ProcessBuilder builder = new ProcessBuilder(MediaInfoProcessName, OutputArgument, request.getSourceFile());
+		ProcessBuilder builder = new ProcessBuilder(MediaInfoProcessName, OutputArgument, sourceFile);
 		try {
-			Log.info("Requesting media info about: " + request.getSourceFile());
+			Log.info("Requesting media info about: " + sourceFile);
 			Process process = builder.start();
-			String output = InputStreamUtilities.ReadInputStreamToEnd(process.getInputStream());
+			String output = InputStreamUtilities.readInputStreamToEnd(process.getInputStream());
 			
 			process.waitFor(); //Shouldn't take long. 
 			
 			Facade facade = getFacade();
 			RawMediaInfoProxy rawMediaInfoProxy = (RawMediaInfoProxy)facade.retrieveProxy(RawMediaInfoProxy.PROXY_NAME);
-			rawMediaInfoProxy.put(request.getSourceFile(), output);
+			rawMediaInfoProxy.put(sourceFile, output);
 		} catch (IOException e) {
 			Log.error("Could not get the media info for a specific object", e);
 			return;

@@ -57,7 +57,7 @@ public class ServiceRequestCommand extends SimpleCommand{
 	 */
 	private static String readFromSocket(Socket socket){
 		try{
-			return InputStreamUtilities.ReadInputStreamToEnd(socket.getInputStream());
+			return InputStreamUtilities.readInputStreamToEnd(socket.getInputStream());
 		}catch(IOException exception){
 			Log.error("Could not read from socket", exception);
 		}
