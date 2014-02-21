@@ -14,14 +14,13 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
 public class SocketProxy extends Proxy{
 	public static final String PROXY_NAME = "SocketProxy";
 	
-	private final BlockingQueue<Socket> sockets;
+	private final BlockingQueue<Socket> sockets = new LinkedBlockingDeque<>();
 
 	/**
 	 * Constructs a new SocketProxy
 	 */
 	public SocketProxy(){
 		super(PROXY_NAME);
-		sockets = new LinkedBlockingDeque<>();
 	}
 	
 	/**

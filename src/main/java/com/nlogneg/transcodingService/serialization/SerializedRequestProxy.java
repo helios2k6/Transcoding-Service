@@ -15,11 +15,10 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public class SerializedRequestProxy extends Proxy{
 	public static final String PROXY_NAME = "SerializedRequestProxy";
 	
-	private final BlockingQueue<String> serializedRequests;
+	private final BlockingQueue<String> serializedRequests = new LinkedBlockingDeque<>();
 	
 	public SerializedRequestProxy(){
 		super(PROXY_NAME);
-		serializedRequests = new LinkedBlockingDeque<String>();
 	}
 	
 	/**

@@ -15,14 +15,13 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public class MKVInfoProxy extends Proxy{
 	public static final String PROXY_NAME = "MKVInfoProxy";
 	
-	private final ConcurrentMap<String, MKVInfo> mkvInfoMap;
+	private final ConcurrentMap<String, MKVInfo> mkvInfoMap = new ConcurrentHashMap<>();
 	
 	/**
 	 * Constructs a MKVInfoProxy
 	 */
 	public MKVInfoProxy(){
 		super(PROXY_NAME);
-		mkvInfoMap = new ConcurrentHashMap<String, MKVInfo>();
 	}
 	
 	/**
