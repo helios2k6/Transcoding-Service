@@ -17,6 +17,7 @@ public final class VideoTrack extends MediaTrack{
 	 * Constructs a new video track
 	 * @param format The format
 	 * @param codecID The codec ID
+	 * @param id The track ID
 	 * @param width The width of the video
 	 * @param height The height of the video
 	 * @param displayAspectRatio The display aspect ratio
@@ -26,12 +27,13 @@ public final class VideoTrack extends MediaTrack{
 	public VideoTrack(
 			String format, 
 			String codecID,
+			int id,
 			String width,
 			String height, 
 			String displayAspectRatio,
 			String frameRateMode,
 			String frameRate){
-		super(format, codecID);
+		super(format, codecID, id);
 		this.width = width;
 		this.height = height;
 		this.displayAspectRatio = displayAspectRatio;

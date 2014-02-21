@@ -17,10 +17,11 @@ public class TextTrack extends MediaTrack{
 	 * Construct a TextTrack
 	 * @param format The format
 	 * @param codecID The codec ID
+	 * @param id The track id
 	 * @param language The language of the track
 	 */
-	public TextTrack(String format, String codecID, String language) {
-		super(format, codecID);
+	public TextTrack(String format, String codecID, int id, String language) {
+		super(format, codecID, id);
 		this.language = language;
 	}
 

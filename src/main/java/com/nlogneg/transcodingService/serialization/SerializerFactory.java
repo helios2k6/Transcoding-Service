@@ -88,6 +88,7 @@ public final class SerializerFactory {
 		xstream.aliasField("Complete_name", GeneralTrack.class, "completeName");
 		
 		xstream.aliasField("Codec_ID", MediaTrack.class, "codecID");
+		xstream.aliasField("ID", MediaTrack.class, "id");
 		
 		xstream.aliasField("Channel_s_", AudioTrack.class, "channels");
 		xstream.aliasField("Language", AudioTrack.class, "language");

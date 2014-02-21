@@ -1,15 +1,11 @@
 package com.nlogneg.transcodingService.mediaInfo;
 
-import java.io.IOException;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
-import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.requests.Request;
-import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
  * Queries for media information about a specific file
@@ -20,31 +16,44 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 	
 	private static final Logger Log = LogManager.getLogger(QueryMediaInfoCommand.class);
 
-	private static final String MediaInfoProcessName = "mediainfo";
-	private static final String OutputArgument = "--output=XML";
+	private final MediaInfoQueryStrategy<String, String> mediaInfoStrategy;
+	private final MediaInfoDeserializationStrategy<String> deserializationStrategy;
 	
+	
+	/**
+	 * Constructs a new QueryMediaInfoCommand
+	 * @param mediaInfoStrategy The query strategy
+	 * @param deserializationStrategy The deserialization strategy
+	 */
+	public QueryMediaInfoCommand(
+			MediaInfoQueryStrategy<String, String> mediaInfoStrategy,
+			MediaInfoDeserializationStrategy<String> deserializationStrategy){
+		this.mediaInfoStrategy = mediaInfoStrategy;
+		this.deserializationStrategy = deserializationStrategy;
+	}
+
 	@Override
 	public void execute(INotification notification){
 		String sourceFile = (String)notification.getBody();
 		
-		ProcessBuilder builder = new ProcessBuilder(MediaInfoProcessName, OutputArgument, sourceFile);
-		try {
-			Log.info("Requesting media info about: " + sourceFile);
-			Process process = builder.start();
-			String output = InputStreamUtilities.readInputStreamToEnd(process.getInputStream());
-			
-			process.waitFor(); //Shouldn't take long. 
-			
-			Facade facade = getFacade();
-			RawMediaInfoProxy rawMediaInfoProxy = (RawMediaInfoProxy)facade.retrieveProxy(RawMediaInfoProxy.PROXY_NAME);
-			rawMediaInfoProxy.put(sourceFile, output);
-		} catch (IOException e) {
-			Log.error("Could not get the media info for a specific object", e);
-			return;
-		} catch (InterruptedException e) {
-			Log.error("Media Info process was interrupted.", e);
+		Log.info("Querying media info on file: " + sourceFile);
+		Optional<String> mediaInfoXml = mediaInfoStrategy.queryMediaInfo(sourceFile);
+		
+		if(mediaInfoXml.isNone()){
+			Log.error("Could not query media info on file: " + sourceFile);
 			return;
 		}
+		
+		Optional<MediaInfo> mediaInfo = deserializationStrategy.deserializeMediaInfo(mediaInfoXml.getValue());
+		
+		if(mediaInfo.isNone()){
+			Log.error("Could not deserialize media info XML for file: " + sourceFile);
+			return;
+		}
+		
+		Log.info("Successfully queried media info for file: " + sourceFile);
+		MediaInfoProxy proxy = (MediaInfoProxy)getFacade().retrieveProxy(MediaInfoProxy.PROXY_NAME);
+		proxy.putMediaInfo(sourceFile, mediaInfo.getValue());
 	}
 	
 }

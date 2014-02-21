@@ -19,15 +19,17 @@ public final class AudioTrack extends MediaTrack{
 	 * Constructs a new audio track
 	 * @param format The format
 	 * @param codecID The codec ID
+	 * @param id The track ID
 	 * @param channels The number of audio channels
 	 * @param language The language
 	 */
 	public AudioTrack(
 			String format, 
 			String codecID,
+			int id,
 			String channels,
 			String language){
-		super(format, codecID);
+		super(format, codecID, id);
 		this.channels = channels;
 		this.language = language;
 	}

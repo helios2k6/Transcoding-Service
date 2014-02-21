@@ -8,16 +8,19 @@ public abstract class MediaTrack extends Track{
 	private static final long serialVersionUID = 8563336050612487821L;
 
 	private final String codecID;
+	private final int id;
 	
 	/**
 	 * Creates a new media track
 	 * @param format The format
 	 * @param formatInfo the format info
-	 * @param codecID The 
+	 * @param codecID The codec ID 
+	 * @param id The track ID
 	 */
-	public MediaTrack(String format, String codecID) {
+	public MediaTrack(String format, String codecID, int id) {
 		super(format);
 		this.codecID = codecID;
+		this.id = id;
 	}
 
 	/**
@@ -26,6 +29,14 @@ public abstract class MediaTrack extends Track{
 	 */
 	public String getCodecID(){
 		return codecID;
+	}
+	
+	/**
+	 * Get the track ID
+	 * @return The track ID
+	 */
+	public int getId(){
+		return id;
 	}
 
 	/* (non-Javadoc)
