@@ -86,7 +86,9 @@ public class ConfigureServerCommand extends SimpleCommand{
 			String portNumberString = commandLine.getOptionValue(CommandLineOptionsFactory.PortNumberArgument);
 			int parsedPortNumber = parsePortNumber(portNumberString);
 			
-			return new ServerConfiguration(parsedPortNumber, needsHelp);
+			String fontFolder = commandLine.getOptionValue(CommandLineOptionsFactory.FontFolderArgument);
+			
+			return new ServerConfiguration(parsedPortNumber, needsHelp, fontFolder);
 		}catch(ParseException exception){
 			fail("Could not parse command line arguments.", exception);
 		}
