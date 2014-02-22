@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.requests;
 
-import com.nlogneg.transcodingService.media.EncodingSettings;
 
 /**
  * Represents a transcoding request. 
@@ -12,19 +11,29 @@ public class Request{
 	private final String sourceFile;
 	private final String destinationFile;
 	private final EncodingSettings encodingSettings;
+	private final Selector selector;
 
 	/**
 	 * Constructs a new, immutable request
 	 * @param filePath The file path
 	 * @param outputPath The output path
 	 * @param settings The encoding settings for this request
+	 * @param selector The selector
 	 */
-	protected Request(String filePath, String outputPath, EncodingSettings settings){
+	protected Request(String filePath, String outputPath, EncodingSettings settings, Selector selector){
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;
 		this.encodingSettings = settings;
+		this.selector = selector;
 	}
 	
+	/**
+	 * @return the selector
+	 */
+	public Selector getSelector() {
+		return selector;
+	}
+
 	/**
 	 * Get the file path
 	 * @return

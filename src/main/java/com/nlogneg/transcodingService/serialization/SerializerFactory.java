@@ -1,13 +1,5 @@
 package com.nlogneg.transcodingService.serialization;
 
-import com.nlogneg.transcodingService.media.Compatibility;
-import com.nlogneg.transcodingService.media.EncodingSettings;
-import com.nlogneg.transcodingService.media.Estimation;
-import com.nlogneg.transcodingService.media.Level;
-import com.nlogneg.transcodingService.media.Profile;
-import com.nlogneg.transcodingService.media.PsychoVisualSettings;
-import com.nlogneg.transcodingService.media.RateControl;
-import com.nlogneg.transcodingService.media.SampleAspectRatio;
 import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
 import com.nlogneg.transcodingService.mediaInfo.File;
 import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
@@ -16,7 +8,16 @@ import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
 import com.nlogneg.transcodingService.mediaInfo.TextTrack;
 import com.nlogneg.transcodingService.mediaInfo.Track;
 import com.nlogneg.transcodingService.mediaInfo.VideoTrack;
+import com.nlogneg.transcodingService.requests.Compatibility;
+import com.nlogneg.transcodingService.requests.EncodingSettings;
+import com.nlogneg.transcodingService.requests.Estimation;
+import com.nlogneg.transcodingService.requests.Level;
+import com.nlogneg.transcodingService.requests.Profile;
+import com.nlogneg.transcodingService.requests.PsychoVisualSettings;
+import com.nlogneg.transcodingService.requests.RateControl;
 import com.nlogneg.transcodingService.requests.Request;
+import com.nlogneg.transcodingService.requests.SampleAspectRatio;
+import com.nlogneg.transcodingService.requests.Selector;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
@@ -52,6 +53,7 @@ public final class SerializerFactory {
 		xstream.alias("type", RateControl.Type.class);
 		xstream.alias("motionEstimation", Estimation.MotionEstimation.class);
 		xstream.alias("sampleAspectRatio", SampleAspectRatio.class);
+		xstream.alias("selector", Selector.class);
 	}
 	
 	/**

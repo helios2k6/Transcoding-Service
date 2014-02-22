@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.media;
+package com.nlogneg.transcodingService.requests;
 
 import java.io.Serializable;
 

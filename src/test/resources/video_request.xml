@@ -29,4 +29,12 @@
 			<beta>0</beta>
 		</psychoVisualSettings>
 	</encodingSettings>
+	<selector>
+		<force169AspectRatio>false</force169AspectRatio>
+		<forceUseAudioTrack>false</forceUseAudioTrack>
+		<forceResolution>false</forceResolution>
+		<audioTrack>-1</audioTrack>
+		<forceHeight>-1</forceHeight>
+		<forceWidth>-1</forceWidth>
+	</selector>
 </request>
