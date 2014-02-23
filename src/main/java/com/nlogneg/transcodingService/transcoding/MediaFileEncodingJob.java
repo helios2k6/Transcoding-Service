@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.transcoding;
 
 import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
+import com.nlogneg.transcodingService.requests.Request;
 import com.nlogneg.transcodingService.requests.Selector;
 
 /**
@@ -13,18 +14,19 @@ public abstract class MediaFileEncodingJob extends EncodingJob{
 	private final Selector selector;
 	
 	/**
-	 * @param id The id
-	 * @param file The file
-	 * @param mediaInfo The media info
-	 * @param selector The selector
+	 * @param id
+	 * @param file
+	 * @param request
+	 * @param mediaInfo
+	 * @param selector
 	 */
 	public MediaFileEncodingJob(
-			long id, 
+			long id,
 			String file, 
-			MediaInfo mediaInfo,
+			Request request,
+			MediaInfo mediaInfo, 
 			Selector selector){
-		
-		super(id, file);
+		super(id, file, request);
 		this.mediaInfo = mediaInfo;
 		this.selector = selector;
 	}

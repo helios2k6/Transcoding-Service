@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.transcoding;
 
+import com.nlogneg.transcodingService.requests.Request;
+
 /**
  * Represents an encoding job
  * @author Andrew
@@ -8,15 +10,16 @@ package com.nlogneg.transcodingService.transcoding;
 public abstract class EncodingJob{
 	private final long id;
 	private final String file;
-	
+	private final Request request;
 	/**
-	 * Constructs a encoding job
-	 * @param id The id
-	 * @param file The file to encode
+	 * @param id
+	 * @param file
+	 * @param request
 	 */
-	public EncodingJob(long id, String file) {
+	public EncodingJob(long id, String file, Request request) {
 		this.id = id;
 		this.file = file;
+		this.request = request;
 	}
 	/**
 	 * @return the id
@@ -30,6 +33,12 @@ public abstract class EncodingJob{
 	public String getFile() {
 		return file;
 	}
+	/**
+	 * @return the request
+	 */
+	public Request getRequest() {
+		return request;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -39,6 +48,7 @@ public abstract class EncodingJob{
 		int result = 1;
 		result = prime * result + ((file == null) ? 0 : file.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((request == null) ? 0 : request.hashCode());
 		return result;
 	}
 	/* (non-Javadoc)
@@ -66,6 +76,15 @@ public abstract class EncodingJob{
 		if (id != other.id) {
 			return false;
 		}
+		if (request == null) {
+			if (other.request != null) {
+				return false;
+			}
+		} else if (!request.equals(other.request)) {
+			return false;
+		}
 		return true;
 	}
+	
+	
 }

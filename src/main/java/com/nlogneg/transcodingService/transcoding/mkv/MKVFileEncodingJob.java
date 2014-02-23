@@ -1,8 +1,9 @@
-package com.nlogneg.transcodingService.transcoding;
+package com.nlogneg.transcodingService.transcoding.mkv;
 
 import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
+import com.nlogneg.transcodingService.requests.Request;
 import com.nlogneg.transcodingService.requests.Selector;
-import com.nlogneg.transcodingService.transcoding.mkv.MKVInfo;
+import com.nlogneg.transcodingService.transcoding.MediaFileEncodingJob;
 
 /**
  * Represents an encoding job for an MKV file
@@ -13,16 +14,16 @@ public final class MKVFileEncodingJob extends MediaFileEncodingJob{
 	private final MKVInfo mkvInfo;
 
 	/**
-	 * Constructs an MKV File Encoding Job
 	 * @param id
 	 * @param file
+	 * @param request
 	 * @param mediaInfo
 	 * @param selector
 	 * @param mkvInfo
 	 */
-	public MKVFileEncodingJob(long id, String file, MediaInfo mediaInfo,
-			Selector selector, MKVInfo mkvInfo) {
-		super(id, file, mediaInfo, selector);
+	public MKVFileEncodingJob(long id, String file, Request request,
+			MediaInfo mediaInfo, Selector selector, MKVInfo mkvInfo) {
+		super(id, file, request, mediaInfo, selector);
 		this.mkvInfo = mkvInfo;
 	}
 

@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import com.nlogneg.transcodingService.mediaInfo.MediaInfoProxy;
 import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
 
-public abstract class DemultiplexMkvMediaTrackCommand extends SimpleCommand{
-	private static final Logger Log = LogManager.getLogger(DemultiplexMkvMediaTrackCommand.class);
+public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
+	private static final Logger Log = LogManager.getLogger(DemultiplexMKVMediaTrackCommand.class);
 	private static final String TracksArgument = "tracks";
 	
 	public void execute(INotification notification){
