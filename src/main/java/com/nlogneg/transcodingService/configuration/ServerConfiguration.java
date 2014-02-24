@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.configuration;
 
+
 /**
  * Represents a server configuration
  * @author anjohnson
@@ -8,18 +9,18 @@ package com.nlogneg.transcodingService.configuration;
 public final class ServerConfiguration{
 	private final int portNumber;
 	private final boolean help;
-	private final String fontFolder;
+	private final FontStrategyConfiguration fontConfiguration;
 	
 	/**
 	 * Constructs a new Server Configuration object
 	 * @param portNumber The port number this server should listen to
 	 * @param help Whether or not to show the help text
-	 * @param fontFolder Where to install fonts
+	 * @param fontConfiguration The font configuration
 	 */
-	public ServerConfiguration(int portNumber, boolean help, String fontFolder){
+	public ServerConfiguration(int portNumber, boolean help, FontStrategyConfiguration fontConfiguration){
 		this.portNumber = portNumber;
 		this.help = help;
-		this.fontFolder = fontFolder;
+		this.fontConfiguration = fontConfiguration;
 	}
 
 	/**
@@ -37,9 +38,10 @@ public final class ServerConfiguration{
 	}
 
 	/**
-	 * @return the fontFolder
+	 * @return the fontConfiguration
 	 */
-	public String getFontFolder() {
-		return fontFolder;
+	public FontStrategyConfiguration getFontConfiguration() {
+		return fontConfiguration;
 	}
 }
+

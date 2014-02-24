@@ -2,6 +2,11 @@ package com.nlogneg.transcodingService.transcoding.mkv;
 
 import java.util.List;
 
+/**
+ * Holds metadata about an MKV File
+ * @author anjohnson
+ *
+ */
 public final class MKVInfo{
 	private final List<Attachment> attachments;
 

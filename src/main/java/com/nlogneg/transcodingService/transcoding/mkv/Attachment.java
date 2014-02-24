@@ -2,6 +2,13 @@ package com.nlogneg.transcodingService.transcoding.mkv;
 
 import javax.activation.MimeType;
 
+import com.nlogneg.transcodingService.utilities.MimeTypeUtilities;
+
+/**
+ * Represents an MKV Attachment
+ * @author anjohnson
+ *
+ */
 public final class Attachment{
 	private final long id;
 	private final String fileName;
@@ -94,12 +101,8 @@ public final class Attachment{
 		if (uid != other.uid){
 			return false;
 		}
-		if(mimeType == null){
-			if(other.mimeType != null){
-				return false;
-			}
-		}else if(!mimeType.getBaseType().equals(other.mimeType.getBaseType())
-				|| !mimeType.getSubType().equals(other.mimeType.getSubType())){
+		//Check MIME Type
+		if(MimeTypeUtilities.areEqual(mimeType, other.mimeType) == false){
 			return false;
 		}
 		

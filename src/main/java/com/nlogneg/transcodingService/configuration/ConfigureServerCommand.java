@@ -1,5 +1,9 @@
 package com.nlogneg.transcodingService.configuration;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -87,16 +91,22 @@ public class ConfigureServerCommand extends SimpleCommand{
 			int parsedPortNumber = parsePortNumber(portNumberString);
 			
 			String fontFolder = commandLine.getOptionValue(CommandLineOptionsFactory.FontFolderArgument);
-			
-			return new ServerConfiguration(parsedPortNumber, needsHelp, fontFolder);
+			Path fontPath = parseFontPath(fontFolder);
+			return new ServerConfiguration(parsedPortNumber, needsHelp, fontPath);
 		}catch(ParseException exception){
 			fail("Could not parse command line arguments.", exception);
+		}catch(InvalidPathException exception){
+			fail("Could not parse path.", exception);
 		}
 		
 		fail("An impossible evolution has occured.");
 		return null;
 	}
 
+	private Path parseFontPath(String fontFolder){
+		return Paths.get(fontFolder);
+	}
+	
 	/**
 	 * Parses the port number
 	 * @param portNumberArgument The string representation of the port number

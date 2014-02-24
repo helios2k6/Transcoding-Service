@@ -21,8 +21,13 @@ public final class MKVFileEncodingJob extends MediaFileEncodingJob{
 	 * @param selector
 	 * @param mkvInfo
 	 */
-	public MKVFileEncodingJob(long id, String file, Request request,
-			MediaInfo mediaInfo, Selector selector, MKVInfo mkvInfo) {
+	public MKVFileEncodingJob(
+			long id,
+			String file, 
+			Request request,
+			MediaInfo mediaInfo,
+			Selector selector,
+			MKVInfo mkvInfo){
 		super(id, file, request, mediaInfo, selector);
 		this.mkvInfo = mkvInfo;
 	}

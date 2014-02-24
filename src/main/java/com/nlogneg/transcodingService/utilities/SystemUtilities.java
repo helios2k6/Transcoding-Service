@@ -1,11 +1,16 @@
 package com.nlogneg.transcodingService.utilities;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 /**
  * Contains several system-dependent utilities 
  * @author anjohnson
  *
  */
 public final class SystemUtilities{
+	private static final Logger Log = LogManager.getLogger(SystemUtilities.class);
+	
 	private enum OperatingSystem{
 		UnixLike,
 		Windows,
@@ -20,12 +25,16 @@ public final class SystemUtilities{
 	private static final OperatingSystem OS = calculateOperatingSystem();
 
 	private static OperatingSystem calculateOperatingSystem(){
+		Log.info("Detecting operating system");
+		
 		String property = System.getProperty("os.name").toUpperCase();
+		Log.info("os.name = " + property);
 		
 		if(property.contains("WINDOWS")){
+			Log.info("Detected Windows");
 			return OperatingSystem.Windows;
 		}
-		
+		Log.info("Detected Unix-like OS");
 		return OperatingSystem.UnixLike;
 	}
 	
