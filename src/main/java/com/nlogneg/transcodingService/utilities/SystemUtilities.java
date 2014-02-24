@@ -73,6 +73,10 @@ public final class SystemUtilities{
 		return calculateProcessName(ffmpegCore);
 	}
 	
+	/**
+	 * Get the x264 process name
+	 * @return
+	 */
 	public static String getX264ProcessName(){
 		return calculateProcessName(x264Core);
 	}
