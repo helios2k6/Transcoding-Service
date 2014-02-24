@@ -30,7 +30,7 @@ public class Request{
 	/**
 	 * @return the selector
 	 */
-	public Selector getSelector() {
+	public Selector getSelector(){
 		return selector;
 	}
 
@@ -67,7 +67,7 @@ public class Request{
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode(){
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
@@ -86,43 +86,43 @@ public class Request{
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object obj){
+		if (this == obj){
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null){
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass()){
 			return false;
 		}
 		Request other = (Request) obj;
-		if (destinationFile == null) {
-			if (other.destinationFile != null) {
+		if (destinationFile == null){
+			if (other.destinationFile != null){
 				return false;
 			}
-		} else if (!destinationFile.equals(other.destinationFile)) {
+		}else if (!destinationFile.equals(other.destinationFile)){
 			return false;
 		}
-		if (encodingSettings == null) {
-			if (other.encodingSettings != null) {
+		if (encodingSettings == null){
+			if (other.encodingSettings != null){
 				return false;
 			}
-		} else if (!encodingSettings.equals(other.encodingSettings)) {
+		}else if (!encodingSettings.equals(other.encodingSettings)){
 			return false;
 		}
-		if (selector == null) {
-			if (other.selector != null) {
+		if (selector == null){
+			if (other.selector != null){
 				return false;
 			}
-		} else if (!selector.equals(other.selector)) {
+		}else if (!selector.equals(other.selector)){
 			return false;
 		}
-		if (sourceFile == null) {
-			if (other.sourceFile != null) {
+		if (sourceFile == null){
+			if (other.sourceFile != null){
 				return false;
 			}
-		} else if (!sourceFile.equals(other.sourceFile)) {
+		}else if (!sourceFile.equals(other.sourceFile)){
 			return false;
 		}
 		return true;

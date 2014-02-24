@@ -13,6 +13,7 @@ import com.nlogneg.transcodingService.mediaInfo.MediaInfoProxy;
 import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
 import com.nlogneg.transcodingService.transcoding.EncodingJob;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
 public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(DemultiplexMKVMediaTrackCommand.class);
@@ -39,7 +40,7 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 		StringBuilder argument = new StringBuilder();
 		argument.append(track.getId()).append(":").append(outputName);
 		
-		ProcessBuilder builder = new ProcessBuilder(getProcessName(), TracksArgument, argument.toString());
+		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvExtractProcessName(), TracksArgument, argument.toString());
 		
 		try{
 			Process process = builder.start();
@@ -70,16 +71,4 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	 */
 	protected abstract String getOutputFileName(String fileName, MediaTrack mediaTrack);
 	
-	/**
-	 * Gets the process name based on the operating sytem
-	 * @return The expected mkvinfo process name
-	 */
-	private static String getProcessName(){
-		String osProperty = System.getProperty("os.name");
-		if(osProperty.contains("Windows")){
-			return "mkvextract.exe";
-		}
-
-		return "mkvextract";
-	}
 }

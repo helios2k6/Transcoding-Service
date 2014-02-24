@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
 /**
  * Gathers raw MKVInfo from the external process "mkvinfo" which is a part of the
@@ -27,7 +28,7 @@ public class MKVToolNixMKVInfoQueryStrategy implements MKVInfoQueryStrategy<Stri
 	public Optional<String> queryForMKVInfo(String sourceFile){
 		Log.info("Requesting MKV info about: " + sourceFile);
 		
-		ProcessBuilder builder = new ProcessBuilder(getProcessName(), TrackArgument, sourceFile);
+		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvInfoProcessName(), TrackArgument, sourceFile);
 		Process process;
 		try {
 			process = builder.start();
@@ -41,18 +42,5 @@ public class MKVToolNixMKVInfoQueryStrategy implements MKVInfoQueryStrategy<Stri
 			Log.error("An exception occured while getting the MKVInfo from an external process", e);
 			return Optional.none();
 		}
-	}
-	
-	/**
-	 * Gets the process name based on the operating sytem
-	 * @return The expected mkvinfo process name
-	 */
-	private static String getProcessName(){
-		String osProperty = System.getProperty("os.name");
-		if(osProperty.contains("Windows")){
-			return "mkvinfo.exe";
-		}
-		
-		return "mkvinfo";
 	}
 }

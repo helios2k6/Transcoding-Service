@@ -7,16 +7,16 @@ import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
 public class MediaInfoProcessQueryStrategy implements MediaInfoQueryStrategy<String, String>{
 	private static final Logger Log = LogManager.getLogger(MediaInfoProcessQueryStrategy.class);
 
-	private static final String MediaInfoProcessName = "mediainfo";
 	private static final String OutputArgument = "--output=XML";
 
 	@Override
 	public Optional<String> queryMediaInfo(String sourceFile) {
-		ProcessBuilder builder = new ProcessBuilder(MediaInfoProcessName, OutputArgument, sourceFile);
+		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMediaInfoProcessName(), OutputArgument, sourceFile);
 		Log.info("Requesting media info about: " + sourceFile);
 		Process process;
 		try {
