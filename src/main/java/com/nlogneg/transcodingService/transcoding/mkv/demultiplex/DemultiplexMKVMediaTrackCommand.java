@@ -6,10 +6,12 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
+import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
 import com.nlogneg.transcodingService.mediaInfo.MediaInfoProxy;
 import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
+import com.nlogneg.transcodingService.transcoding.EncodingJob;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
@@ -17,31 +19,35 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	private static final String TracksArgument = "tracks";
 	
 	public void execute(INotification notification){
-		String file = (String)notification.getBody();
+		EncodingJob encodingJob = (EncodingJob)notification.getBody();
+		String file = encodingJob.getFile();
 		Log.info("Starting demultiplexing MKV file: " + file);
 		
 		MediaInfoProxy mediaInfoProxy = (MediaInfoProxy)getFacade().retrieveProxy(MediaInfoProxy.PROXY_NAME);
 		Optional<MediaInfo> mediaInfo = mediaInfoProxy.getMediaInfo(file);
 
 		if(mediaInfo.isNone()){
-			Log.error("Could not get media info for file: " + file);
+			Log.error("Could not get media info for file: " + encodingJob);
 			return;
 		}
 		
 		MediaTrack track = getTrackToDemultiplex(mediaInfo.getValue());
-		String getOutputName = getOutputFileName(file, track);
+		String outputName = getOutputFileName(file, track);
 		
-		Log.info("Demultiplexing track " + track.getId() + "for file: " + file);
+		Log.info("Demultiplexing track " + track.getId() + "for file: " + encodingJob);
 		
 		StringBuilder argument = new StringBuilder();
-		argument.append(track.getId()).append(":").append(getOutputName);
+		argument.append(track.getId()).append(":").append(outputName);
 		
 		ProcessBuilder builder = new ProcessBuilder(getProcessName(), TracksArgument, argument.toString());
 		
 		try{
 			Process process = builder.start();
 			process.waitFor();
-			//TODO: NEED TO RECORD WHERE THE FILE IS
+			
+			Facade facade = getFacade();
+			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
+			proxy.put(encodingJob, track, outputName);
 		}catch (IOException e){
 			Log.error("Could not start process for demultiplexing", e);
 		}catch (InterruptedException e){

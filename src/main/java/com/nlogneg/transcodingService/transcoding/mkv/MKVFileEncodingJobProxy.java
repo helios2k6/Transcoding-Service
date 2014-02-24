@@ -42,4 +42,12 @@ public class MKVFileEncodingJobProxy extends Proxy{
 	public Optional<MKVFileEncodingJob> get(Request request){
 		return Optional.make(encodingJobs.get(request));
 	}
+	
+	/**
+	 * Removes a mapping
+	 * @param request The key to remove the mapping
+	 */
+	public void removeMapping(Request request){
+		encodingJobs.remove(request);
+	}
 }
