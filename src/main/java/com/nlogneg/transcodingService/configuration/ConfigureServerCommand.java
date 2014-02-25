@@ -92,7 +92,7 @@ public class ConfigureServerCommand extends SimpleCommand{
 			
 			String fontFolder = commandLine.getOptionValue(CommandLineOptionsFactory.FontFolderArgument);
 			Path fontPath = parseFontPath(fontFolder);
-			return new ServerConfiguration(parsedPortNumber, needsHelp, fontPath);
+			//return new ServerConfiguration(parsedPortNumber, needsHelp, fontPath);
 		}catch(ParseException exception){
 			fail("Could not parse command line arguments.", exception);
 		}catch(InvalidPathException exception){

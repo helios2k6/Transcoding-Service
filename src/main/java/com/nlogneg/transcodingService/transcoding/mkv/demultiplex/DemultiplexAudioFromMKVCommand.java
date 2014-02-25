@@ -2,8 +2,8 @@ package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
 
 import java.util.Set;
 
-import com.nlogneg.transcodingService.mediaInfo.MediaInfoTrackSummary;
-import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
+import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 
 /**
  * Demultiplexes the audio track from an MKV file

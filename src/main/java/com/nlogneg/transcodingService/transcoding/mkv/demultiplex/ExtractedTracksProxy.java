@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
-import com.nlogneg.transcodingService.mediaInfo.Track;
+import com.nlogneg.transcodingService.info.mediainfo.Track;
 import com.nlogneg.transcodingService.transcoding.EncodingJob;
 
 /**

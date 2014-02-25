@@ -1,8 +1,8 @@
 package com.nlogneg.transcodingService.transcoding;
 
-import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
-import com.nlogneg.transcodingService.requests.Request;
-import com.nlogneg.transcodingService.requests.Selector;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
+import com.nlogneg.transcodingService.request.Request;
+import com.nlogneg.transcodingService.request.Selector;
 
 /**
  * Represents encoding a media file

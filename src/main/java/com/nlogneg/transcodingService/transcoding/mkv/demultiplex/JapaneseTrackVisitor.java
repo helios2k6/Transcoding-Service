@@ -1,12 +1,12 @@
 package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
 
-import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
-import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
-import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
-import com.nlogneg.transcodingService.mediaInfo.TextTrack;
-import com.nlogneg.transcodingService.mediaInfo.Track;
-import com.nlogneg.transcodingService.mediaInfo.TrackVisitor;
-import com.nlogneg.transcodingService.mediaInfo.VideoTrack;
+import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
+import com.nlogneg.transcodingService.info.mediainfo.GeneralTrack;
+import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
+import com.nlogneg.transcodingService.info.mediainfo.Track;
+import com.nlogneg.transcodingService.info.mediainfo.TrackVisitor;
+import com.nlogneg.transcodingService.info.mediainfo.VideoTrack;
 
 public class JapaneseTrackVisitor implements TrackVisitor{
 	private boolean isJapanese = false;

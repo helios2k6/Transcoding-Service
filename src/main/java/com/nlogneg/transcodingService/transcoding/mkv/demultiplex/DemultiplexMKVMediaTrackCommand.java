@@ -8,9 +8,9 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
-import com.nlogneg.transcodingService.mediaInfo.MediaInfoProxy;
-import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfoProxy;
+import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 import com.nlogneg.transcodingService.transcoding.EncodingJob;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SystemUtilities;

@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
-import com.nlogneg.transcodingService.requests.Request;
+import com.nlogneg.transcodingService.request.Request;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**

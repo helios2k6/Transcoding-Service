@@ -1,6 +1,6 @@
 package com.nlogneg.transcodingService.transcoding;
 
-import com.nlogneg.transcodingService.requests.Request;
+import com.nlogneg.transcodingService.request.Request;
 
 /**
  * Represents an encoding job

@@ -2,10 +2,10 @@ package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
 
 import java.util.Set;
 
-import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
-import com.nlogneg.transcodingService.mediaInfo.MediaInfoTrackSummary;
-import com.nlogneg.transcodingService.mediaInfo.MediaInfoTrackSummaryFactory;
-import com.nlogneg.transcodingService.mediaInfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummaryFactory;
+import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 
 public abstract class DemultiplexMKVAudioSubtitleTrackBase extends DemultiplexMKVMediaTrackCommand{
 	/**
