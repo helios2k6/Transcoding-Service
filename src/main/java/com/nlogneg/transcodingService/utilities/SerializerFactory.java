@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.utilities;
 
+import com.nlogneg.transcodingService.configuration.ConfigurationFile;
 import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.info.mediainfo.File;
 import com.nlogneg.transcodingService.info.mediainfo.FileSectionConverter;
@@ -134,5 +135,11 @@ public final class SerializerFactory {
 				return super.shouldSerializeMember(definedIn, fieldName);
 			}
 		}; 
+	}
+	
+	public static final XStream getConfigurationFileDeserialization(){
+		XStream xstream = new XStream(new DomDriver());
+		xstream.alias("configurationFile", ConfigurationFile.class);
+		return xstream;
 	}
 }

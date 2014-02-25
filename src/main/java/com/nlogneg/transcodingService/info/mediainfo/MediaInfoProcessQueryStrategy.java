@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.info.mediainfo;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -9,15 +10,15 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
-public class MediaInfoProcessQueryStrategy implements MediaInfoQueryStrategy<String, String>{
+public class MediaInfoProcessQueryStrategy implements MediaInfoQueryStrategy<Path, String>{
 	private static final Logger Log = LogManager.getLogger(MediaInfoProcessQueryStrategy.class);
 
 	private static final String OutputArgument = "--output=XML";
 
 	@Override
-	public Optional<String> queryMediaInfo(String sourceFile) {
-		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMediaInfoProcessName(), OutputArgument, sourceFile);
-		Log.info("Requesting media info about: " + sourceFile);
+	public Optional<String> queryMediaInfo(Path sourcePath) {
+		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMediaInfoProcessName(), OutputArgument, sourcePath.toAbsolutePath().toString());
+		Log.info("Requesting media info about: " + sourcePath);
 		Process process;
 		try {
 			process = builder.start();

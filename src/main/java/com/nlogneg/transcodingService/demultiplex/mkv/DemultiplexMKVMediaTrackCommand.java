@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.demultiplex.mkv;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,21 +20,21 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	private static final String TracksArgument = "tracks";
 	
 	public void execute(INotification notification){
-		String mkvFile = (String)notification.getBody();
-		Log.info("Starting demultiplexing MKV file: " + mkvFile);
+		DemultiplexMKVJob mkvJob = (DemultiplexMKVJob)notification.getBody();
+		Log.info("Starting demultiplexing MKV file: " + mkvJob);
 		
 		MediaInfoProxy mediaInfoProxy = (MediaInfoProxy)getFacade().retrieveProxy(MediaInfoProxy.PROXY_NAME);
-		Optional<MediaInfo> mediaInfo = mediaInfoProxy.getMediaInfo(mkvFile);
+		Optional<MediaInfo> mediaInfo = mediaInfoProxy.getMediaInfo(mkvJob.getMediaFile());
 
 		if(mediaInfo.isNone()){
-			Log.error("Could not get media info for file: " + mkvFile);
+			Log.error("Could not get media info for file: " + mkvJob);
 			return;
 		}
 		
 		MediaTrack track = getTrackToDemultiplex(mediaInfo.getValue());
-		String outputName = getOutputFileName(mkvFile, track);
+		String outputName = getOutputFileName(mkvJob.getMediaFile(), track);
 		
-		Log.info("Demultiplexing track " + track.getId() + "for file: " + mkvFile);
+		Log.info("Demultiplexing track " + track.getId() + "for file: " + mkvJob);
 		
 		StringBuilder argument = new StringBuilder();
 		argument.append(track.getId()).append(":").append(outputName);
@@ -46,7 +47,7 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 			
 			Facade facade = getFacade();
 			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
-			proxy.put(mkvFile, track, outputName);
+			proxy.put(mkvJob.getMediaFile(), track, outputName);
 		}catch (IOException e){
 			Log.error("Could not start process for demultiplexing", e);
 		}catch (InterruptedException e){
@@ -63,10 +64,10 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	
 	/**
 	 * Get the file name to use for the demuliplexed track
-	 * @param fileName The file being demultiplexed
+	 * @param filePath The file being demultiplexed
 	 * @param mediaTrack The media track being extracted
 	 * @return The file name to use for the demultiplexed track
 	 */
-	protected abstract String getOutputFileName(String fileName, MediaTrack mediaTrack);
+	protected abstract String getOutputFileName(Path filePath, MediaTrack mediaTrack);
 	
 }

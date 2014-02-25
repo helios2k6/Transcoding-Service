@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.info.mediainfo;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,19 +26,19 @@ public class MediaInfoProxy extends Proxy{
 	
 	/**
 	 * Puts a new mapping into the proxy
-	 * @param fileName The file name
+	 * @param filePath The file path
 	 * @param mediaInfo The media info
 	 */
-	public void putMediaInfo(String fileName, MediaInfo mediaInfo){
-		map.put(fileName,  mediaInfo);
+	public void putMediaInfo(Path filePath, MediaInfo mediaInfo){
+		map.put(filePath.toAbsolutePath().toString(),  mediaInfo);
 	}
 	
 	/**
 	 * Gets the media info for the given string
-	 * @param fileName The file name
+	 * @param filePath The file path
 	 * @return An optional representing the MediaInfo
 	 */
-	public Optional<MediaInfo> getMediaInfo(String fileName){
-		return Optional.make(map.get(fileName));
+	public Optional<MediaInfo> getMediaInfo(Path filePath){
+		return Optional.make(map.get(filePath.toAbsolutePath().toString()));
 	}
 }

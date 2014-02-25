@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.demultiplex.mkv;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
@@ -18,8 +19,8 @@ public class DemultiplexSubtitleFromMKVCommand extends DemultiplexMKVAudioSubtit
 	}
 
 	@Override
-	protected String getOutputFileName(String fileName, MediaTrack mediaTrack) {
-		return fileName + "_subtitle." + mediaTrack.getFormat();
+	protected String getOutputFileName(Path filePath, MediaTrack mediaTrack) {
+		return filePath.getFileName() + "_subtitle." + mediaTrack.getFormat();
 	}
 
 }

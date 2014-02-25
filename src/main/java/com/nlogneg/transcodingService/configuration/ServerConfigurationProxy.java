@@ -2,29 +2,31 @@ package com.nlogneg.transcodingService.configuration;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
-public class ServerConfigurationProxy extends Proxy {
+/**
+ * Proxy that holds the server configuration
+ * @author anjohnson
+ *
+ */
+public final class ServerConfigurationProxy extends Proxy{
+	public static final String PROXY_NAME = "";
 	
-	public static final String PROXY_NAME = "ServerConfigurationProxy";
+	private ConfigurationFile configurationFile;
 	
-	private ServerConfiguration serverConfiguration;
-	
-	public ServerConfigurationProxy() {
+	public ServerConfigurationProxy(){
 		super(PROXY_NAME);
-	}
-	
-	/**
-	 * Gets the Server Configuration object
-	 * @return
-	 */
-	public ServerConfiguration getServerConfiguration() {
-		return serverConfiguration;
 	}
 
 	/**
-	 * Sets the Server Configuration object
-	 * @param serverConfiguration
+	 * @return the configurationFile
 	 */
-	public void setServerConfiguration(ServerConfiguration serverConfiguration) {
-		this.serverConfiguration = serverConfiguration;
+	public ConfigurationFile getConfigurationFile() {
+		return configurationFile;
+	}
+
+	/**
+	 * @param configurationFile the configurationFile to set
+	 */
+	public void setConfigurationFile(ConfigurationFile configurationFile) {
+		this.configurationFile = configurationFile;
 	}
 }

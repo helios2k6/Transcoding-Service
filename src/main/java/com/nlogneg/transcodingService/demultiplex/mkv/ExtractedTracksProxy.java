@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.demultiplex.mkv;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,16 +24,16 @@ public class ExtractedTracksProxy extends Proxy{
 	
 	/**
 	 * Place a mapping into the proxy
-	 * @param job The MKV File
+	 * @param filePath the path to the MKV file
 	 * @param track The track that was extracted
 	 * @param fileName The file name
 	 */
-	public synchronized void put(String job, Track track, String fileName){
-		Map<Track, String> existingMappings = extractedTrackMap.get(job);
+	public synchronized void put(Path filePath, Track track, String fileName){
+		Map<Track, String> existingMappings = extractedTrackMap.get(filePath.toAbsolutePath().toString());
 		
 		if(existingMappings == null){
 			existingMappings = new HashMap<Track, String>();
-			extractedTrackMap.put(job,  existingMappings);
+			extractedTrackMap.put(filePath.toAbsolutePath().toString(),  existingMappings);
 		}
 		
 		existingMappings.put(track, fileName);
@@ -40,9 +41,9 @@ public class ExtractedTracksProxy extends Proxy{
 	
 	/**
 	 * Remove a specific mapping
-	 * @param job The encoding job
+	 * @param filePath The MKV file
 	 */
-	public synchronized void removeMapping(String job){
-		extractedTrackMap.remove(job);
+	public synchronized void removeMapping(Path filePath){
+		extractedTrackMap.remove(filePath.toAbsolutePath().toString());
 	}
 }

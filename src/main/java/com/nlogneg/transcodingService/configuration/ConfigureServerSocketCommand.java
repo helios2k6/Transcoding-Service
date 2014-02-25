@@ -7,34 +7,29 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
-import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.request.server.ServerSocketProxy;
 
 /**
- * Configures the server socket proxy
+ * Configures the Server Socket to use for this application
  * @author anjohnson
  *
  */
 public class ConfigureServerSocketCommand extends SimpleCommand{
-
 	private static final Logger Log = LogManager.getLogger(ConfigureServerSocketCommand.class);
 	
-	@Override
 	public void execute(INotification notification){
-		Facade facade = getFacade();
-		ServerConfigurationProxy proxy = (ServerConfigurationProxy)facade.retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
-		ServerConfiguration configuration = proxy.getServerConfiguration();
-
-		try{
-			ServerSocket socket = new ServerSocket(configuration.getPortNumber());
-			ServerSocketProxy serverSocketProxy = (ServerSocketProxy)facade.retrieveProxy(ServerSocketProxy.PROXY_NAME);
-			serverSocketProxy.setServerSocket(socket);
+		ServerConfigurationProxy proxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
+		int portNumber = proxy.getConfigurationFile().getPortNumber();
+		
+		try {
+			ServerSocket serverSocket = new ServerSocket(portNumber);
+			ServerSocketProxy serverSocketProxy = (ServerSocketProxy)getFacade().retrieveProxy(ServerSocketProxy.PROXY_NAME);
+			serverSocketProxy.setServerSocket(serverSocket);
 		}catch (IOException e){
-			Log.error("Could not create server socket.", e);
-			sendNotification(Notifications.ExitSystemCommandNotification, new Integer(-1));
-			return;
+			Log.fatal("Could not bind to socket: " + portNumber);
+			sendNotification(Notifications.ExitSystemCommandNotification);
 		}
 	}
 }

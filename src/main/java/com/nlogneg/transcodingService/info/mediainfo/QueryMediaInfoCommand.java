@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.info.mediainfo;
 
+import java.nio.file.Path;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
@@ -16,7 +18,7 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 	
 	private static final Logger Log = LogManager.getLogger(QueryMediaInfoCommand.class);
 
-	private final MediaInfoQueryStrategy<String, String> mediaInfoStrategy;
+	private final MediaInfoQueryStrategy<Path, String> mediaInfoStrategy;
 	private final MediaInfoDeserializationStrategy<String> deserializationStrategy;
 	
 	
@@ -26,7 +28,7 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 	 * @param deserializationStrategy The deserialization strategy
 	 */
 	public QueryMediaInfoCommand(
-			MediaInfoQueryStrategy<String, String> mediaInfoStrategy,
+			MediaInfoQueryStrategy<Path, String> mediaInfoStrategy,
 			MediaInfoDeserializationStrategy<String> deserializationStrategy){
 		this.mediaInfoStrategy = mediaInfoStrategy;
 		this.deserializationStrategy = deserializationStrategy;
@@ -34,7 +36,7 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 
 	@Override
 	public void execute(INotification notification){
-		String sourceFile = (String)notification.getBody();
+		Path sourceFile = (Path)notification.getBody();
 		
 		Log.info("Querying media info on file: " + sourceFile);
 		Optional<String> mediaInfoXml = mediaInfoStrategy.queryMediaInfo(sourceFile);
