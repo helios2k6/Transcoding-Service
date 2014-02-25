@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.utilities;
+package com.nlogneg.transcodingService.utilities.exceptions;
 
 public class InvalidOperationException extends RuntimeException{
 

@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.utilities;
 
+import com.nlogneg.transcodingService.utilities.exceptions.NoValueException;
+
 /**
  * Represents a None type
  * @author anjohnson

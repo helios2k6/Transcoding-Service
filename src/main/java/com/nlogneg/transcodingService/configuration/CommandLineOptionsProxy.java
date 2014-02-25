@@ -11,7 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
-import com.nlogneg.transcodingService.utilities.InvalidOperationException;
+import com.nlogneg.transcodingService.utilities.exceptions.InvalidOperationException;
 
 /**
  * Holds all of the command line options that were passed to this application
