@@ -28,7 +28,7 @@ public class TestDeserializationConfigFile {
 		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
 		
-		XStream deserializer = SerializerFactory.getConfigurationFileDeserialization();
+		XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
 		ConfigurationFile file = (ConfigurationFile)deserializer.fromXML(resourceAsString);
 		
 		Path expectedPath = Paths.get("C:\\Windows\\Fonts");

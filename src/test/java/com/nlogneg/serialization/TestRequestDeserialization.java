@@ -1,7 +1,6 @@
 package com.nlogneg.serialization;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,9 +49,16 @@ public class TestRequestDeserialization{
 		EncodingSettings expectedEncodingSettings = new EncodingSettings(rateControl, estimation, profile, level, compatibility, psychoVisualSettings);
 		Selector expectedSelector = new Selector(false, false, false, -1, -1, -1);
 		
+		String expectedSourceFile = "/test/file.mkv";
+		String expectedDestinationFile = "/STDOUT";
+		
 		assertNotNull(request);
-		assertEquals("/test/file.mkv", request.getSourceFile());
-		assertEquals("-", request.getDestinationFile());
+		assertNotNull(request.getSourceFile());
+		assertNotNull(request.getDestinationFile());
+		
+		assertTrue(expectedSourceFile.equals(request.getSourceFile().getPath()));
+		assertTrue(expectedDestinationFile.equals(request.getDestinationFile().getPath()));
+		
 		assertEquals(expectedEncodingSettings, request.getEncodingSettings());
 		assertEquals(expectedSelector, request.getSelector());
 	}

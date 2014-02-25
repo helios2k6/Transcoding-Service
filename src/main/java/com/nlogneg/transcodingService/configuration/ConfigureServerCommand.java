@@ -38,7 +38,7 @@ public class ConfigureServerCommand extends SimpleCommand{
 			List<String> lines = Files.readAllLines(configFile, Charset.defaultCharset());
 			String flattenedFile = ListUtilities.flatten(lines);
 			
-			XStream deserializer = SerializerFactory.getConfigurationFileDeserialization();
+			XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
 			ConfigurationFile file = (ConfigurationFile)deserializer.fromXML(flattenedFile);
 			
 			ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);

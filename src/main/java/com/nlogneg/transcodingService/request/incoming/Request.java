@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.request.incoming;
 
+import java.net.URL;
+
 
 /**
  * Represents a transcoding request. 
@@ -8,8 +10,8 @@ package com.nlogneg.transcodingService.request.incoming;
  */
 public class Request{
 	
-	private final String sourceFile;
-	private final String destinationFile;
+	private final URL sourceFile;
+	private final URL destinationFile;
 	private final EncodingSettings encodingSettings;
 	private final Selector selector;
 
@@ -20,7 +22,7 @@ public class Request{
 	 * @param settings The encoding settings for this request
 	 * @param selector The selector
 	 */
-	protected Request(String filePath, String outputPath, EncodingSettings settings, Selector selector){
+	protected Request(URL filePath, URL outputPath, EncodingSettings settings, Selector selector){
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;
 		this.encodingSettings = settings;
@@ -38,7 +40,7 @@ public class Request{
 	 * Get the file path
 	 * @return
 	 */
-	public String getSourceFile(){
+	public URL getSourceFile(){
 		return sourceFile;
 	}
 
@@ -46,7 +48,7 @@ public class Request{
 	 * Get the output path
 	 * @return
 	 */
-	public String getDestinationFile(){
+	public URL getDestinationFile(){
 		return destinationFile;
 	}
 	
@@ -101,7 +103,7 @@ public class Request{
 			if (other.destinationFile != null){
 				return false;
 			}
-		}else if (!destinationFile.equals(other.destinationFile)){
+		}else if (!destinationFile.toString().equals(other.destinationFile.toString())){ // Do not want to hit the network
 			return false;
 		}
 		if (encodingSettings == null){

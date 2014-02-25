@@ -7,7 +7,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
-import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.request.incoming.SerializedRequestProxy;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
@@ -17,15 +16,13 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
  * @author anjohnson
  *
  */
-public class ServiceRequestCommand extends SimpleCommand{
-	private static final Logger Log = LogManager.getLogger(ServiceRequestCommand.class);
+public class ReadClientRequestFromSocketCommand extends SimpleCommand{
+	private static final Logger Log = LogManager.getLogger(ReadClientRequestFromSocketCommand.class);
 	
 	public void execute(INotification notification){
 		Log.info("Servicing request");
 		
-		Facade facade = getFacade();
-		SocketProxy socketProxy = (SocketProxy)facade.retrieveProxy(SocketProxy.PROXY_NAME);
-		Socket request = socketProxy.getNextSocket();
+		Socket request = (Socket)notification.getBody();
 		
 		if(request == null){
 			Log.info("No requests to service");
@@ -39,15 +36,8 @@ public class ServiceRequestCommand extends SimpleCommand{
 			return;
 		}
 		
-		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)getFacade().retrieveProxy(SerializedRequestProxy.PROXY_NAME);
 		serializedRequestProxy.addSerializedRequest(requestPayload);
-		
-		try{
-			request.close();
-		}catch (IOException e){
-			Log.error("Could not close socket.", e);
-			return;
-		}
 	}
 	
 	/**
