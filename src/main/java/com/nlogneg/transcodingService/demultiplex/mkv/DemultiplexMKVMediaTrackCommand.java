@@ -15,6 +15,11 @@ import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
+/**
+ * Represents demultiplexing an MKV Media Track
+ * @author anjohnson
+ *
+ */
 public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(DemultiplexMKVMediaTrackCommand.class);
 	private static final String TracksArgument = "tracks";

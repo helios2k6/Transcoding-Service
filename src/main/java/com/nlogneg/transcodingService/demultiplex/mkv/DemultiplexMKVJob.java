@@ -17,9 +17,10 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	private final List<Track> tracks;
 	
 	/**
-	 * @param mediaFile
-	 * @param attachments
-	 * @param tracks
+	 * Constructs a demultiplexing job for an MKV file
+	 * @param mediaFile The path to the media file
+	 * @param attachments The attachments to demultiplex
+	 * @param tracks The tracks to demultiplex
 	 */
 	public DemultiplexMKVJob(
 			Path mediaFile,

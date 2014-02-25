@@ -20,7 +20,6 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 
 	private final MediaInfoQueryStrategy<Path, String> mediaInfoStrategy;
 	
-	
 	/**
 	 * Constructs a new QueryMediaInfoCommand
 	 * @param mediaInfoStrategy The query strategy

@@ -1,10 +1,7 @@
 package com.nlogneg.transcodingService.demultiplex.mkv;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +10,13 @@ import javax.activation.MimeType;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.MimeTypeUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 
-public class ExtractMKVSubtitleAttachmentsCommand extends ExtractMKVAttachmentsCommand{
+public class ExtractMKVFontAttachmentsCommand extends ExtractMKVAttachmentsCommand{
 	
-	private static final Logger Log = LogManager.getLogger(ExtractMKVSubtitleAttachmentsCommand.class);
+	private static final Logger Log = LogManager.getLogger(ExtractMKVFontAttachmentsCommand.class);
 		
 	/* (non-Javadoc)
 	 * @see com.nlogneg.transcodingService.transcoding.mkv.demultiplex.ExtractMKVAttachmentsCommand#getAttachmentsToExtract(com.nlogneg.transcodingService.transcoding.mkv.MKVFileEncodingJob)
@@ -44,22 +40,10 @@ public class ExtractMKVSubtitleAttachmentsCommand extends ExtractMKVAttachmentsC
 	@Override
 	protected void postProcessAttachmentExtraction(List<Attachment> extractedAttachments) {
 		List<Path> paths = getPathsForAttachments(extractedAttachments);
-		
-		ServerConfigurationProxy proxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
-		
-		//TODO: EXECUTE FONT STRATEGY
+		ExtractedFontAttachmentsProxy proxy = (ExtractedFontAttachmentsProxy)getFacade().retrieveProxy(ExtractedFontAttachmentsProxy.PROXY_NAME);
+		proxy.add(paths);
 	}
 
-	private static final void tryMoveFile(Path fileToMove, Path destinationDirectory){
-		Path destinationFile = destinationDirectory.resolve(fileToMove.getFileName());
-		
-		try {
-			Files.move(fileToMove, destinationFile, StandardCopyOption.ATOMIC_MOVE);
-		}catch (IOException e){
-			Log.error("Could not move file: " + fileToMove, e);
-		}
-	}
-	
 	private static final List<Path> getPathsForAttachments(List<Attachment> attachments){
 		List<Path> paths = new ArrayList<>();
 		for(Attachment attachment : attachments){
