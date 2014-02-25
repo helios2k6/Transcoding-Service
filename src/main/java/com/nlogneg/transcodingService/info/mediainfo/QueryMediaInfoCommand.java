@@ -19,19 +19,15 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(QueryMediaInfoCommand.class);
 
 	private final MediaInfoQueryStrategy<Path, String> mediaInfoStrategy;
-	private final MediaInfoDeserializationStrategy<String> deserializationStrategy;
 	
 	
 	/**
 	 * Constructs a new QueryMediaInfoCommand
 	 * @param mediaInfoStrategy The query strategy
-	 * @param deserializationStrategy The deserialization strategy
 	 */
 	public QueryMediaInfoCommand(
-			MediaInfoQueryStrategy<Path, String> mediaInfoStrategy,
-			MediaInfoDeserializationStrategy<String> deserializationStrategy){
+			MediaInfoQueryStrategy<Path, String> mediaInfoStrategy){
 		this.mediaInfoStrategy = mediaInfoStrategy;
-		this.deserializationStrategy = deserializationStrategy;
 	}
 
 	@Override
@@ -46,7 +42,7 @@ public class QueryMediaInfoCommand extends SimpleCommand{
 			return;
 		}
 		
-		Optional<MediaInfo> mediaInfo = deserializationStrategy.deserializeMediaInfo(mediaInfoXml.getValue());
+		Optional<MediaInfo> mediaInfo = MediaInfoXmlDeserializer.deserializeMediaInfo(mediaInfoXml.getValue());
 		
 		if(mediaInfo.isNone()){
 			Log.error("Could not deserialize media info XML for file: " + sourceFile);
