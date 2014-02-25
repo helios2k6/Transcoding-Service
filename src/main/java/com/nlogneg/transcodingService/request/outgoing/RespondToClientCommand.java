@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.request.server;
+package com.nlogneg.transcodingService.request.outgoing;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.request.outgoing.Acknowledgement;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
