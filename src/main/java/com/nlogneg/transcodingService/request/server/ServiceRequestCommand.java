@@ -9,7 +9,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.request.SerializedRequestProxy;
+import com.nlogneg.transcodingService.request.incoming.SerializedRequestProxy;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 
 /**

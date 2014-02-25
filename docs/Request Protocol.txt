@@ -1,0 +1,2 @@
+CLIENT: [fileName, encoding settings, destination] ----> SERVER
+SERVER: [acknowledge] ----> CLIENT
