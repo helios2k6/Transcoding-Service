@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
+package com.nlogneg.transcodingService.demultiplex.mkv;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,6 @@ import java.util.Map;
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
 import com.nlogneg.transcodingService.info.mediainfo.Track;
-import com.nlogneg.transcodingService.transcoding.EncodingJob;
 
 /**
  * Represents the mapping between encoding jobs to extracted tracks
@@ -16,7 +15,7 @@ import com.nlogneg.transcodingService.transcoding.EncodingJob;
 public class ExtractedTracksProxy extends Proxy{
 	public static final String PROXY_NAME = "ExtractedTracksProxy";
 	
-	private final Map<EncodingJob, Map<Track, String>> extractedTrackMap = new HashMap<EncodingJob, Map<Track, String>>();
+	private final Map<String, Map<Track, String>> extractedTrackMap = new HashMap<String, Map<Track, String>>();
 	
 	public ExtractedTracksProxy(){
 		super(PROXY_NAME);
@@ -24,11 +23,11 @@ public class ExtractedTracksProxy extends Proxy{
 	
 	/**
 	 * Place a mapping into the proxy
-	 * @param job The encoding job
+	 * @param job The MKV File
 	 * @param track The track that was extracted
 	 * @param fileName The file name
 	 */
-	public synchronized void put(EncodingJob job, Track track, String fileName){
+	public synchronized void put(String job, Track track, String fileName){
 		Map<Track, String> existingMappings = extractedTrackMap.get(job);
 		
 		if(existingMappings == null){
@@ -43,7 +42,7 @@ public class ExtractedTracksProxy extends Proxy{
 	 * Remove a specific mapping
 	 * @param job The encoding job
 	 */
-	public synchronized void removeMapping(EncodingJob job){
+	public synchronized void removeMapping(String job){
 		extractedTrackMap.remove(job);
 	}
 }

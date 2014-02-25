@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.info.mkv;
 
 import javax.activation.MimeType;
 

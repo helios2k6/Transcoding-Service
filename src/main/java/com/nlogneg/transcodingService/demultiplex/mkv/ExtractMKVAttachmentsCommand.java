@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
+package com.nlogneg.transcodingService.demultiplex.mkv;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,8 +8,7 @@ import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.transcoding.mkv.Attachment;
-import com.nlogneg.transcodingService.transcoding.mkv.MKVFileEncodingJob;
+import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.SystemUtilities;
 
 /**
@@ -22,7 +21,7 @@ public abstract class ExtractMKVAttachmentsCommand extends SimpleCommand{
 	private static final String AttachmentArgument = "attachments";
 	
 	public final void execute(INotification notification){
-		MKVFileEncodingJob job = (MKVFileEncodingJob)notification.getBody();
+		DemultiplexMKVJob job = (DemultiplexMKVJob)notification.getBody();
 		
 		List<Attachment> attachments = getAttachmentsToExtract(job);
 		
@@ -38,15 +37,15 @@ public abstract class ExtractMKVAttachmentsCommand extends SimpleCommand{
 	 * @param job The MKV Encoding Job
 	 * @return The list of attachments
 	 */
-	protected abstract List<Attachment> getAttachmentsToExtract(MKVFileEncodingJob job);
+	protected abstract List<Attachment> getAttachmentsToExtract(DemultiplexMKVJob job);
 	
 	/**
 	 * Perform any post processing 
 	 */
 	protected abstract void postProcessAttachmentExtraction(List<Attachment> extractedAttachments);
 	
-	private static void extractAttachment(MKVFileEncodingJob job, Attachment attachment){
-		Log.info("Extracting attachments for: " + job.getFile());
+	private static void extractAttachment(DemultiplexMKVJob job, Attachment attachment){
+		Log.info("Extracting attachments for: " + job.getAttachments());
 		
 		StringBuilder extractedAttachmentArgument = new StringBuilder();
 		extractedAttachmentArgument.append(attachment.getId()).append(":").append(attachment.getFileName());
@@ -54,7 +53,7 @@ public abstract class ExtractMKVAttachmentsCommand extends SimpleCommand{
 		ProcessBuilder builder = new ProcessBuilder(
 				SystemUtilities.getMkvExtractProcessName(),
 				AttachmentArgument,
-				job.getFile(),
+				job.getMediaFile().toAbsolutePath().toString(),
 				extractedAttachmentArgument.toString());
 		
 		try{

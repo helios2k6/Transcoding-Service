@@ -1,0 +1,23 @@
+﻿Major Stages
+	+ Config Stage
+		+ Read commandline input
+		+ Deserialize configuration file
+		+ Set server context
+	+ Request Stage
+		+ Listen for requests
+		+ Respond with acknowledgement or refusal
+	+ Info Stage
+		+ Gather information about media file
+		+ Determine strategy for encoding
+	+ Extraction Stage
+		+ Extract tracks
+		+ Extract attachments
+		+ Post process any tracks
+		+ Post process any attachments
+	+ Transcoding Stage
+		+ Encode video stream of media file
+		+ Encode audio stream of media file
+	+ Multiplex Stage
+		+ Multiplex video and audio
+	+ Delivery Stage
+		+ Write bytes to file specified in request

@@ -18,10 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.nlogneg.transcodingService.transcoding.mkv.Attachment;
-import com.nlogneg.transcodingService.transcoding.mkv.MKVInfo;
-import com.nlogneg.transcodingService.transcoding.mkv.MKVToolNixRawMKVInfoDeserializerStrategy;
-import com.nlogneg.transcodingService.transcoding.mkv.RawMKVInfoDeserializationStrategy;
+import com.nlogneg.transcodingService.info.mkv.Attachment;
+import com.nlogneg.transcodingService.info.mkv.MKVInfo;
+import com.nlogneg.transcodingService.info.mkv.MKVInfoDeserializer;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 
@@ -54,8 +53,7 @@ public class TestDeserializationMKVInfo{
 		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
 
-		RawMKVInfoDeserializationStrategy<String> strat = new MKVToolNixRawMKVInfoDeserializerStrategy();
-		Optional<MKVInfo> info = strat.deserializeRawMKVInfo(resourceAsString);
+		Optional<MKVInfo> info = MKVInfoDeserializer.deserializeRawMKVInfo(null, resourceAsString);
 		
 		assertNotEquals(Optional.none(), info);
 		assertEquals(11, info.getValue().getAttachments().size());

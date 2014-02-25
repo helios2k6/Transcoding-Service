@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.transcoding.mkv.demultiplex;
+package com.nlogneg.transcodingService.demultiplex.mkv;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
-import com.nlogneg.transcodingService.transcoding.mkv.Attachment;
-import com.nlogneg.transcodingService.transcoding.mkv.MKVFileEncodingJob;
+import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.MimeTypeUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 
@@ -27,9 +26,9 @@ public class ExtractMKVSubtitleAttachmentsCommand extends ExtractMKVAttachmentsC
 	 * @see com.nlogneg.transcodingService.transcoding.mkv.demultiplex.ExtractMKVAttachmentsCommand#getAttachmentsToExtract(com.nlogneg.transcodingService.transcoding.mkv.MKVFileEncodingJob)
 	 */
 	@Override
-	protected List<Attachment> getAttachmentsToExtract(MKVFileEncodingJob job){
+	protected List<Attachment> getAttachmentsToExtract(DemultiplexMKVJob job){
 		List<Attachment> attachments = new ArrayList<>();
-		for(Attachment a : job.getMkvInfo().getAttachments()){
+		for(Attachment a : job.getAttachments()){
 			MimeType attachmentMime = a.getMimeType();
 			if(MimeTypeUtilities.areEqual(attachmentMime, getFontMimeType())){
 				attachments.add(a);

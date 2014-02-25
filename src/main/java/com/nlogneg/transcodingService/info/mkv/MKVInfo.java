@@ -1,5 +1,6 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.info.mkv;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -8,16 +9,26 @@ import java.util.List;
  *
  */
 public final class MKVInfo{
+	private final Path filePath;
 	private final List<Attachment> attachments;
 
 	/**
 	 * Creates an MKV Info object
-	 * @param attachments
+	 * @param filePath The file path to the MKV file
+	 * @param attachments The attachments
 	 */
-	public MKVInfo(List<Attachment> attachments) {
+	public MKVInfo(Path filePath, List<Attachment> attachments) {
+		this.filePath = filePath;
 		this.attachments = attachments;
 	}
 
+	/**
+	 * @return The file path of the MKV file
+	 */
+	public Path getFilePath(){
+		return filePath;
+	}
+	
 	/**
 	 * @return the attachments
 	 */
@@ -34,6 +45,8 @@ public final class MKVInfo{
 		int result = 1;
 		result = prime * result
 				+ ((attachments == null) ? 0 : attachments.hashCode());
+		result = prime * result
+				+ ((filePath == null) ? 0 : filePath.hashCode());
 		return result;
 	}
 
@@ -59,8 +72,13 @@ public final class MKVInfo{
 		} else if (!attachments.equals(other.attachments)) {
 			return false;
 		}
+		if (filePath == null) {
+			if (other.filePath != null) {
+				return false;
+			}
+		} else if (!filePath.equals(other.filePath)) {
+			return false;
+		}
 		return true;
 	}
-	
-	
 }

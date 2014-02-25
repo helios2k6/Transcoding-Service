@@ -1,5 +1,6 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.info.mkv;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,9 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  *
  */
-public class MKVToolNixRawMKVInfoDeserializerStrategy implements RawMKVInfoDeserializationStrategy<String>{
+public final class MKVInfoDeserializer{
 
-	private static final Logger Log = LogManager.getLogger(MKVToolNixRawMKVInfoDeserializerStrategy.class);
+	private static final Logger Log = LogManager.getLogger(MKVInfoDeserializer.class);
 
 	private static final String AttachedHeader = "+ ATTACHED";
 	private static final String FileNameLabel = "+ FILE NAME:";
@@ -30,7 +31,7 @@ public class MKVToolNixRawMKVInfoDeserializerStrategy implements RawMKVInfoDeser
 	 * Deserializes an MKVInfo from the given string, which is expected to be the 
 	 * actual raw input, not the name of a file
 	 */
-	public Optional<MKVInfo> deserializeRawMKVInfo(String rawMkvInfo){
+	public static Optional<MKVInfo> deserializeRawMKVInfo(Path inputFile, String rawMkvInfo){
 		String[] splitString = rawMkvInfo.split("\\|");
 
 		List<Attachment> attachments = new ArrayList<Attachment>();
@@ -80,7 +81,7 @@ public class MKVToolNixRawMKVInfoDeserializerStrategy implements RawMKVInfoDeser
 		}
 
 		if(attachments.size() > 0){
-			return Optional.make(new MKVInfo(attachments));
+			return Optional.make(new MKVInfo(inputFile, attachments));
 		}
 		
 		return Optional.none();

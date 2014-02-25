@@ -1,4 +1,6 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.info.mkv;
+
+import java.nio.file.Path;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,30 +18,27 @@ public class QueryMKVInfoCommand extends SimpleCommand{
 	
 	private static final Logger Log = LogManager.getLogger(QueryMKVInfoCommand.class);
 	
-	private final MKVInfoQueryStrategy<String, String> queryStrategy;
-	private final RawMKVInfoDeserializationStrategy<String> deserializationStrategy;
+	private final MKVInfoQueryStrategy<Path, String> queryStrategy;
 	
 	/**
 	 * The strategy to use for querying MKVInfo
 	 * @param queryStrategy The strategy
 	 */
-	public QueryMKVInfoCommand(MKVInfoQueryStrategy<String, String> queryStrategy, 
-			RawMKVInfoDeserializationStrategy<String> deserializationStrategy){
+	public QueryMKVInfoCommand(MKVInfoQueryStrategy<Path, String> queryStrategy){ 
 		this.queryStrategy = queryStrategy;
-		this.deserializationStrategy = deserializationStrategy;
 	}
 
 	public void execute(INotification notification){
-		String sourceFile = (String)notification.getBody();
-		Log.info("Querying MKVInfo for: " + sourceFile);
+		Path sourceFile = (Path)notification.getBody();
+		Log.info("Querying MKVInfo for: " + sourceFile.toString());
 		Optional<String> rawQuery = queryStrategy.queryForMKVInfo(sourceFile);
 
 		if(rawQuery.isSome()){
-			Optional<MKVInfo> info = deserializationStrategy.deserializeRawMKVInfo(rawQuery.getValue());
+			Optional<MKVInfo> info = MKVInfoDeserializer.deserializeRawMKVInfo(sourceFile, rawQuery.getValue());
 
 			if(info.isSome()){
 				MKVInfoProxy proxy = (MKVInfoProxy)getFacade().retrieveProxy(MKVInfoProxy.PROXY_NAME);
-				proxy.put(sourceFile, info.getValue());
+				proxy.put(info.getValue());
 			}
 		}
 	}

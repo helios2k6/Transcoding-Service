@@ -1,5 +1,6 @@
-package com.nlogneg.transcodingService.transcoding.mkv;
+package com.nlogneg.transcodingService.info.mkv;
 
+import java.nio.file.Path;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -26,19 +27,18 @@ public class MKVInfoProxy extends Proxy{
 	
 	/**
 	 * Put a mapping between a file and an MKVInfo
-	 * @param fileName The file name
 	 * @param info The MKV Info
 	 */
-	public void put(String fileName, MKVInfo info){
-		mkvInfoMap.putIfAbsent(fileName, info);
+	public void put(MKVInfo info){
+		mkvInfoMap.putIfAbsent(info.getFilePath().toAbsolutePath().toString(), info);
 	}
 	
 	/**
 	 * Get an MKVInfo from a file name
-	 * @param fileName The file name
+	 * @filePath The file path
 	 * @return An optional representing the MKVInfo
 	 */
-	public Optional<MKVInfo> get(String fileName){
-		return Optional.make(mkvInfoMap.get(fileName));
+	public Optional<MKVInfo> get(Path filePath){
+		return Optional.make(mkvInfoMap.get(filePath.toAbsolutePath().toString()));
 	}
 }
