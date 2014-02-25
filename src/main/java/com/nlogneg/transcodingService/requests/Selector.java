@@ -30,9 +30,14 @@ public final class Selector implements Serializable{
 	 * @param forceHeight
 	 * @param forceWidth
 	 */
-	public Selector(boolean force169AspectRatio, boolean forceUseAudioTrack,
-			boolean forceResolution, long audioTrack, long forceHeight,
-			long forceWidth) {
+	public Selector(
+			boolean force169AspectRatio, 
+			boolean forceUseAudioTrack,
+			boolean forceResolution, 
+			long audioTrack, 
+			long forceHeight,
+			long forceWidth){
+		
 		this.force169AspectRatio = force169AspectRatio;
 		this.forceUseAudioTrack = forceUseAudioTrack;
 		this.forceResolution = forceResolution;

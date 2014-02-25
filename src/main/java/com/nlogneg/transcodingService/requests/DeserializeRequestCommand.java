@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.serialization;
+package com.nlogneg.transcodingService.requests;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -6,9 +6,8 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.requests.Request;
-import com.nlogneg.transcodingService.requests.RequestProxy;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 

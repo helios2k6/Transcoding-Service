@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.serialization;
+package com.nlogneg.transcodingService.mediaInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,6 @@ import org.apache.log4j.Logger;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
-import com.nlogneg.transcodingService.mediaInfo.File;
-import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
-import com.nlogneg.transcodingService.mediaInfo.SerializationConstants;
-import com.nlogneg.transcodingService.mediaInfo.TextTrack;
-import com.nlogneg.transcodingService.mediaInfo.Track;
-import com.nlogneg.transcodingService.mediaInfo.VideoTrack;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;

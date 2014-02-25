@@ -1,7 +1,8 @@
-package com.nlogneg.transcodingService.serialization;
+package com.nlogneg.transcodingService.utilities;
 
 import com.nlogneg.transcodingService.mediaInfo.AudioTrack;
 import com.nlogneg.transcodingService.mediaInfo.File;
+import com.nlogneg.transcodingService.mediaInfo.FileSectionConverter;
 import com.nlogneg.transcodingService.mediaInfo.GeneralTrack;
 import com.nlogneg.transcodingService.mediaInfo.MediaInfo;
 import com.nlogneg.transcodingService.mediaInfo.MediaTrack;

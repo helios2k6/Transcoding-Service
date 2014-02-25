@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.serialization;
+package com.nlogneg.transcodingService.requests;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;

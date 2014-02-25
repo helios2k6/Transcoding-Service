@@ -18,8 +18,8 @@ import com.nlogneg.transcodingService.mediaInfo.TextTrack;
 import com.nlogneg.transcodingService.mediaInfo.Track;
 import com.nlogneg.transcodingService.mediaInfo.TrackVisitor;
 import com.nlogneg.transcodingService.mediaInfo.VideoTrack;
-import com.nlogneg.transcodingService.serialization.SerializerFactory;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)

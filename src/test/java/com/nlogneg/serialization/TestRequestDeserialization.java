@@ -22,8 +22,8 @@ import com.nlogneg.transcodingService.requests.RateControl.Type;
 import com.nlogneg.transcodingService.requests.Request;
 import com.nlogneg.transcodingService.requests.SampleAspectRatio;
 import com.nlogneg.transcodingService.requests.Selector;
-import com.nlogneg.transcodingService.serialization.SerializerFactory;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)

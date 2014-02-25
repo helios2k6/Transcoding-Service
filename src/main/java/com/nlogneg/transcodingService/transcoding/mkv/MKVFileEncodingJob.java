@@ -12,6 +12,7 @@ import com.nlogneg.transcodingService.transcoding.MediaFileEncodingJob;
  */
 public final class MKVFileEncodingJob extends MediaFileEncodingJob{
 	private final MKVInfo mkvInfo;
+	private final boolean needsAudioTranscode;
 
 	/**
 	 * @param id
@@ -27,11 +28,20 @@ public final class MKVFileEncodingJob extends MediaFileEncodingJob{
 			Request request,
 			MediaInfo mediaInfo,
 			Selector selector,
-			MKVInfo mkvInfo){
+			MKVInfo mkvInfo,
+			boolean needsAudioTranscode){
 		super(id, file, request, mediaInfo, selector);
 		this.mkvInfo = mkvInfo;
+		this.needsAudioTranscode = needsAudioTranscode;
 	}
 
+	/**
+	 * @return Whether this needs audio transcoding
+	 */
+	public boolean getNeedsAudioTranscode(){
+		return needsAudioTranscode;
+	}
+	
 	/**
 	 * @return the mkvInfo
 	 */

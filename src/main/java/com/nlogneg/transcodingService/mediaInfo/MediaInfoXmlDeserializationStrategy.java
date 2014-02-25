@@ -3,8 +3,8 @@ package com.nlogneg.transcodingService.mediaInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.nlogneg.transcodingService.serialization.SerializerFactory;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
 /**
