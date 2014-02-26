@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv.attachments;
+package com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
