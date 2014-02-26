@@ -20,9 +20,26 @@ public abstract class EncodeMediaFileCommand extends SimpleCommand{
 		
 	}
 	
+	/**
+	 * Get the decoder arguments for the FFMPEG Process 
+	 * @param job
+	 * @return
+	 */
 	protected abstract List<String> getDecoderArguments(EncodingJob job);
 	
+	/**
+	 * Get the encoder arguments for the X264 Process
+	 * @param job
+	 * @return
+	 */
 	protected abstract List<String> getEncoderArguments(EncodingJob job);
 	
+	/**
+	 * Get the mutltiplexing arguments for the FFMpeg Process
+	 * @param job
+	 * @return
+	 */
 	protected abstract List<String> getMultiplexingArguments(EncodingJob job);
+	
+	
 }
