@@ -12,6 +12,11 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 
+/**
+ * Install fonts on Linux
+ * @author anjohnson
+ *
+ */
 public final class InstallLinuxFontsCommand extends InstallFontsCommand{
 	private static final Logger Log = LogManager.getLogger(InstallLinuxFontsCommand.class);
 	
