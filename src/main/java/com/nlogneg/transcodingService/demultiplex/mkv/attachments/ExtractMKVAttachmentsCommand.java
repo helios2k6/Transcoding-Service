@@ -10,7 +10,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
-import com.nlogneg.transcodingService.utilities.SystemUtilities;
+import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * Represents the base class for extracting MKV attachments 

@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
-import com.nlogneg.transcodingService.utilities.SystemUtilities;
+import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * Gathers raw MKVInfo from the external process "mkvinfo" which is a part of the

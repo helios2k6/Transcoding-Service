@@ -14,7 +14,7 @@ import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoProxy;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
-import com.nlogneg.transcodingService.utilities.SystemUtilities;
+import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * Represents demultiplexing an MKV Media Track

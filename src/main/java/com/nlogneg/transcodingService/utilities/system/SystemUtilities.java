@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.utilities;
+package com.nlogneg.transcodingService.utilities.system;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;

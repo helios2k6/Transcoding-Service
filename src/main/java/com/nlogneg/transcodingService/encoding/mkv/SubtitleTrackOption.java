@@ -1,9 +1,9 @@
 package com.nlogneg.transcodingService.encoding.mkv;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 import com.nlogneg.transcodingService.encoding.EncodingAction;
-import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
@@ -12,23 +12,22 @@ import com.nlogneg.transcodingService.utilities.Optional;
  *
  */
 public final class SubtitleTrackOption{
-	private final Optional<TextTrack> textTrack;
+	private final Optional<Path> textTrackFilePath;
 	private final Set<EncodingAction> encodingActions;
-	
 	/**
-	 * @param textTrack
+	 * @param textTrackFilePath
 	 * @param encodingActions
 	 */
-	public SubtitleTrackOption(Optional<TextTrack> textTrack,
+	public SubtitleTrackOption(Optional<Path> textTrackFilePath,
 			Set<EncodingAction> encodingActions) {
-		this.textTrack = textTrack;
+		this.textTrackFilePath = textTrackFilePath;
 		this.encodingActions = encodingActions;
 	}
 	/**
-	 * @return the textTrack
+	 * @return the textTrackFilePath
 	 */
-	public Optional<TextTrack> getTextTrack() {
-		return textTrack;
+	public Optional<Path> getTextTrackFilePath() {
+		return textTrackFilePath;
 	}
 	/**
 	 * @return the encodingActions

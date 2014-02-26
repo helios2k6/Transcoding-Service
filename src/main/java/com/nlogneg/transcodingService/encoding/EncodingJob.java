@@ -77,4 +77,10 @@ public abstract class EncodingJob{
 		}
 		return true;
 	}
+	
+	/**
+	 * Accepts a visitor
+	 * @param visitor
+	 */
+	public abstract void accept(EncodingJobVisitor visitor);
 }

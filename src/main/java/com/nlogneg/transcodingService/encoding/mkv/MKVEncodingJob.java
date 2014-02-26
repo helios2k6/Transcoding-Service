@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.encoding.mkv;
 
 import com.nlogneg.transcodingService.encoding.EncodingJob;
+import com.nlogneg.transcodingService.encoding.EncodingJobVisitor;
 import com.nlogneg.transcodingService.info.mkv.MKVInfo;
 import com.nlogneg.transcodingService.request.incoming.Request;
 
@@ -14,15 +15,19 @@ public final class MKVEncodingJob extends EncodingJob{
 	private final MKVInfo mkvInfo;
 	private final AudioTrackOption audioTrackOption;
 	private final SubtitleTrackOption subtitleTrackOption;
+	
 	/**
 	 * @param request
 	 * @param mkvInfo
 	 * @param audioTrackOption
 	 * @param subtitleTrackOption
 	 */
-	public MKVEncodingJob(Request request, MKVInfo mkvInfo,
+	public MKVEncodingJob(
+			Request request, 
+			MKVInfo mkvInfo,
 			AudioTrackOption audioTrackOption,
-			SubtitleTrackOption subtitleTrackOption) {
+			SubtitleTrackOption subtitleTrackOption){
+		
 		super(request);
 		this.mkvInfo = mkvInfo;
 		this.audioTrackOption = audioTrackOption;
@@ -32,20 +37,24 @@ public final class MKVEncodingJob extends EncodingJob{
 	/**
 	 * @return the mkvInfo
 	 */
-	public MKVInfo getMkvInfo() {
+	public MKVInfo getMkvInfo(){
 		return mkvInfo;
 	}
 	/**
 	 * @return the audioTrackOption
 	 */
-	public AudioTrackOption getAudioTrackOption() {
+	public AudioTrackOption getAudioTrackOption(){
 		return audioTrackOption;
 	}
 	/**
 	 * @return the subtitleTrackOption
 	 */
-	public SubtitleTrackOption getSubtitleTrackOption() {
+	public SubtitleTrackOption getSubtitleTrackOption(){
 		return subtitleTrackOption;
 	}
-	
+
+	@Override
+	public void accept(EncodingJobVisitor visitor){
+		visitor.visit(this);
+	}
 }

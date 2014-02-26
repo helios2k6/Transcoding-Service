@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
-import com.nlogneg.transcodingService.utilities.SystemUtilities;
+import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 public class MediaInfoProcessQueryStrategy implements MediaInfoQueryStrategy<Path, String>{
 	private static final Logger Log = LogManager.getLogger(MediaInfoProcessQueryStrategy.class);

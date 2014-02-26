@@ -1,9 +1,9 @@
 package com.nlogneg.transcodingService.encoding.mkv;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 import com.nlogneg.transcodingService.encoding.EncodingAction;
-import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
@@ -12,27 +12,25 @@ import com.nlogneg.transcodingService.utilities.Optional;
  *
  */
 public final class AudioTrackOption{
-	private final Optional<AudioTrack> audioTrack;
+	private final Optional<Path> audioTrackFilePath;
 	private final Set<EncodingAction> encodingAction;
 	
 	/**
-	 * @param audioTrack
+	 * @param audioTrackFilePath
 	 * @param encodingAction
 	 */
-	public AudioTrackOption(
-			Optional<AudioTrack> audioTrack,
-			Set<EncodingAction> encodingAction){
-		this.audioTrack = audioTrack;
+	public AudioTrackOption(Optional<Path> audioTrackFilePath,
+			Set<EncodingAction> encodingAction) {
+		this.audioTrackFilePath = audioTrackFilePath;
 		this.encodingAction = encodingAction;
 	}
-
+	
 	/**
-	 * @return the audioTrack
+	 * @return the audioTrackFilePath
 	 */
-	public Optional<AudioTrack> getAudioTrack() {
-		return audioTrack;
+	public Optional<Path> getAudioTrackFilePath() {
+		return audioTrackFilePath;
 	}
-
 	/**
 	 * @return the encodingAction
 	 */

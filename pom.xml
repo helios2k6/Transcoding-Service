@@ -18,6 +18,7 @@
 		<puremvc.version>1.0.7</puremvc.version>
 		<xstream.version>1.4.5</xstream.version>
 		<cli.version>1.2</cli.version>
+		<io.version>2.4</io.version>
 	</properties>
 
 	<dependencies>
@@ -56,29 +57,12 @@
 			<version>${junit.version}</version>
 		</dependency>
 
-		<!-- Spring Framework -->
-		<!--
+		<!-- Commons IO -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${io.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		-->
 	</dependencies>
 	<build>
 		<pluginManagement>
