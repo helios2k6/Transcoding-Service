@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv;
+package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.info.mediainfo.GeneralTrack;

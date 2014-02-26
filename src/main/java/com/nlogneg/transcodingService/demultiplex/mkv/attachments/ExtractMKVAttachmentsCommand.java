@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv;
+package com.nlogneg.transcodingService.demultiplex.mkv.attachments;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
+import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.SystemUtilities;
 

@@ -16,6 +16,7 @@ import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.utilities.ListUtilities;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 
 /**
  * Configures this server application 
@@ -45,7 +46,7 @@ public class ConfigureServerCommand extends SimpleCommand{
 			serverConfigProxy.setConfigurationFile(file);
 		}catch(IOException e){
 			fail("Could not read config file.", e);
-		}catch(Exception ex){
+		}catch(XStreamException ex){
 			fail("Could not deserialize configuration file.", ex);
 		}
 	}

@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv;
+package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,6 +9,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
+import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoProxy;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
@@ -44,9 +45,17 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 		StringBuilder argument = new StringBuilder();
 		argument.append(track.getId()).append(":").append(outputName);
 		
-		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvExtractProcessName(), TracksArgument, argument.toString());
+		runExternalProcess(mkvJob, track, outputName, argument);
+	}
+
+	private void runExternalProcess(
+			DemultiplexMKVJob mkvJob, 
+			MediaTrack track,
+			String outputName, 
+			StringBuilder argument){
 		
 		try{
+			ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvExtractProcessName(), TracksArgument, argument.toString());
 			Process process = builder.start();
 			process.waitFor();
 			
