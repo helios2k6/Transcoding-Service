@@ -22,7 +22,9 @@ public final class X264EncodingArgumentBuilder{
 	/**
 	 * @param encodingOptions
 	 */
-	public X264EncodingArgumentBuilder(String outputFile, List<String> encodingOptions){
+	public X264EncodingArgumentBuilder(
+			String outputFile, 
+			List<String> encodingOptions){
 		this.encodingOptions = encodingOptions;
 		this.outputFile = outputFile;
 	}

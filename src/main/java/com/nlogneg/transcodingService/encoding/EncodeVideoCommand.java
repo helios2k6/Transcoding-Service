@@ -2,6 +2,8 @@ package com.nlogneg.transcodingService.encoding;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.LogManager;
@@ -10,16 +12,18 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
 
 /**
  * Encodes a media file
  * @author anjohnson
  *
  */
-public abstract class EncodeMediaFileCommand extends SimpleCommand{
+public abstract class EncodeVideoCommand extends SimpleCommand{
 	private static final AtomicInteger counter = new AtomicInteger();
 	
-	private static final Logger Log = LogManager.getLogger(EncodeMediaFileCommand.class);
+	private static final Logger Log = LogManager.getLogger(EncodeVideoCommand.class);
 	
 	public final void execute(INotification notification){
 		EncodingJob job = (EncodingJob)notification.getBody();
@@ -45,6 +49,13 @@ public abstract class EncodeMediaFileCommand extends SimpleCommand{
 			tryCloseProcess(decoder);
 			return;
 		}
+		
+		//Hook up pipe between the two
+		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
+		InterProcessPipe pipe = new InterProcessPipe(decoder.getValue(), encoder.getValue(), executorProxy.getService());
+		
+		//Run pipe synchronously
+		pipe.run();
 	}
 	
 	private static void tryCloseProcess(Optional<Process> process){

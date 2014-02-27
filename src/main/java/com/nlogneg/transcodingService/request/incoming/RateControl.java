@@ -1,6 +1,8 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents the rate control setting for Encoding settings
@@ -8,6 +10,10 @@ import java.io.Serializable;
  *
  */
 public class RateControl implements Serializable{
+	
+	private static final String BitRateArgument = "--bitrate";
+	private static final String ConstantBitRateArgument = "--crf";
+	private static final String QPArgument = "--qp";
 	
 	/**
 	 * 
@@ -93,5 +99,23 @@ public class RateControl implements Serializable{
 		return true;
 	}
 	
-	
+	public static List<String> convertToArguments(RateControl control){
+		List<String> arguments = new LinkedList<String>();
+		
+		switch(control.getType()){
+		case BitRate:
+			arguments.add(BitRateArgument);
+			break;
+		case ConstantRateFactor:
+			arguments.add(ConstantBitRateArgument);
+			break;
+		case QuantizationParameter:
+			arguments.add(QPArgument);
+			arguments.add(Integer.toString((int)control.getSetting()));
+			return arguments;
+		}
+		
+		arguments.add(Double.toString(control.getSetting()));
+		return arguments;
+	}
 }

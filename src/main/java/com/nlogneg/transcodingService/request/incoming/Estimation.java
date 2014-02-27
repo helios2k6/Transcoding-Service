@@ -1,6 +1,8 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents the Estimation settings to use for encoding
@@ -8,6 +10,17 @@ import java.io.Serializable;
  *
  */
 public final class Estimation implements Serializable{
+	
+	private static final String MotionEstimationArgument = "--me";
+	private static final String TrellisArgument = "--trellis";
+	private static final String SubpixelMotionEstimation = "--subme";
+	
+	private static final String DiamondArgument = "dia";
+	private static final String HexagonArgument = "hex";
+	private static final String UnevenMultiHexArgument = "umh";
+	private static final String ExhaustiveArgument = "exa";
+	private static final String TransformExhaustive = "tesa";
+	
 	/**
 	 * 
 	 */
@@ -107,6 +120,35 @@ public final class Estimation implements Serializable{
 		}
 		return true;
 	}
-	
-	
+
+	public static List<String> convertToArguments(Estimation estimation){
+		List<String> arguments = new LinkedList<String>();
+		arguments.add(MotionEstimationArgument);
+
+		switch(estimation.getMotionEstimation()){
+		case Diamond:
+			arguments.add(DiamondArgument);
+			break;
+		case Exhaustive:
+			arguments.add(ExhaustiveArgument);
+			break;
+		case Hexagon:
+			arguments.add(HexagonArgument);
+			break;
+		case TransformExhaustive:
+			arguments.add(TransformExhaustive);
+			break;
+		case UnevenMultiHexagon:
+			arguments.add(UnevenMultiHexArgument);
+			break;
+		}
+		
+		arguments.add(TrellisArgument);
+		arguments.add(Integer.toString(estimation.getTrellis()));
+		
+		arguments.add(SubpixelMotionEstimation);
+		arguments.add(Integer.toString(estimation.getSubpixelMotionEstimation()));
+		
+		return arguments;
+	}
 }

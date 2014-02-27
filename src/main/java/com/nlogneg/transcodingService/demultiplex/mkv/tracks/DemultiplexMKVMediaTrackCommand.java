@@ -36,39 +36,46 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 			Log.error("Could not get media info for file: " + mkvJob);
 			return;
 		}
-		
+
 		MediaTrack track = getTrackToDemultiplex(mediaInfo.getValue());
 		String outputName = getOutputFileName(mkvJob.getMediaFile(), track);
-		
+
 		Log.info("Demultiplexing track " + track.getId() + "for file: " + mkvJob);
-		
+
 		StringBuilder argument = new StringBuilder();
 		argument.append(track.getId()).append(":").append(outputName);
-		
-		runExternalProcess(mkvJob, track, outputName, argument);
+
+		boolean processResult = runExternalProcess(mkvJob, track, outputName, argument);
+
+		if(processResult){
+			Facade facade = getFacade();
+			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
+			proxy.put(mkvJob.getMediaFile(), track, outputName);
+		}
 	}
 
-	private void runExternalProcess(
+	private boolean runExternalProcess(
 			DemultiplexMKVJob mkvJob, 
 			MediaTrack track,
 			String outputName, 
 			StringBuilder argument){
-		
-		try{
-			ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvExtractProcessName(), TracksArgument, argument.toString());
-			Process process = builder.start();
-			process.waitFor();
-			
-			Facade facade = getFacade();
-			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
-			proxy.put(mkvJob.getMediaFile(), track, outputName);
-		}catch (IOException e){
-			Log.error("Could not start process for demultiplexing", e);
-		}catch (InterruptedException e){
-			Log.error("Thread interrupted from waiting for process to end.");
+
+		while(true){
+			try{
+				ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvExtractProcessName(), TracksArgument, argument.toString());
+				Process process = builder.start();
+				process.waitFor();
+
+				return true;
+			}catch (IOException e){
+				Log.error("Could not start process for demultiplexing", e);
+				return false;
+			}catch (InterruptedException e){
+				Log.error("Thread interrupted from waiting for process to end.");
+			}
 		}
 	}
-	
+
 	/**
 	 * Get the track to demultiplex
 	 * @param mediaInfo The media info

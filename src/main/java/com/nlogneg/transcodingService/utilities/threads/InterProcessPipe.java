@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.utilities.threads;
 
-import java.nio.channels.CompletionHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -27,7 +26,6 @@ public final class InterProcessPipe implements Runnable{
 	private final ProcessReader reader;
 	private final ProcessWriter writer;
 	private final ExecutorService service;
-	private final CompletionHandler<Void, Void> completionHandler;
 	
 	private volatile boolean isCancelled = false;
 	private volatile boolean isFinished = false;
@@ -39,12 +37,11 @@ public final class InterProcessPipe implements Runnable{
 	 * @param service The executor service
 	 * @param completionHandler The callback
 	 */
-	public InterProcessPipe(Process source, Process sink, ExecutorService service, CompletionHandler<Void, Void> completionHandler){
+	public InterProcessPipe(Process source, Process sink, ExecutorService service){
 		this.id = IdGenerator.incrementAndGet();
 		this.reader = new ProcessReader(source, source.getInputStream(), service, queue);
 		this.writer = new ProcessWriter(sink, sink.getOutputStream(), service, queue);
 		this.service = service;
-		this.completionHandler = completionHandler;
 	}
 	
 	/**
@@ -76,15 +73,10 @@ public final class InterProcessPipe implements Runnable{
 				Log.error("Interprocess Pipe interrupted.", e);
 			}
 		}
-		
+
 		if(isCancelled){
 			reader.cancel();
 			writer.cancel();
-			completionHandler.failed(null, null);
-		}
-		
-		if(isFinished){
-			completionHandler.completed(null, null);
 		}
 	}
 	

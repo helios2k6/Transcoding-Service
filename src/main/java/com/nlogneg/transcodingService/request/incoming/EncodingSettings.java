@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Represents the Encoding Settings to use 
@@ -174,5 +175,10 @@ public final class EncodingSettings implements Serializable{
 		return true;
 	}
 	
-	
+	public static List<String> convertToArguments(EncodingSettings settings){
+		List<String> rateControlArguments = RateControl.convertToArguments(settings.getRateControl());
+		
+		
+		return rateControlArguments;
+	}
 }

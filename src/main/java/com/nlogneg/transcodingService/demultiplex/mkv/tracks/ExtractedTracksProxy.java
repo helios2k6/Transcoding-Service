@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +38,24 @@ public class ExtractedTracksProxy extends Proxy{
 		}
 		
 		existingMappings.put(track, fileName);
+	}
+	
+	/**
+	 * Get the extracted tracks for a particular media file
+	 * @param mediaFile The media file
+	 * @return The extracted track map
+	 */
+	public synchronized Map<Track, Path> getExtractedTracks(Path mediaFile){
+		Map<Track, String> resultMap = new HashMap<Track, String>();
+		resultMap = extractedTrackMap.get(mediaFile.toAbsolutePath().toString());
+		
+		Map<Track, Path> finalResultMap = new HashMap<Track, Path>();
+		for(Track t : resultMap.keySet()){
+			String result = resultMap.get(t);
+			finalResultMap.put(t, Paths.get(result).toAbsolutePath());
+		}
+		
+		return finalResultMap;
 	}
 	
 	/**
