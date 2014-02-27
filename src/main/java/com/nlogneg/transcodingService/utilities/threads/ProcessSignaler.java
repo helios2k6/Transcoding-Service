@@ -16,7 +16,7 @@ public final class ProcessSignaler implements Runnable{
 
 	private final Lock lock = new ReentrantLock();
 	private volatile boolean isProcessFinished = false;
-	private volatile boolean cancelJob = false;
+	private volatile boolean isCancelled = false;
 	
 	private final Process process;
 	private Thread runningThread;
@@ -37,17 +37,17 @@ public final class ProcessSignaler implements Runnable{
 	 * @return 
 	 */
 	public boolean isCancelled(){
-		return cancelJob;
+		return isCancelled;
 	}
 	
 	/**
 	 * Cancels this Process Signaler
 	 * @throws InterruptedException
 	 */
-	public void cancel() throws InterruptedException{
-		lock.lockInterruptibly();
+	public void cancel(){
+		lock.lock();
 		
-		cancelJob = true;
+		isCancelled = true;
 		if(runningThread != null){
 			runningThread.interrupt();
 		}
@@ -57,26 +57,21 @@ public final class ProcessSignaler implements Runnable{
 
 	@Override
 	public void run(){
-		while(isProcessFinished == false){
+		setCurrentThread();
+		
+		while(isProcessFinished == false && isCancelled == false){
 			try{
-				setCurrentThreadAndCheckCancelFlag();
 				process.waitFor();
 				isProcessFinished = true;
 			}catch (InterruptedException e){
 				Log.error("Process Signaller interrupted", e);
-				if(cancelJob){
-					return;
-				}
 			}
 		}
 	}
 
-	private void setCurrentThreadAndCheckCancelFlag() throws InterruptedException{
-		lock.lockInterruptibly();
+	private void setCurrentThread(){
+		lock.lock();
 		runningThread = Thread.currentThread();
-		if(cancelJob){
-			throw new InterruptedException("Process Signaller canceled by Process Reader parent.");
-		}
 		lock.unlock();
 	}
 }

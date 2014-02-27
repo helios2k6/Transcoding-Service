@@ -25,6 +25,7 @@ public final class ProcessReader implements Runnable{
 	private final BlockingQueue<byte[]> queue;
 	
 	private volatile boolean isCancelled = false;
+	private volatile boolean isFinished = false;
 
 	/**
 	 * Creates a Process Reader
@@ -49,46 +50,77 @@ public final class ProcessReader implements Runnable{
 		ProcessSignaler signaler = new ProcessSignaler(process);
 		service.submit(signaler);
 
-		while(signaler.isProcessFinished() == false 
-				&& signaler.isCancelled() == false
-				&& isCancelled == false){
-			try{
-				if(stream.available() > 0){
-					readBytes();
-				}else{
-					//Wait for a while
-					Thread.sleep(500);
+		while(isCancelled == false && isFinished == false){
+			//Check to see if the external process is finished
+			if(signaler.isProcessFinished()){
+				isFinished = true;
+			}else{
+				try {
+					if(stream.available() > 0){
+						tryReadBytes();
+					}else{
+						Thread.sleep(50);
+					}
+				}catch (IOException e){
+					isCancelled = true;
+					Log.error("IO Error occurred while reading from process.", e);
+				}catch (InterruptedException e){
+					Log.error("This thread was interrupted.", e);
 				}
-				checkInterruptedStatus(signaler);
-			}catch (IOException e){
-				Log.error("Could not read from stream.", e);
-				return;
-			}catch (InterruptedException e){
-				Log.error("Interrupted Process Reader.", e);
 			}
 		}
+		
+		//Check cancellation status
+		checkCancelStatus(signaler);
 	}
 
+	/**
+	 * Returns whether or not this Process Reader finished reading from 
+	 * the process successfully. A cancelled Process Reader is not considered
+	 * finished
+	 * @return
+	 */
+	public boolean isFinished(){
+		return isFinished;
+	}
+	
+	/**
+	 * @return the isCancelled
+	 */
+	public boolean isCancelled() {
+		return isCancelled;
+	}
+
+	/**
+	 * @param isCancelled the isCancelled to set
+	 */
+	public void setCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+
+	/**
+	 * Cancels this Process Reader
+	 */
 	public void cancel(){
 		isCancelled = true;
 	}
-	
-	private void readBytes() throws IOException, InterruptedException {
-		int amountRead = stream.read(buffer);
-		
-		byte[] copy = new byte[amountRead];
-		for(int i = 0; i < amountRead; i++){
-			copy[i] = buffer[i];
+
+	private void tryReadBytes() throws IOException{
+		if(stream.available() > 0){
+			int amountRead = stream.read(buffer);
+
+			byte[] copy = new byte[amountRead];
+			for(int i = 0; i < amountRead; i++){
+				copy[i] = buffer[i];
+			}
+
+			queue.add(copy);
 		}
-		
-		queue.add(copy);
 	}
 
-	private void checkInterruptedStatus(ProcessSignaler signaler) throws InterruptedException {
-		if(Thread.interrupted()){
+	private void checkCancelStatus(ProcessSignaler signaler){
+		if(isCancelled){
 			signaler.cancel();
-			Thread.currentThread().interrupt();
-			throw new InterruptedException("Interrupted Process Signaller while sleeping.");
 		}
 	}
 }
