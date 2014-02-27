@@ -2,6 +2,7 @@ package com.nlogneg.transcodingService.encoding;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.request.incoming.Request;
 
 /**
@@ -14,14 +15,17 @@ public abstract class EncodingJob{
 	
 	private final long id;
 	private final Request request;
+	private final MediaInfo mediaInfo;
 	
 	/**
 	 * Constructs a new encoding job
-	 * @param request
+	 * @param request The request
+	 * @param mediaInfo The media info
 	 */
-	protected EncodingJob(Request request){
+	protected EncodingJob(Request request, MediaInfo mediaInfo){
 		this.id = IDSeed.incrementAndGet();
 		this.request = request;
+		this.mediaInfo = mediaInfo;
 	}
 
 	/**
@@ -36,6 +40,13 @@ public abstract class EncodingJob{
 	 */
 	public Request getRequest() {
 		return request;
+	}
+
+	/**
+	 * @return the mediaInfo
+	 */
+	public MediaInfo getMediaInfo() {
+		return mediaInfo;
 	}
 
 	/* (non-Javadoc)

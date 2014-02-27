@@ -1,19 +1,12 @@
-﻿#ffmpeg -an -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv"  -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 10 "temptest.y4m"
-
-ffmpeg -an -ss 600 -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv"  -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 480 "tempest.y4m"
-
-ffmpeg -an -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv" -filter_complex "[0:v][0:s]overlay[v]" -map "[v]"  -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 480 "tempest.y4m"
-
-ffmpeg -codec:s ass -an -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv" -filter_complex "[0:v][0:s]overlay[v]" -map "[v]"  -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 720 "tempest.y4m"
-
-ffmpeg -an -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv" -vf "ass=subtitle.ass" -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 720 "tempest.y4m"
-
---FINAL COMMAND--
+﻿--FINAL COMMAND--
 	+ Must extract subtitle file
 	+ Must install fonts
 	+ call "sudo fc-cache -f -v" after installing fonts to ~/.fonts
 	
-ffmpeg -an -i "[Commie] Zetsuen no Tempest - 12 [2B4E6C62].mkv" -vf "ass=subtitle.ass" -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p -frames 720 - | x264 --input-res 1280x720 --fps 24000/1001 --demuxer y4m --output "tempest.264" -
+ffmpeg -an -i <INPUT> -vf "ass=<PATH TO SUBTITLE FILE>" -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p - | x264 --input-res 1280x720 --fps 24000/1001 --demuxer y4m --output <OUTPUT FILE> -
+
+Process Breakdown:
+ffmpeg [any decoding options] -an -i <INPUT> [any filter options] -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p [any output options] - | x264 --input-res <INPUT RES> --fps <INPUT FPS> --demuxer y4m [any encoding options] --output <OUTPUT FILE> - 
 
 FFMPEG Multiplexing
-ffmpeg -i <VIDEO_INPUT> -i <AUDIO_INPUT> -map 0:0 -c:v copy -map 1:1 -c:a copy <OUTPUT>
+ffmpeg -i <VIDEO_INPUT> -i <AUDIO_INPUT> -map 0:0 -c:v copy -map 1:1 -c:a copy [any multiplexing options] <OUTPUT>

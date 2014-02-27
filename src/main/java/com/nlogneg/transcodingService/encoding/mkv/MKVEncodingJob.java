@@ -2,6 +2,7 @@ package com.nlogneg.transcodingService.encoding.mkv;
 
 import com.nlogneg.transcodingService.encoding.EncodingJob;
 import com.nlogneg.transcodingService.encoding.EncodingJobVisitor;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mkv.MKVInfo;
 import com.nlogneg.transcodingService.request.incoming.Request;
 
@@ -18,17 +19,15 @@ public final class MKVEncodingJob extends EncodingJob{
 	
 	/**
 	 * @param request
+	 * @param mediaInfo
 	 * @param mkvInfo
 	 * @param audioTrackOption
 	 * @param subtitleTrackOption
 	 */
-	public MKVEncodingJob(
-			Request request, 
-			MKVInfo mkvInfo,
-			AudioTrackOption audioTrackOption,
-			SubtitleTrackOption subtitleTrackOption){
-		
-		super(request);
+	public MKVEncodingJob(Request request, MediaInfo mediaInfo,
+			MKVInfo mkvInfo, AudioTrackOption audioTrackOption,
+			SubtitleTrackOption subtitleTrackOption) {
+		super(request, mediaInfo);
 		this.mkvInfo = mkvInfo;
 		this.audioTrackOption = audioTrackOption;
 		this.subtitleTrackOption = subtitleTrackOption;
