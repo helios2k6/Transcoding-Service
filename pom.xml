@@ -19,6 +19,7 @@
 		<xstream.version>1.4.5</xstream.version>
 		<cli.version>1.2</cli.version>
 		<io.version>2.4</io.version>
+		<collections.version>4.0</collections.version>
 	</properties>
 
 	<dependencies>
@@ -62,6 +63,16 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${io.version}</version>
+		</dependency>
+		
+		<!-- Commons Collections -->
+		<!-- LOCAL DEPENDENCY CAUSE MAVEN DOESN'T HAVE THE SHIT YET -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${collections.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/thirdparty/commons-collections4-4.0/commons-collections4-4.0.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<build>

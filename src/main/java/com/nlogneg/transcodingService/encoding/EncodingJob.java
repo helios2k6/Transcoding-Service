@@ -10,22 +10,29 @@ import com.nlogneg.transcodingService.request.incoming.Request;
  * @author anjohnson
  *
  */
-public abstract class EncodingJob{
+public final class EncodingJob{
 	private static final AtomicLong IDSeed = new AtomicLong(0);
 	
 	private final long id;
 	private final Request request;
 	private final MediaInfo mediaInfo;
-	
+	private final AudioTrackOption audioTrackOption;
+	private final SubtitleTrackOption subtitleTrackOption;
+
 	/**
-	 * Constructs a new encoding job
-	 * @param request The request
-	 * @param mediaInfo The media info
+	 * @param request
+	 * @param mediaInfo
+	 * @param audioTrackOption
+	 * @param subtitleTrackOption
 	 */
-	protected EncodingJob(Request request, MediaInfo mediaInfo){
+	public EncodingJob(Request request, MediaInfo mediaInfo,
+			AudioTrackOption audioTrackOption,
+			SubtitleTrackOption subtitleTrackOption) {
 		this.id = IDSeed.incrementAndGet();
 		this.request = request;
 		this.mediaInfo = mediaInfo;
+		this.audioTrackOption = audioTrackOption;
+		this.subtitleTrackOption = subtitleTrackOption;
 	}
 
 	/**
@@ -49,49 +56,17 @@ public abstract class EncodingJob{
 		return mediaInfo;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * @return the audioTrackOption
 	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
-		return result;
+	public AudioTrackOption getAudioTrackOption() {
+		return audioTrackOption;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		EncodingJob other = (EncodingJob) obj;
-		if (id != other.id) {
-			return false;
-		}
-		if (request == null) {
-			if (other.request != null) {
-				return false;
-			}
-		} else if (!request.equals(other.request)) {
-			return false;
-		}
-		return true;
-	}
-	
 	/**
-	 * Accepts a visitor
-	 * @param visitor
+	 * @return the subtitleTrackOption
 	 */
-	public abstract void accept(EncodingJobVisitor visitor);
+	public SubtitleTrackOption getSubtitleTrackOption() {
+		return subtitleTrackOption;
+	}
 }

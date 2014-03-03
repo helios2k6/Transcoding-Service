@@ -1,6 +1,8 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the H.264 level parameter
@@ -77,5 +79,20 @@ public final class Level implements Serializable{
 		return true;
 	}
 	
-	
+	/**
+	 * Converts the Level to arguments for x264
+	 * @param level
+	 * @return
+	 */
+	public static List<String> convertToArguments(Level level){
+		StringBuilder builder = new StringBuilder();
+		builder.append(level.getMajor()).append(".").append(level.getMinor());
+		
+		List<String> arguments = new ArrayList<String>();
+		
+		arguments.add("--level");
+		arguments.add(builder.toString());
+		
+		return arguments;
+	}
 }

@@ -1,9 +1,11 @@
 package com.nlogneg.transcodingService.encoding;
 
 import java.io.IOException;
+import java.nio.channels.CompletionHandler;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.LogManager;
@@ -11,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
+import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
@@ -20,11 +23,24 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
  * @author anjohnson
  *
  */
-public abstract class EncodeVideoCommand extends SimpleCommand{
+public final class EncodeVideoCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
 	private static final AtomicInteger counter = new AtomicInteger();
-	
 	private static final Logger Log = LogManager.getLogger(EncodeVideoCommand.class);
 	
+	private final DecoderArgumentBuilder decoderBuilder;
+	private final EncoderArgumentBuilder encoderBuilder;
+	
+	/**
+	 * @param decoderBuilder
+	 * @param encoderBuilder
+	 */
+	public EncodeVideoCommand(
+			DecoderArgumentBuilder decoderBuilder,
+			EncoderArgumentBuilder encoderBuilder){
+		this.decoderBuilder = decoderBuilder;
+		this.encoderBuilder = encoderBuilder;
+	}
+
 	public final void execute(INotification notification){
 		EncodingJob job = (EncodingJob)notification.getBody();
 		
@@ -42,7 +58,7 @@ public abstract class EncodeVideoCommand extends SimpleCommand{
 		}
 		
 		//Start encoder
-		String encodedOutputFile = "temp_encoded_file_" + counter.incrementAndGet() + ".264";
+		Path encodedOutputFile = Paths.get("temp_encoded_file_" + counter.incrementAndGet() + ".264");
 		Optional<Process> encoder = startEncoder(job, encodedOutputFile);
 		if(encoder.isNone()){
 			Log.error("Could not begin x264 encoder process");
@@ -52,10 +68,17 @@ public abstract class EncodeVideoCommand extends SimpleCommand{
 		
 		//Hook up pipe between the two
 		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		InterProcessPipe pipe = new InterProcessPipe(decoder.getValue(), encoder.getValue(), executorProxy.getService());
+		ExecutorService service = executorProxy.getService();
 		
-		//Run pipe synchronously
-		pipe.run();
+		InterProcessPipe<EncodingJob> pipe = new InterProcessPipe<EncodingJob>(
+				decoder.getValue(), 
+				encoder.getValue(),
+				service,
+				job, 
+				this);
+		
+		//Submit to executor
+		service.submit(pipe);
 	}
 	
 	private static void tryCloseProcess(Optional<Process> process){
@@ -65,14 +88,9 @@ public abstract class EncodeVideoCommand extends SimpleCommand{
 		}
 	}
 	
-	private Optional<Process> startEncoder(EncodingJob job, String outputFile){
-		List<String> encodingOptions = getAdditionalEncoderArguments(job);
-		
-		X264EncodingArgumentBuilder builder = new X264EncodingArgumentBuilder(outputFile, encodingOptions);
-		
-		List<String> arguments = builder.getArguments();
-		
-		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
+	private Optional<Process> startEncoder(EncodingJob job, Path outputFile){
+		List<String> encodingOptions = encoderBuilder.getEncoderArguments(job, outputFile);
+		ProcessBuilder processBuilder = new ProcessBuilder(encodingOptions);
 		
 		try{
 			Process process = processBuilder.start();
@@ -85,22 +103,9 @@ public abstract class EncodeVideoCommand extends SimpleCommand{
 	}
 	
 	private Optional<Process> startDecoder(EncodingJob job){
-		String sourceFilePath = job.getRequest().getSourceFile().getPath();
+		List<String> decodingOptions = decoderBuilder.getDecoderArguments(job);
 		
-		List<String> decodingOptions = getAdditionalDecodingArguments(job);
-		List<String> filterOptions = getAdditionalFilterOptions(job);
-		List<String> outputOptions = getAdditionalDecoderOutputOptions(job);
-		
-		FFMPEGDecodingArgumentBuilder builder = 
-				new FFMPEGDecodingArgumentBuilder(
-						sourceFilePath,
-						decodingOptions,
-						filterOptions,
-						outputOptions);
-		
-		List<String> arguments = builder.getArguments();
-		
-		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
+		ProcessBuilder processBuilder = new ProcessBuilder(decodingOptions);
 		
 		try{
 			Process process = processBuilder.start();
@@ -112,38 +117,19 @@ public abstract class EncodeVideoCommand extends SimpleCommand{
 		return Optional.none();
 	}
 	
-	/**
-	 * Get the decoder arguments for the FFMPEG Process 
-	 * @param job
-	 * @return
+	/* (non-Javadoc)
+	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
 	 */
-	protected abstract List<String> getAdditionalDecodingArguments(EncodingJob job);
-	
-	/**
-	 * Get the FFMPEG filter options 
-	 * @param job
-	 * @return
+	@Override
+	public void completed(Void arg0, EncodingJob job){
+		sendNotification(Notifications.EncodeVideoCommandSuccessNotification, job);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
 	 */
-	protected abstract List<String> getAdditionalFilterOptions(EncodingJob job);
-	
-	/**
-	 * Get any decoder output options
-	 * @param job
-	 * @return
-	 */
-	protected abstract List<String> getAdditionalDecoderOutputOptions(EncodingJob job);
-	
-	/**
-	 * Get the encoder arguments for the X264 Process
-	 * @param job
-	 * @return
-	 */
-	protected abstract List<String> getAdditionalEncoderArguments(EncodingJob job);
-	
-	/**
-	 * Get the mutltiplexing arguments for the FFMpeg Process
-	 * @param job
-	 * @return
-	 */
-	protected abstract List<String> getMultiplexingArguments(EncodingJob job);
+	@Override
+	public void failed(Throwable arg0, EncodingJob job){
+		sendNotification(Notifications.EncodeVideoCommandFailureNotification, job);;
+	}
 }

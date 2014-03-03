@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.utilities.threads;
 
+import java.nio.channels.CompletionHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
  * @author Andrew
  *
  */
-public final class InterProcessPipe implements Runnable{
+public final class InterProcessPipe<T> implements Runnable{
 	private static final Logger Log = LogManager.getLogger(InterProcessPipe.class);
 	
 	private static final AtomicLong IdGenerator = new AtomicLong();
@@ -26,6 +27,8 @@ public final class InterProcessPipe implements Runnable{
 	private final ProcessReader reader;
 	private final ProcessWriter writer;
 	private final ExecutorService service;
+	private final T t;
+	private final CompletionHandler<Void, T> completionHandler;
 	
 	private volatile boolean isCancelled = false;
 	private volatile boolean isFinished = false;
@@ -36,12 +39,17 @@ public final class InterProcessPipe implements Runnable{
 	 * @param sink The sink process
 	 * @param service The executor service
 	 * @param completionHandler The callback
+	 * @param t The payload to associate with this InterProcessPipe
+	 * @param completionHandler The completion handler to call when this process is finished
+	 * 
 	 */
-	public InterProcessPipe(Process source, Process sink, ExecutorService service){
+	public InterProcessPipe(Process source, Process sink, ExecutorService service, T t, CompletionHandler<Void, T> completionHandler){
 		this.id = IdGenerator.incrementAndGet();
 		this.reader = new ProcessReader(source, source.getInputStream(), service, queue);
 		this.writer = new ProcessWriter(sink, sink.getOutputStream(), service, queue);
 		this.service = service;
+		this.t = t;
+		this.completionHandler = completionHandler;
 	}
 	
 	/**
@@ -77,6 +85,11 @@ public final class InterProcessPipe implements Runnable{
 		if(isCancelled){
 			reader.cancel();
 			writer.cancel();
+			completionHandler.failed(null, t);
+		}
+		
+		if(isFinished){
+			completionHandler.completed(null, t);
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Constructs a new Compatibility object
@@ -36,7 +37,7 @@ public final class Compatibility implements Serializable{
 	/**
 	 * @return the useAccessUnitDelimiters
 	 */
-	public boolean isUseAccessUnitDelimiters() {
+	public boolean useAccessUnitDelimiters() {
 		return useAccessUnitDelimiters;
 	}
 
@@ -83,5 +84,18 @@ public final class Compatibility implements Serializable{
 		return true;
 	}
 	
-	
+	/**
+	 * Converts a Compatibility to an argument list for x264
+	 * @param compatibility
+	 * @return
+	 */
+	public static List<String> convertToArguments(Compatibility compatibility){
+		List<String> arguments = SampleAspectRatio.convertToArguments(compatibility.getSampleAspectRatio());
+		
+		if(compatibility.useAccessUnitDelimiters()){
+			arguments.add("--aud");
+		}
+		
+		return arguments;
+	}
 }

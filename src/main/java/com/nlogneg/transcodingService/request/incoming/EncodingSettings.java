@@ -1,7 +1,10 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.commons.collections4.ListUtils;
 
 /**
  * Represents the Encoding Settings to use 
@@ -175,10 +178,28 @@ public final class EncodingSettings implements Serializable{
 		return true;
 	}
 	
+	/**
+	 * Convert EncodingSettings to an argument list for x264
+	 * @param settings
+	 * @return
+	 */
 	public static List<String> convertToArguments(EncodingSettings settings){
 		List<String> rateControlArguments = RateControl.convertToArguments(settings.getRateControl());
+		List<String> estimationArguments = Estimation.convertToArguments(settings.getEstimation());
+		List<String> profileArguments = Profile.convertToArguments(settings.getProfile());
+		List<String> levelArguments = Level.convertToArguments(settings.getLevel());
+		List<String> compatibilityArguments = Compatibility.convertToArguments(settings.getCompatibility());
+		List<String> psychoArguments = PsychoVisualSettings.convertToArguments(settings.getPsychoVisualSettings());
 		
+		List<String> arguments = new LinkedList<String>();
 		
-		return rateControlArguments;
+		arguments = ListUtils.union(arguments, rateControlArguments);
+		arguments = ListUtils.union(arguments, estimationArguments);
+		arguments = ListUtils.union(arguments, profileArguments);
+		arguments = ListUtils.union(arguments, levelArguments);
+		arguments = ListUtils.union(arguments, compatibilityArguments);
+		arguments = ListUtils.union(arguments, psychoArguments);
+		
+		return arguments;
 	}
 }

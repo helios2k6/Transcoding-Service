@@ -1,6 +1,8 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class SampleAspectRatio implements Serializable{
 	/**
@@ -68,5 +70,19 @@ public final class SampleAspectRatio implements Serializable{
 		return true;
 	}
 	
-	
+	/**
+	 * Converts a SampleAspectRatio to a list of arguments for x264
+	 * @param ratio
+	 * @return
+	 */
+	public static List<String> convertToArguments(SampleAspectRatio ratio){
+		StringBuilder builder = new StringBuilder();
+		builder.append(ratio.getWidth()).append(":").append(ratio.getHeight());
+		
+		List<String> arguments = new ArrayList<String>();
+		arguments.add("--sar");
+		arguments.add(builder.toString());
+		
+		return arguments;
+	}
 }

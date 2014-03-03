@@ -17,4 +17,8 @@ public final class Notifications {
 	public static final String ExitSystemCommandNotification = "ExitSystemCommandNotification";
 	
 	public static final String QueryMediaInfoCommandNotification = "QueryMediaInfoCommandNotification";
+	
+	public static final String EncodeVideoCommandSuccessNotification = "EncodeVideoCommandSuccessNotification";
+	
+	public static final String EncodeVideoCommandFailureNotification = "EncodeVideoCommandFailureNotification";
 }

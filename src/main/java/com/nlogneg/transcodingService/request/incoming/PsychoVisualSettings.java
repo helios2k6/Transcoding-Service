@@ -1,6 +1,8 @@
 package com.nlogneg.transcodingService.request.incoming;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A representation of the psychoVisual rate-distortion setting
@@ -80,5 +82,20 @@ public final class PsychoVisualSettings implements Serializable{
 		return true;
 	}
 	
-	
+	/**
+	 * Convert PsychoVisualSettings to arguments for x264
+	 * @param settings
+	 * @return
+	 */
+	public static List<String> convertToArguments(PsychoVisualSettings settings){
+		StringBuilder builder = new StringBuilder();
+		builder.append(settings.getAlpha()).append(":").append(settings.getBeta());
+		
+		List<String> arguments = new ArrayList<String>();
+		
+		arguments.add("--psy-rd");
+		arguments.add(builder.toString());
+		
+		return arguments;
+	}
 }
