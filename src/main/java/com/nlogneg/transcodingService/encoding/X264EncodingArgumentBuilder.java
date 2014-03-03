@@ -1,7 +1,10 @@
 package com.nlogneg.transcodingService.encoding;
 
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
@@ -10,7 +13,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author Andrew
  *
  */
-public final class X264EncodingArgumentBuilder{
+public final class X264EncodingArgumentBuilder implements EncoderArgumentBuilder{
 	private static final String DemuxerArgument = "--demuxer";
 	private static final String OutputFileArgument = "--output";
 	
@@ -56,5 +59,10 @@ public final class X264EncodingArgumentBuilder{
 		arguments.add(StandardInput);
 		
 		return arguments;
+	}
+
+	@Override
+	public List<String> getEncoderArguments(EncodingJob job, Path outputFile) {
+		throw new NotImplementedException();
 	}
 }
