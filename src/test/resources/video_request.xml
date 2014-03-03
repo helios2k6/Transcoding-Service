@@ -32,9 +32,9 @@
 	<selector>
 		<force169AspectRatio>false</force169AspectRatio>
 		<forceUseAudioTrack>false</forceUseAudioTrack>
-		<forceResolution>false</forceResolution>
+		<capResolution>false</capResolution>
 		<audioTrack>-1</audioTrack>
-		<forceHeight>-1</forceHeight>
-		<forceWidth>-1</forceWidth>
+		<maxHeight>-1</maxHeight>
+		<maxWidth>-1</maxWidth>
 	</selector>
 </request>

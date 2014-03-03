@@ -7,6 +7,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.nlogneg.transcodingService.encoding.DecoderArgumentBuilder;
 import com.nlogneg.transcodingService.encoding.EncodingJob;
+import com.nlogneg.transcodingService.encoding.WidthHeightTuple;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
@@ -47,7 +48,22 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgument
 	}
 	
 	private void addFilters(List<String> arguments, EncodingJob job){
+		
+		
 		throw new NotImplementedException();
+	}
+	
+	/**
+	 * So, since the user can actually specify two options that may contradict
+	 * one another, we'll resolve them here.
+	 * 
+	 * If the user wants to force a specific resolution, then we will obey that
+	 * @param job
+	 * @return
+	 */
+	private WidthHeightTuple calculateWidthHeightTuple(EncodingJob job){
+		
+		return null;
 	}
 	
 	private void addFfmpegProcessName(List<String> arguments){

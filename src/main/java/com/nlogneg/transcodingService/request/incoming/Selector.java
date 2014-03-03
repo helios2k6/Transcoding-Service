@@ -16,41 +16,34 @@ public final class Selector implements Serializable{
 	
 	private final boolean force169AspectRatio;
 	private final boolean forceUseAudioTrack;
-	private final boolean forceResolution;
+	private final boolean capResolution;
 	
 	private final long audioTrack;
-	private final long forceHeight;
-	private final long forceWidth;
+	private final long maxHeight;
+	private final long maxWidth;
 	
 	/**
 	 * @param force169AspectRatio
 	 * @param forceUseAudioTrack
-	 * @param forceResolution
+	 * @param capResolution
 	 * @param audioTrack
-	 * @param forceHeight
-	 * @param forceWidth
+	 * @param maxHeight
+	 * @param maxWidth
 	 */
 	public Selector(
 			boolean force169AspectRatio, 
 			boolean forceUseAudioTrack,
-			boolean forceResolution, 
+			boolean capResolution, 
 			long audioTrack, 
-			long forceHeight,
-			long forceWidth){
+			long maxHeight,
+			long maxWidth){
 		
 		this.force169AspectRatio = force169AspectRatio;
 		this.forceUseAudioTrack = forceUseAudioTrack;
-		this.forceResolution = forceResolution;
+		this.capResolution = capResolution;
 		this.audioTrack = audioTrack;
-		this.forceHeight = forceHeight;
-		this.forceWidth = forceWidth;
-	}
-
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+		this.maxHeight = maxHeight;
+		this.maxWidth = maxWidth;
 	}
 
 	/**
@@ -68,10 +61,10 @@ public final class Selector implements Serializable{
 	}
 
 	/**
-	 * @return the forceResolution
+	 * @return the capResolution
 	 */
-	public boolean isForceResolution() {
-		return forceResolution;
+	public boolean isCapResolution() {
+		return capResolution;
 	}
 
 	/**
@@ -82,17 +75,17 @@ public final class Selector implements Serializable{
 	}
 
 	/**
-	 * @return the forceHeight
+	 * @return the maxHeight
 	 */
-	public long getForceHeight() {
-		return forceHeight;
+	public long getMaxHeight() {
+		return maxHeight;
 	}
 
 	/**
-	 * @return the forceWidth
+	 * @return the maxWidth
 	 */
-	public long getForceWidth() {
-		return forceWidth;
+	public long getMaxWidth() {
+		return maxWidth;
 	}
 
 	/* (non-Javadoc)
@@ -104,10 +97,10 @@ public final class Selector implements Serializable{
 		int result = 1;
 		result = prime * result + (int) (audioTrack ^ (audioTrack >>> 32));
 		result = prime * result + (force169AspectRatio ? 1231 : 1237);
-		result = prime * result + (int) (forceHeight ^ (forceHeight >>> 32));
-		result = prime * result + (forceResolution ? 1231 : 1237);
+		result = prime * result + (int) (maxHeight ^ (maxHeight >>> 32));
+		result = prime * result + (capResolution ? 1231 : 1237);
 		result = prime * result + (forceUseAudioTrack ? 1231 : 1237);
-		result = prime * result + (int) (forceWidth ^ (forceWidth >>> 32));
+		result = prime * result + (int) (maxWidth ^ (maxWidth >>> 32));
 		return result;
 	}
 
@@ -132,16 +125,16 @@ public final class Selector implements Serializable{
 		if (force169AspectRatio != other.force169AspectRatio) {
 			return false;
 		}
-		if (forceHeight != other.forceHeight) {
+		if (maxHeight != other.maxHeight) {
 			return false;
 		}
-		if (forceResolution != other.forceResolution) {
+		if (capResolution != other.capResolution) {
 			return false;
 		}
 		if (forceUseAudioTrack != other.forceUseAudioTrack) {
 			return false;
 		}
-		if (forceWidth != other.forceWidth) {
+		if (maxWidth != other.maxWidth) {
 			return false;
 		}
 		return true;
