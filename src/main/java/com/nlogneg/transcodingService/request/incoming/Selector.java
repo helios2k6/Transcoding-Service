@@ -18,9 +18,9 @@ public final class Selector implements Serializable{
 	private final boolean forceUseAudioTrack;
 	private final boolean capResolution;
 	
-	private final long audioTrack;
-	private final long maxHeight;
-	private final long maxWidth;
+	private final int audioTrack;
+	private final int maxHeight;
+	private final int maxWidth;
 	
 	/**
 	 * @param force169AspectRatio
@@ -34,9 +34,9 @@ public final class Selector implements Serializable{
 			boolean force169AspectRatio, 
 			boolean forceUseAudioTrack,
 			boolean capResolution, 
-			long audioTrack, 
-			long maxHeight,
-			long maxWidth){
+			int audioTrack, 
+			int maxHeight,
+			int maxWidth){
 		
 		this.force169AspectRatio = force169AspectRatio;
 		this.forceUseAudioTrack = forceUseAudioTrack;
@@ -70,21 +70,21 @@ public final class Selector implements Serializable{
 	/**
 	 * @return the audioTrack
 	 */
-	public long getAudioTrack() {
+	public int getAudioTrack() {
 		return audioTrack;
 	}
 
 	/**
 	 * @return the maxHeight
 	 */
-	public long getMaxHeight() {
+	public int getMaxHeight() {
 		return maxHeight;
 	}
 
 	/**
 	 * @return the maxWidth
 	 */
-	public long getMaxWidth() {
+	public int getMaxWidth() {
 		return maxWidth;
 	}
 

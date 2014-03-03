@@ -7,7 +7,7 @@ public final class IntegerUtils{
 	 * @param b
 	 * @return The GCD. Buffer-overflow not detected
 	 */
-	public long gcd(long a, long b){
+	public static long gcd(long a, long b){
 		if(a == b){
 			return a;
 		}
@@ -39,7 +39,7 @@ public final class IntegerUtils{
 	 * @param b
 	 * @return The GCD or -1 if buffer-overflow is detected
 	 */
-	public int gcd(int a, int b){
+	public static int gcd(int a, int b){
 		long longResult = gcd((long)a, (long)b);
 		if(longResult > (long)Integer.MAX_VALUE){
 			return -1;

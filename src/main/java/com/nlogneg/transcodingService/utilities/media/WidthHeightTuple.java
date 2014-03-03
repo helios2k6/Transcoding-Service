@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.encoding;
+package com.nlogneg.transcodingService.utilities.media;
 
 /**
  * Represents the width and height of a video

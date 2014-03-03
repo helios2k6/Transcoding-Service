@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.encoding.EncodingAction;
 import com.nlogneg.transcodingService.encoding.EncodingJob;
 import com.nlogneg.transcodingService.encoding.SubtitleTrackOption;
-import com.nlogneg.transcodingService.encoding.WidthHeightTuple;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
 
 /**
  * Represents an argument builder that corresponds to the FFMPEG filter
