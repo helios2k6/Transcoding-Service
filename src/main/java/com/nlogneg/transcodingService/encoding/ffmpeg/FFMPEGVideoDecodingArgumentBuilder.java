@@ -48,14 +48,7 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgument
 	}
 	
 	private void addFilters(List<String> arguments, EncodingJob job){
-		
-		
 		throw new NotImplementedException();
-	}
-	
-	private WidthHeightTuple calculateWidthHeightTuple(EncodingJob job){
-		
-		return null;
 	}
 	
 	private void addFfmpegProcessName(List<String> arguments){
