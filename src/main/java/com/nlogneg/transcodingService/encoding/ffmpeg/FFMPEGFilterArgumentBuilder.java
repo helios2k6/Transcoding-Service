@@ -7,7 +7,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.encoding.EncodingAction;
-import com.nlogneg.transcodingService.encoding.EncodingJob;
 import com.nlogneg.transcodingService.encoding.SubtitleTrackOption;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
