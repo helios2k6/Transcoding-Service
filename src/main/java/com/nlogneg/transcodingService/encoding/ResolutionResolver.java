@@ -22,6 +22,10 @@ import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
 public final class ResolutionResolver{
 	private static final Logger Log = LogManager.getLogger(ResolutionResolver.class);
 	
+	private ResolutionResolver()
+	{
+	}
+	
 	/**
 	 * Resolve the resolution
 	 * @param job

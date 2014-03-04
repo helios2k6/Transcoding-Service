@@ -34,7 +34,7 @@ public final class FFMPEGFilterArgumentBuilder{
 		this.subtitleOverlay = subtitleOverlay;
 	}
 	
-	public void addVideoFilterArguments(List<String> arguments, EncodingJob job){
+	public void addVideoFilterArguments(List<String> arguments){
 		if(shouldResize() == false && shouldOverlaySubtitles() == false){
 			return;
 		}
@@ -43,7 +43,7 @@ public final class FFMPEGFilterArgumentBuilder{
 		
 		StringBuilder finalArgumentBuilder = new StringBuilder();
 		
-		String subtitleArgumentPart = getSubtitleOverlayArgument(job);
+		String subtitleArgumentPart = getSubtitleOverlayArgument();
 		if(subtitleArgumentPart != null){
 			finalArgumentBuilder.append(subtitleArgumentPart);
 		}
@@ -64,11 +64,9 @@ public final class FFMPEGFilterArgumentBuilder{
 		return subtitleOverlay.getEncodingActions().contains(EncodingAction.Encode);
 	}
 	
-	private String getSubtitleOverlayArgument(EncodingJob job){
-		SubtitleTrackOption subtitleOption = job.getSubtitleTrackOption();
-		
-		if(subtitleOption.getEncodingActions().contains(EncodingAction.Encode)){
-			Optional<Path> extractedOptionalSubtitleFile = subtitleOption.getTextTrackFilePath();
+	private String getSubtitleOverlayArgument(){
+		if(subtitleOverlay.getEncodingActions().contains(EncodingAction.Encode)){
+			Optional<Path> extractedOptionalSubtitleFile = subtitleOverlay.getTextTrackFilePath();
 			if(extractedOptionalSubtitleFile.isSome()){
 				Path extractedSubtitleFile = extractedOptionalSubtitleFile.getValue();
 				

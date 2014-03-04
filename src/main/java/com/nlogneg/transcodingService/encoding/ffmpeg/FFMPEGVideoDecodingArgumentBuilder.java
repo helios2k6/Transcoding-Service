@@ -3,10 +3,11 @@ package com.nlogneg.transcodingService.encoding.ffmpeg;
 import java.util.LinkedList;
 import java.util.List;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.nlogneg.transcodingService.encoding.DecoderArgumentBuilder;
 import com.nlogneg.transcodingService.encoding.EncodingJob;
+import com.nlogneg.transcodingService.encoding.ResolutionResolver;
+import com.nlogneg.transcodingService.encoding.SubtitleTrackOption;
+import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
@@ -48,7 +49,11 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgument
 	}
 	
 	private void addFilters(List<String> arguments, EncodingJob job){
-		throw new NotImplementedException();
+		WidthHeightTuple resolvedResolution = ResolutionResolver.resolveResolution(job);
+		SubtitleTrackOption option = job.getSubtitleTrackOption();
+		FFMPEGFilterArgumentBuilder builder = new FFMPEGFilterArgumentBuilder(Optional.make(resolvedResolution), option);
+		
+		builder.addVideoFilterArguments(arguments);
 	}
 	
 	private void addFfmpegProcessName(List<String> arguments){
