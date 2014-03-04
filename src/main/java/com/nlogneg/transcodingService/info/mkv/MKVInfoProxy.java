@@ -16,7 +16,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public class MKVInfoProxy extends Proxy{
 	public static final String PROXY_NAME = "MKVInfoProxy";
 	
-	private final ConcurrentMap<String, MKVInfo> mkvInfoMap = new ConcurrentHashMap<>();
+	private final ConcurrentMap<Path, MKVInfo> mkvInfoMap = new ConcurrentHashMap<>();
 	
 	/**
 	 * Constructs a MKVInfoProxy
@@ -30,7 +30,7 @@ public class MKVInfoProxy extends Proxy{
 	 * @param info The MKV Info
 	 */
 	public void put(MKVInfo info){
-		mkvInfoMap.putIfAbsent(info.getFilePath().toAbsolutePath().toString(), info);
+		mkvInfoMap.putIfAbsent(info.getFilePath(), info);
 	}
 	
 	/**
@@ -39,6 +39,6 @@ public class MKVInfoProxy extends Proxy{
 	 * @return An optional representing the MKVInfo
 	 */
 	public Optional<MKVInfo> get(Path filePath){
-		return Optional.make(mkvInfoMap.get(filePath.toAbsolutePath().toString()));
+		return Optional.make(mkvInfoMap.get(filePath));
 	}
 }

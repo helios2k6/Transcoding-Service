@@ -15,7 +15,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public final class EncodingJobProxy extends Proxy{
 	public static final String PROXY_NAME = "EncodingJobProxy";
 	
-	private final ConcurrentMap<Long, EncodingJob> jobMap = new ConcurrentHashMap<Long, EncodingJob>();
+	private final ConcurrentMap<Long, EncodingJob> jobMap = new ConcurrentHashMap<>();
 	
 	public EncodingJobProxy(){
 		super(PROXY_NAME);

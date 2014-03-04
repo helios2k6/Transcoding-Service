@@ -16,14 +16,13 @@ public class RequestProxy extends Proxy {
 
 	public static final String PROXY_NAME = "Request Proxy";
 	
-	private final BlockingQueue<Request> requests;
+	private final BlockingQueue<Request> requests =  new LinkedBlockingDeque<>();
 	
 	/**
 	 * Constructs a new Request Proxy
 	 */
 	public RequestProxy() {
 		super(PROXY_NAME);
-		requests = new LinkedBlockingDeque<Request>();
 	}
 	
 	/**

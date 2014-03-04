@@ -17,7 +17,7 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
 public class ExtractedFontAttachmentsProxy extends Proxy{
 	public static final String PROXY_NAME = "ExtractedFontAttachmentsProxy";
 	
-	private final ConcurrentMap<String, Path> extractedFonts = new ConcurrentHashMap<String, Path>();
+	private final ConcurrentMap<String, Path> extractedFonts = new ConcurrentHashMap<>();
 	
 	public ExtractedFontAttachmentsProxy(){
 		super(PROXY_NAME);

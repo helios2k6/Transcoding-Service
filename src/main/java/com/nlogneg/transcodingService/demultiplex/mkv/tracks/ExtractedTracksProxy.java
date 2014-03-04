@@ -17,7 +17,7 @@ import com.nlogneg.transcodingService.info.mediainfo.Track;
 public class ExtractedTracksProxy extends Proxy{
 	public static final String PROXY_NAME = "ExtractedTracksProxy";
 	
-	private final Map<String, Map<Track, String>> extractedTrackMap = new HashMap<String, Map<Track, String>>();
+	private final Map<Path, Map<Track, Path>> extractedTrackMap = new HashMap<>();
 	
 	public ExtractedTracksProxy(){
 		super(PROXY_NAME);
@@ -25,19 +25,19 @@ public class ExtractedTracksProxy extends Proxy{
 	
 	/**
 	 * Place a mapping into the proxy
-	 * @param filePath the path to the MKV file
+	 * @param mediaFilePath the path to the MKV file
 	 * @param track The track that was extracted
-	 * @param fileName The file name
+	 * @param extractedTrackFile The path to the extracted track file
 	 */
-	public synchronized void put(Path filePath, Track track, String fileName){
-		Map<Track, String> existingMappings = extractedTrackMap.get(filePath.toAbsolutePath().toString());
+	public synchronized void put(Path mediaFilePath, Track track, Path extractedTrackFile){
+		Map<Track, Path> existingMappings = extractedTrackMap.get(mediaFilePath);
 		
 		if(existingMappings == null){
-			existingMappings = new HashMap<Track, String>();
-			extractedTrackMap.put(filePath.toAbsolutePath().toString(),  existingMappings);
+			existingMappings = new HashMap<Track, Path>();
+			extractedTrackMap.put(mediaFilePath,  existingMappings);
 		}
 		
-		existingMappings.put(track, fileName);
+		existingMappings.put(track, extractedTrackFile);
 	}
 	
 	/**
@@ -46,13 +46,13 @@ public class ExtractedTracksProxy extends Proxy{
 	 * @return The extracted track map
 	 */
 	public synchronized Map<Track, Path> getExtractedTracks(Path mediaFile){
-		Map<Track, String> resultMap = new HashMap<Track, String>();
-		resultMap = extractedTrackMap.get(mediaFile.toAbsolutePath().toString());
+		Map<Track, Path> resultMap = new HashMap<Track, Path>();
+		resultMap = extractedTrackMap.get(mediaFile);
 		
 		Map<Track, Path> finalResultMap = new HashMap<Track, Path>();
 		for(Track t : resultMap.keySet()){
-			String result = resultMap.get(t);
-			finalResultMap.put(t, Paths.get(result).toAbsolutePath());
+			Path result = resultMap.get(t);
+			finalResultMap.put(t, result);
 		}
 		
 		return finalResultMap;

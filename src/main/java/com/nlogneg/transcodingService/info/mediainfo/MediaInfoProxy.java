@@ -16,12 +16,10 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public class MediaInfoProxy extends Proxy{
 	public static final String PROXY_NAME = "MediaInfoProxy";
 	
-	private final Map<String, MediaInfo> map;
+	private final Map<Path, MediaInfo> map = new HashMap<>();
 	
 	public MediaInfoProxy(){
 		super(PROXY_NAME);
-		
-		map = new HashMap<String, MediaInfo>();
 	}
 	
 	/**
@@ -30,7 +28,7 @@ public class MediaInfoProxy extends Proxy{
 	 * @param mediaInfo The media info
 	 */
 	public void putMediaInfo(Path filePath, MediaInfo mediaInfo){
-		map.put(filePath.toAbsolutePath().toString(),  mediaInfo);
+		map.put(filePath,  mediaInfo);
 	}
 	
 	/**
@@ -39,6 +37,6 @@ public class MediaInfoProxy extends Proxy{
 	 * @return An optional representing the MediaInfo
 	 */
 	public Optional<MediaInfo> getMediaInfo(Path filePath){
-		return Optional.make(map.get(filePath.toAbsolutePath().toString()));
+		return Optional.make(map.get(filePath));
 	}
 }

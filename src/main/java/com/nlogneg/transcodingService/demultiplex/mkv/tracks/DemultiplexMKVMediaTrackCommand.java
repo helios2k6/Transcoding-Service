@@ -2,6 +2,7 @@ package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -50,7 +51,8 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 		if(processResult){
 			Facade facade = getFacade();
 			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
-			proxy.put(mkvJob.getMediaFile(), track, outputName);
+			Path extractedTrackPath = Paths.get(outputName);
+			proxy.put(mkvJob.getMediaFile(), track, extractedTrackPath);
 		}
 	}
 

@@ -48,16 +48,16 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgument
 		return arguments;
 	}
 	
+	private void addFfmpegProcessName(List<String> arguments){
+		arguments.add(0, SystemUtilities.getFFMPEGProcessName());
+	}
+	
 	private void addFilters(List<String> arguments, EncodingJob job){
 		WidthHeightTuple resolvedResolution = ResolutionResolver.resolveResolution(job);
 		SubtitleTrackOption option = job.getSubtitleTrackOption();
 		FFMPEGFilterArgumentBuilder builder = new FFMPEGFilterArgumentBuilder(Optional.make(resolvedResolution), option);
 		
 		builder.addVideoFilterArguments(arguments);
-	}
-	
-	private void addFfmpegProcessName(List<String> arguments){
-		arguments.add(0, SystemUtilities.getFFMPEGProcessName());
 	}
 	
 	private void addInputFile(List<String> arguments, EncodingJob job){
