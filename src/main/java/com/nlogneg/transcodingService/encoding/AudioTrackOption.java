@@ -1,7 +1,6 @@
 package com.nlogneg.transcodingService.encoding;
 
 import java.nio.file.Path;
-import java.util.Set;
 
 import com.nlogneg.transcodingService.utilities.Optional;
 
@@ -12,14 +11,14 @@ import com.nlogneg.transcodingService.utilities.Optional;
  */
 public final class AudioTrackOption{
 	private final Optional<Path> audioTrackFilePath;
-	private final Set<EncodingAction> encodingAction;
+	private final EncodingAction encodingAction;
 	
 	/**
 	 * @param audioTrackFilePath
 	 * @param encodingAction
 	 */
 	public AudioTrackOption(Optional<Path> audioTrackFilePath,
-			Set<EncodingAction> encodingAction) {
+			EncodingAction encodingAction) {
 		this.audioTrackFilePath = audioTrackFilePath;
 		this.encodingAction = encodingAction;
 	}
@@ -33,7 +32,7 @@ public final class AudioTrackOption{
 	/**
 	 * @return the encodingAction
 	 */
-	public Set<EncodingAction> getEncodingAction() {
+	public EncodingAction getEncodingAction() {
 		return encodingAction;
 	}
 }

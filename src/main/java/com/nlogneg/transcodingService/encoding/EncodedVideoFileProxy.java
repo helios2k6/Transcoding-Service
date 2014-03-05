@@ -13,12 +13,12 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  *
  */
-public class EncodedFileProxy extends Proxy{
+public class EncodedVideoFileProxy extends Proxy{
 	public static final String PROXY_NAME = "EncodedFileProxy";
 	
 	private final ConcurrentMap<EncodingJob, Path> encodedFileMap = new ConcurrentHashMap<>();
 	
-	public EncodedFileProxy(){
+	public EncodedVideoFileProxy(){
 		super(PROXY_NAME);
 	}
 	
@@ -28,7 +28,7 @@ public class EncodedFileProxy extends Proxy{
 	 * @param path
 	 */
 	public void put(EncodingJob job, Path path){
-		encodedFileMap.put(job, path);
+		encodedFileMap.putIfAbsent(job, path);
 	}
 	
 	/**

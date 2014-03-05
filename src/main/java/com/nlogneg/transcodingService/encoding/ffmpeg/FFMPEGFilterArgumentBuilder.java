@@ -34,7 +34,7 @@ public final class FFMPEGFilterArgumentBuilder{
 	}
 	
 	public void addVideoFilterArguments(List<String> arguments){
-		if(shouldResize() == false && shouldOverlaySubtitles() == false){
+		if(shouldResize() == false && subtitleOverlay.getEncodingActions() != EncodingAction.Encode){
 			return;
 		}
 		
@@ -59,12 +59,8 @@ public final class FFMPEGFilterArgumentBuilder{
 		return resizeResolution.isSome();
 	}
 	
-	private boolean shouldOverlaySubtitles(){
-		return subtitleOverlay.getEncodingActions().contains(EncodingAction.Encode);
-	}
-	
 	private String getSubtitleOverlayArgument(){
-		if(subtitleOverlay.getEncodingActions().contains(EncodingAction.Encode)){
+		if(subtitleOverlay.getEncodingActions() == EncodingAction.Encode){
 			Optional<Path> extractedOptionalSubtitleFile = subtitleOverlay.getTextTrackFilePath();
 			if(extractedOptionalSubtitleFile.isSome()){
 				Path extractedSubtitleFile = extractedOptionalSubtitleFile.getValue();
