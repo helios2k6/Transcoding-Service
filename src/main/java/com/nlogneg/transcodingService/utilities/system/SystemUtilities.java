@@ -16,11 +16,12 @@ public final class SystemUtilities{
 		Windows,
 	}
 	
-	private static final String mkvExtractCore = "mkvextract";
-	private static final String mkvInfoCore = "mkvinfo";
-	private static final String mediaInfoCore = "mediainfo";
-	private static final String ffmpegCore = "ffmpeg";
-	private static final String x264Core = "x264";
+	private static final String MkvExtractCore = "mkvextract";
+	private static final String MkvInfoCore = "mkvinfo";
+	private static final String MediaInfoCore = "mediainfo";
+	private static final String FFMPEGCore = "ffmpeg";
+	private static final String X264Core = "x264";
+	private static final String NeroAacCore = "neroAacEnc";
 	
 	private static final OperatingSystem OS = calculateOperatingSystem();
 
@@ -55,7 +56,7 @@ public final class SystemUtilities{
 	 * @return 
 	 */
 	public static String getMkvExtractProcessName(){
-		return calculateProcessName(mkvExtractCore);
+		return calculateProcessName(MkvExtractCore);
 	}
 	
 	/**
@@ -63,7 +64,7 @@ public final class SystemUtilities{
 	 * @return
 	 */
 	public static String getMkvInfoProcessName(){
-		return calculateProcessName(mkvInfoCore);
+		return calculateProcessName(MkvInfoCore);
 	}
 	
 	/**
@@ -71,7 +72,7 @@ public final class SystemUtilities{
 	 * @return
 	 */
 	public static String getMediaInfoProcessName(){
-		return calculateProcessName(mediaInfoCore);
+		return calculateProcessName(MediaInfoCore);
 	}
 	
 	/**
@@ -79,7 +80,7 @@ public final class SystemUtilities{
 	 * @return
 	 */
 	public static String getFFMPEGProcessName(){
-		return calculateProcessName(ffmpegCore);
+		return calculateProcessName(FFMPEGCore);
 	}
 	
 	/**
@@ -87,7 +88,15 @@ public final class SystemUtilities{
 	 * @return
 	 */
 	public static String getX264ProcessName(){
-		return calculateProcessName(x264Core);
+		return calculateProcessName(X264Core);
+	}
+	
+	/**
+	 * Get the neroAacEnc process name
+	 * @return
+	 */
+	public static String getNeroAacEncProcessName(){
+		return calculateProcessName(NeroAacCore);
 	}
 }
 

@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.encoding;
 
-import java.io.IOException;
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,6 +14,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
 
@@ -24,7 +24,7 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
  *
  */
 public final class EncodeVideoCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
-	private static final AtomicInteger counter = new AtomicInteger();
+	private static final AtomicInteger Counter = new AtomicInteger();
 	private static final Logger Log = LogManager.getLogger(EncodeVideoCommand.class);
 	
 	private final DecoderArgumentBuilder decoderBuilder;
@@ -58,11 +58,11 @@ public final class EncodeVideoCommand extends SimpleCommand implements Completio
 		}
 		
 		//Start encoder
-		Path encodedOutputFile = Paths.get("temp_encoded_file_" + counter.incrementAndGet() + ".264");
+		Path encodedOutputFile = Paths.get("temp_encoded_file_" + Counter.incrementAndGet() + ".264");
 		Optional<Process> encoder = startEncoder(job, encodedOutputFile);
 		if(encoder.isNone()){
 			Log.error("Could not begin x264 encoder process");
-			tryCloseProcess(decoder);
+			ProcessUtils.tryCloseProcess(decoder);
 			return;
 		}
 		
@@ -81,40 +81,16 @@ public final class EncodeVideoCommand extends SimpleCommand implements Completio
 		service.submit(pipe);
 	}
 	
-	private static void tryCloseProcess(Optional<Process> process){
-		if(process.isSome()){
-			Process p = process.getValue();
-			p.destroy();
-		}
-	}
-	
 	private Optional<Process> startEncoder(EncodingJob job, Path outputFile){
 		List<String> encodingOptions = encoderBuilder.getEncoderArguments(job, outputFile);
 		ProcessBuilder processBuilder = new ProcessBuilder(encodingOptions);
-		
-		try{
-			Process process = processBuilder.start();
-			return Optional.make(process);
-		}catch(IOException e){
-			Log.error("Could not start x264 process.", e);
-		}
-		
-		return Optional.none();
+		return ProcessUtils.tryStartProcess(processBuilder);
 	}
 	
 	private Optional<Process> startDecoder(EncodingJob job){
 		List<String> decodingOptions = decoderBuilder.getDecoderArguments(job);
-		
 		ProcessBuilder processBuilder = new ProcessBuilder(decodingOptions);
-		
-		try{
-			Process process = processBuilder.start();
-			return Optional.make(process);
-		}catch (IOException e){
-			Log.error("Could not start ffmpeg.", e);
-		}
-		
-		return Optional.none();
+		return ProcessUtils.tryStartProcess(processBuilder);
 	}
 	
 	/* (non-Javadoc)

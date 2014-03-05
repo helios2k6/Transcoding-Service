@@ -9,4 +9,10 @@ Process Breakdown:
 ffmpeg [any decoding options] -an -i <INPUT> [any filter options] -codec:v rawvideo -f yuv4mpegpipe -pix_fmt yuv420p [any output options] - | x264 --input-res <INPUT RES> --fps <INPUT FPS> --demuxer y4m [any encoding options] --output <OUTPUT FILE> - 
 
 FFMPEG Multiplexing
-ffmpeg -i <VIDEO_INPUT> -i <AUDIO_INPUT> -map 0:0 -c:v copy -map 1:1 -c:a copy [any multiplexing options] <OUTPUT>
+ffmpeg -i <VIDEO_INPUT> -i <AUDIO_INPUT> -map 0:0 -codec:v copy -map 1:1 -codec:a copy [any multiplexing options] <OUTPUT>
+
+FFMPEG Audio Decoding
+ffmpeg -i <AUDIO_INPUT> -codec:a pcm_s16le <OUTPUT>
+
+Nero Audio Encoding
+neroAacEnc -br 96000 -if <INPUT_FILE> -of <OUTPUT>

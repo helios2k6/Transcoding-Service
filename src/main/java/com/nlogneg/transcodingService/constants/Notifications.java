@@ -21,4 +21,8 @@ public final class Notifications {
 	public static final String EncodeVideoCommandSuccessNotification = "EncodeVideoCommandSuccessNotification";
 	
 	public static final String EncodeVideoCommandFailureNotification = "EncodeVideoCommandFailureNotification";
+	
+	public static final String EncodeAudioCommandSuccessNotification = "EncodeAudioCommandSuccessNotification";
+	
+	public static final String EncodeAudioCommandFailureNotification = "EncodeAudioCommandFailureNotification";
 }

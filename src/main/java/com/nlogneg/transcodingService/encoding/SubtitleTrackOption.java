@@ -2,6 +2,7 @@ package com.nlogneg.transcodingService.encoding;
 
 import java.nio.file.Path;
 
+import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
@@ -12,14 +13,18 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public final class SubtitleTrackOption{
 	private final Optional<Path> textTrackFilePath;
 	private final EncodingAction encodingActions;
+	private final Optional<TextTrack> subtitleTrack;
 	/**
 	 * @param textTrackFilePath
 	 * @param encodingActions
 	 */
-	public SubtitleTrackOption(Optional<Path> textTrackFilePath,
-			EncodingAction encodingActions){
+	public SubtitleTrackOption(
+			Optional<Path> textTrackFilePath,
+			EncodingAction encodingActions,
+			Optional<TextTrack> subtitleTrack){
 		this.textTrackFilePath = textTrackFilePath;
 		this.encodingActions = encodingActions;
+		this.subtitleTrack = subtitleTrack;
 	}
 	/**
 	 * @return the textTrackFilePath
@@ -32,5 +37,13 @@ public final class SubtitleTrackOption{
 	 */
 	public EncodingAction getEncodingActions(){
 		return encodingActions;
+	}
+	
+	/**
+	 * Gets the subtitle track
+	 * @return
+	 */
+	public Optional<TextTrack> getSubtitleTrack(){
+		return subtitleTrack;
 	}
 }
