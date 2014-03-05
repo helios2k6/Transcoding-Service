@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.encoding;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
@@ -68,5 +70,21 @@ public final class EncodingJob{
 	 */
 	public SubtitleTrackOption getSubtitleTrackOption() {
 		return subtitleTrackOption;
+	}
+	
+	/**
+	 * Gets the source file as a Path
+	 * @return
+	 */
+	public Path getSourceFilePath(){
+		return Paths.get(request.getSourceFile());
+	}
+	
+	/**
+	 * Gets the destination file as a Path
+	 * @return
+	 */
+	public Path getDestinationFilePath(){
+		return Paths.get(request.getDestinationFile());
 	}
 }

@@ -56,8 +56,8 @@ public class TestRequestDeserialization{
 		assertNotNull(request.getSourceFile());
 		assertNotNull(request.getDestinationFile());
 		
-		assertTrue(expectedSourceFile.equals(request.getSourceFile().getPath()));
-		assertTrue(expectedDestinationFile.equals(request.getDestinationFile().getPath()));
+		assertTrue(expectedSourceFile.equals(request.getSourceFile()));
+		assertTrue(expectedDestinationFile.equals(request.getDestinationFile()));
 		
 		assertEquals(expectedEncodingSettings, request.getEncodingSettings());
 		assertEquals(expectedSelector, request.getSelector());

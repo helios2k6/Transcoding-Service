@@ -62,7 +62,7 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgument
 	
 	private void addInputFile(List<String> arguments, EncodingJob job){
 		arguments.add(InputFileArgument);
-		arguments.add(job.getRequest().getSourceFile().getPath());
+		arguments.add(job.getRequest().getSourceFile());
 	}
 	
 	private void addStandardOut(List<String> arguments){

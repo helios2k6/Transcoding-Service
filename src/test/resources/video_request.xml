@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <request>
-	<sourceFile>file:///test/file.mkv</sourceFile>
-	<destinationFile>file:///STDOUT</destinationFile>
+	<sourceFile>/test/file.mkv</sourceFile>
+	<destinationFile>/STDOUT</destinationFile>
 	<encodingSettings>
 		<rateControl>
 			<type>ConstantRateFactor</type>

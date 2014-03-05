@@ -53,7 +53,7 @@ public final class EncodeVideoCommand extends SimpleCommand implements Completio
 		//Start decoder
 		Optional<Process> decoder = startDecoder(job);
 		if(decoder.isNone()){
-			Log.error("Could not begin ffmpeg decoder process for: " + job.getRequest().getSourceFile().getPath());
+			Log.error("Could not begin ffmpeg decoder process for: " + job.getRequest().getSourceFile());
 			return;
 		}
 		

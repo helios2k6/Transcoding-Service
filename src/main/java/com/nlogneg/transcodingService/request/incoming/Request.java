@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.request.incoming;
 
-import java.net.URL;
 
 
 /**
@@ -10,8 +9,8 @@ import java.net.URL;
  */
 public class Request{
 	
-	private final URL sourceFile;
-	private final URL destinationFile;
+	private final String sourceFile;
+	private final String destinationFile;
 	private final EncodingSettings encodingSettings;
 	private final Selector selector;
 
@@ -22,7 +21,7 @@ public class Request{
 	 * @param settings The encoding settings for this request
 	 * @param selector The selector
 	 */
-	protected Request(URL filePath, URL outputPath, EncodingSettings settings, Selector selector){
+	protected Request(String filePath, String outputPath, EncodingSettings settings, Selector selector){
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;
 		this.encodingSettings = settings;
@@ -40,7 +39,7 @@ public class Request{
 	 * Get the file path
 	 * @return
 	 */
-	public URL getSourceFile(){
+	public String getSourceFile(){
 		return sourceFile;
 	}
 
@@ -48,7 +47,7 @@ public class Request{
 	 * Get the output path
 	 * @return
 	 */
-	public URL getDestinationFile(){
+	public String getDestinationFile(){
 		return destinationFile;
 	}
 	
@@ -69,7 +68,7 @@ public class Request{
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
@@ -88,47 +87,46 @@ public class Request{
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj){
-		if (this == obj){
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (obj == null){
+		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()){
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Request other = (Request) obj;
-		if (destinationFile == null){
-			if (other.destinationFile != null){
+		if (destinationFile == null) {
+			if (other.destinationFile != null) {
 				return false;
 			}
-		}else if (!destinationFile.toString().equals(other.destinationFile.toString())){ // Do not want to hit the network
+		} else if (!destinationFile.equals(other.destinationFile)) {
 			return false;
 		}
-		if (encodingSettings == null){
-			if (other.encodingSettings != null){
+		if (encodingSettings == null) {
+			if (other.encodingSettings != null) {
 				return false;
 			}
-		}else if (!encodingSettings.equals(other.encodingSettings)){
+		} else if (!encodingSettings.equals(other.encodingSettings)) {
 			return false;
 		}
-		if (selector == null){
-			if (other.selector != null){
+		if (selector == null) {
+			if (other.selector != null) {
 				return false;
 			}
-		}else if (!selector.equals(other.selector)){
+		} else if (!selector.equals(other.selector)) {
 			return false;
 		}
-		if (sourceFile == null){
-			if (other.sourceFile != null){
+		if (sourceFile == null) {
+			if (other.sourceFile != null) {
 				return false;
 			}
-		}else if (!sourceFile.equals(other.sourceFile)){
+		} else if (!sourceFile.equals(other.sourceFile)) {
 			return false;
 		}
 		return true;
 	}
-	
-	
+
 }
