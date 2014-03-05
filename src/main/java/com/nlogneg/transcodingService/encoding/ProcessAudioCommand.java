@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.demultiplex.ExtractedTracksProxy;
+import com.nlogneg.transcodingService.demultiplex.mkv.tracks.ExtractedTracksProxy;
 
 /**
  * Processes the audio track of a given EncodingJob

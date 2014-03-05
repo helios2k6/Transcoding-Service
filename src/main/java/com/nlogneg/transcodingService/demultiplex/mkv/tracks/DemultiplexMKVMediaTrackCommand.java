@@ -10,7 +10,6 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.demultiplex.ExtractedTracksProxy;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoProxy;
