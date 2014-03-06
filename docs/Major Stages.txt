@@ -21,3 +21,30 @@
 		+ Multiplex video and audio
 	+ Delivery Stage
 		+ Write bytes to file specified in request
+		
+Demultiplex Job
++ 1-to-Many
++ Input:
+	+ Media File
++ Output:
+	+ Subtitles
+	+ Audio
+	+ Attachments
+	
+Encode Job
++ Many-to-Many
++ Input:
+	+ Media File
+	+ Subtitle Track
+	+ Audio Track
++ Output:
+	+ Encoded Video Track
+	+ Encoded Audio Track
+
+Multiplex Job
++ Many-to-One
++ Input:
+	+ Encoded File
+	+ Audio Track
++ Output:
+	+ Media File

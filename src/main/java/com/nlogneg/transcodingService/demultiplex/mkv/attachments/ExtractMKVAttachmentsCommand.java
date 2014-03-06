@@ -1,14 +1,22 @@
 package com.nlogneg.transcodingService.demultiplex.mkv.attachments;
 
 import java.io.IOException;
-import java.util.List;
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
+import org.puremvc.java.multicore.patterns.facade.Facade;
 
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
+import com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts.ExtractedFontAttachmentsProxy;
+import com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts.MKVDemultiplexingUtilities;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
@@ -17,37 +25,34 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  *
  */
-public abstract class ExtractMKVAttachmentsCommand extends SimpleCommand{
+public final class ExtractMKVAttachmentsCommand extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(ExtractMKVAttachmentsCommand.class);
 	private static final String AttachmentArgument = "attachments";
 	
 	public final void execute(INotification notification){
 		DemultiplexMKVJob job = (DemultiplexMKVJob)notification.getBody();
 		
-		List<Attachment> attachments = getAttachmentsToExtract(job);
-		
-		for(Attachment attachment : attachments){
-			extractAttachment(job, attachment);
-		}
-		
-		postProcessAttachmentExtraction(attachments);
+		Map<Attachment, Path> extractedAttachments = extractAttachments(job);
+		addFontAttachmentsToProxy(getFacade(), extractedAttachments);
 	}
 	
-	/**
-	 * Get the attachments that we want to extract
-	 * @param job The MKV Encoding Job
-	 * @return The list of attachments
-	 */
-	protected abstract List<Attachment> getAttachmentsToExtract(DemultiplexMKVJob job);
-	
-	/**
-	 * Perform any post processing 
-	 */
-	protected abstract void postProcessAttachmentExtraction(List<Attachment> extractedAttachments);
-	
-	private static void extractAttachment(DemultiplexMKVJob job, Attachment attachment){
-		Log.info("Extracting attachments for: " + job.getAttachments());
+	private static Map<Attachment, Path> extractAttachments(DemultiplexMKVJob job){
+		Map<Attachment, Path> attachments = job.getAttachmentToOutputMap();
+		Set<Attachment> keyRing = attachments.keySet();
+		Map<Attachment, Path> result = new HashMap<>();
 		
+		for(Attachment key : keyRing){
+			Path outputPath = attachments.get(key);
+			boolean extractResult = extractAttachment(job, key, outputPath);
+			if(extractResult){
+				result.put(key, outputPath);
+			}
+		}
+		
+		return result;
+	}
+	
+	private static boolean extractAttachment(DemultiplexMKVJob job, Attachment attachment, Path outputPath){
 		StringBuilder extractedAttachmentArgument = new StringBuilder();
 		extractedAttachmentArgument.append(attachment.getId()).append(":").append(attachment.getFileName());
 		
@@ -60,12 +65,25 @@ public abstract class ExtractMKVAttachmentsCommand extends SimpleCommand{
 		try{
 			Process process = builder.start();
 			process.waitFor();
+			return true;
 		}catch (IOException e){
 			Log.error("An error occurred while extracting attachments.", e);
-			return;
 		}catch (InterruptedException e){
 			Log.error("This thread was interrupted while waiting for an external process to end.", e);
-			return;
 		}
+		
+		return false;
+	}
+	
+	private static void addFontAttachmentsToProxy(Facade facade, Map<Attachment, Path> extractedAttachments){
+		Collection<Attachment> fontAttachments = MKVDemultiplexingUtilities.getFontAttachments(extractedAttachments.keySet());
+		Set<Path> fontPaths = new HashSet<>();
+		
+		for(Attachment a : fontAttachments){
+			fontPaths.add(extractedAttachments.get(a));
+
+		}
+		ExtractedFontAttachmentsProxy proxy = (ExtractedFontAttachmentsProxy)facade.retrieveProxy(ExtractedFontAttachmentsProxy.PROXY_NAME);
+		proxy.add(fontPaths);
 	}
 }
