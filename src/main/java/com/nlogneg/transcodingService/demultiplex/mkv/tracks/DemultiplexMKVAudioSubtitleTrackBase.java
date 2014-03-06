@@ -1,6 +1,6 @@
 package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
-import java.util.Set;
+import java.util.Collection;
 
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
@@ -13,7 +13,7 @@ public abstract class DemultiplexMKVAudioSubtitleTrackBase extends DemultiplexMK
 	 * @param summary The summary object
 	 * @return A set of media tracks
 	 */
-	protected abstract Set<? extends MediaTrack> getMediaTracks(MediaInfoTrackSummary summary);
+	protected abstract Collection<? extends MediaTrack> getMediaTracks(MediaInfoTrackSummary summary);
 	
 	@Override
 	protected final MediaTrack getTrackToDemultiplex(MediaInfo mediaInfo){
@@ -33,7 +33,7 @@ public abstract class DemultiplexMKVAudioSubtitleTrackBase extends DemultiplexMK
 	private MediaTrack deduceMostLikelyTrack(MediaInfo mediaInfo){
 		MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(mediaInfo);
 
-		Set<? extends MediaTrack> mediaTracks = getMediaTracks(summary);
+		Collection<? extends MediaTrack> mediaTracks = getMediaTracks(summary);
 		MediaTrack selectedTrack = null;
 
 		for(MediaTrack track : mediaTracks){

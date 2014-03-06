@@ -22,8 +22,9 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	 * @param trackToOutputMap
 	 */
 	public DemultiplexMKVJob(Path mediaFile,
-			Map<Attachment, Path> attachmentToOutputMap,
-			Map<Track, Path> trackToOutputMap) {
+			Map<Attachment, 
+			Path> attachmentToOutputMap,
+			Map<Track, Path> trackToOutputMap){
 		super(mediaFile);
 		this.attachmentToOutputMap = attachmentToOutputMap;
 		this.trackToOutputMap = trackToOutputMap;
@@ -31,13 +32,13 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	/**
 	 * @return the attachmentToOutputMap
 	 */
-	public Map<Attachment, Path> getAttachmentToOutputMap() {
+	public Map<Attachment, Path> getAttachmentToOutputMap(){
 		return attachmentToOutputMap;
 	}
 	/**
 	 * @return the trackToOutputMap
 	 */
-	public Map<Track, Path> getTrackToOutputMap() {
+	public Map<Track, Path> getTrackToOutputMap(){
 		return trackToOutputMap;
 	}
 }

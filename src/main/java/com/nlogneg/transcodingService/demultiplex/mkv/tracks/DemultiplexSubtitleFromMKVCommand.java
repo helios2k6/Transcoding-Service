@@ -1,7 +1,7 @@
 package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import java.nio.file.Path;
-import java.util.Set;
+import java.util.Collection;
 
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
@@ -14,7 +14,7 @@ import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 public class DemultiplexSubtitleFromMKVCommand extends DemultiplexMKVAudioSubtitleTrackBase{
 
 	@Override
-	protected Set<? extends MediaTrack> getMediaTracks(MediaInfoTrackSummary summary) {
+	protected Collection<? extends MediaTrack> getMediaTracks(MediaInfoTrackSummary summary) {
 		return summary.getSubtitleTracks();
 	}
 
