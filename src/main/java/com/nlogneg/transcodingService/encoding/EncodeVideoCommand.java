@@ -2,10 +2,8 @@ package com.nlogneg.transcodingService.encoding;
 
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,7 +22,6 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
  *
  */
 public final class EncodeVideoCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
-	private static final AtomicInteger Counter = new AtomicInteger();
 	private static final Logger Log = LogManager.getLogger(EncodeVideoCommand.class);
 	
 	private final DecoderArgumentBuilder decoderBuilder;
@@ -58,8 +55,7 @@ public final class EncodeVideoCommand extends SimpleCommand implements Completio
 		}
 		
 		//Start encoder
-		Path encodedOutputFile = Paths.get("temp_encoded_file_" + Counter.incrementAndGet() + ".264");
-		Optional<Process> encoder = startEncoder(job, encodedOutputFile);
+		Optional<Process> encoder = startEncoder(job, job.getDestinationFilePath());
 		if(encoder.isNone()){
 			Log.error("Could not begin x264 encoder process");
 			ProcessUtils.tryCloseProcess(decoder);

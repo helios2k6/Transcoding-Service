@@ -10,6 +10,8 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoProxy;
@@ -48,12 +50,8 @@ public abstract class DemultiplexMKVMediaTrackCommand extends SimpleCommand{
 
 		boolean processResult = runExternalProcess(mkvJob, track, outputName, argument);
 
-		if(processResult){
-			Facade facade = getFacade();
-			ExtractedTracksProxy proxy = (ExtractedTracksProxy)facade.retrieveProxy(ExtractedTracksProxy.PROXY_NAME);
-			Path extractedTrackPath = Paths.get(outputName);
-			proxy.put(mkvJob.getMediaFile(), track, extractedTrackPath);
-		}
+		//TODO: WE NEED TO FLAG THE MASTER JOB COORDINATOR OR SOMETHING HERE
+		throw new NotImplementedException();
 	}
 
 	private boolean runExternalProcess(

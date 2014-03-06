@@ -20,14 +20,12 @@ import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
 /**
- * Processes the audio track of a given EncodingJob
+ * Encodes or processes the audio track of a given Encoding Job
  * @author anjohnson
  *
  */
-public class ProcessAudioCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
-	private static final AtomicInteger IdGenerator = new AtomicInteger();
-	
-	private static final Logger Log = LogManager.getLogger(ProcessAudioCommand.class);
+public class EncodeAudioCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
+	private static final Logger Log = LogManager.getLogger(EncodeAudioCommand.class);
 	public void execute(INotification notification){
 		EncodingJob job = (EncodingJob)notification.getBody();
 		AudioTrackOption audioOption = job.getAudioTrackOption();
@@ -48,18 +46,14 @@ public class ProcessAudioCommand extends SimpleCommand implements CompletionHand
 			return;
 		}
 		
-		Path outputFilePath = generateOutputFilePath(audioTrackPathOptional.getValue());
 		EncoderArgumentBuilder builder = new NeroAacArgumentBuilder();
-		List<String> arguments = builder.getEncoderArguments(job, outputFilePath);
+		List<String> arguments = builder.getEncoderArguments(job, job.getOutputAudioFile());
 		Optional<Process> process = ProcessUtils.tryStartProcess(new ProcessBuilder(arguments));
 		
 		if(process.isNone()){
 			Log.error("Could not start neroAacEnc process");;
 			return;
 		}
-		
-		EncodedAudioFileProxy proxy = (EncodedAudioFileProxy)getFacade().retrieveProxy(EncodedAudioFileProxy.PROXY_NAME);
-		proxy.put(job, outputFilePath);
 		
 		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
 		ExecutorService service = executorProxy.getService();
@@ -69,18 +63,6 @@ public class ProcessAudioCommand extends SimpleCommand implements CompletionHand
 		service.submit(signaler);
 	}
 	
-	private static Path generateOutputFilePath(Path audioTrackFile){
-		String audioTrackFileName = audioTrackFile.getFileName().toString();
-		StringBuilder builder = new StringBuilder();
-		
-		builder.append(audioTrackFileName);
-		builder.append("_");
-		builder.append(IdGenerator.incrementAndGet());
-		builder.append(".m4a");
-		
-		return Paths.get(builder.toString());
-	}
-
 	/* (non-Javadoc)
 	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
 	 */

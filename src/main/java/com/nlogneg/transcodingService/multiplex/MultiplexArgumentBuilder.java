@@ -1,6 +1,8 @@
-package com.nlogneg.transcodingService.encoding;
+package com.nlogneg.transcodingService.multiplex;
 
 import java.util.List;
+
+import com.nlogneg.transcodingService.encoding.EncodingJob;
 
 /**
  * Represents an object that can get the multiplexing arguments for an 

@@ -20,55 +20,64 @@ public final class EncodingJob{
 	private final MediaInfo mediaInfo;
 	private final AudioTrackOption audioTrackOption;
 	private final SubtitleTrackOption subtitleTrackOption;
+	private final Path outputVideoFile;
+	private final Path outputAudioFile;
 
 	/**
 	 * @param request
 	 * @param mediaInfo
 	 * @param audioTrackOption
 	 * @param subtitleTrackOption
+	 * @param outputVideoFile
+	 * @param outputAudioFile
 	 */
-	public EncodingJob(Request request, MediaInfo mediaInfo,
+	public EncodingJob(Request request, 
+			MediaInfo mediaInfo,
 			AudioTrackOption audioTrackOption,
-			SubtitleTrackOption subtitleTrackOption) {
+			SubtitleTrackOption subtitleTrackOption,
+			Path outputVideoFile,
+			Path outputAudioFile){
 		this.id = IDSeed.incrementAndGet();
 		this.request = request;
 		this.mediaInfo = mediaInfo;
 		this.audioTrackOption = audioTrackOption;
 		this.subtitleTrackOption = subtitleTrackOption;
+		this.outputVideoFile = outputVideoFile;
+		this.outputAudioFile = outputAudioFile;
 	}
 
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public long getId(){
 		return id;
 	}
 
 	/**
 	 * @return the request
 	 */
-	public Request getRequest() {
+	public Request getRequest(){
 		return request;
 	}
 
 	/**
 	 * @return the mediaInfo
 	 */
-	public MediaInfo getMediaInfo() {
+	public MediaInfo getMediaInfo(){
 		return mediaInfo;
 	}
 
 	/**
 	 * @return the audioTrackOption
 	 */
-	public AudioTrackOption getAudioTrackOption() {
+	public AudioTrackOption getAudioTrackOption(){
 		return audioTrackOption;
 	}
 
 	/**
 	 * @return the subtitleTrackOption
 	 */
-	public SubtitleTrackOption getSubtitleTrackOption() {
+	public SubtitleTrackOption getSubtitleTrackOption(){
 		return subtitleTrackOption;
 	}
 	
@@ -86,5 +95,19 @@ public final class EncodingJob{
 	 */
 	public Path getDestinationFilePath(){
 		return Paths.get(request.getDestinationFile());
+	}
+
+	/**
+	 * @return the output video file
+	 */
+	public Path getOutputVideoFile(){
+		return outputVideoFile;
+	}
+	
+	/**
+	 * @return the output audio file
+	 */
+	public Path getOutputAudioFile(){
+		return outputAudioFile;
 	}
 }
