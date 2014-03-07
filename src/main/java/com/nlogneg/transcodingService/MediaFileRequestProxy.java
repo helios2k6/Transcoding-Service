@@ -48,4 +48,5 @@ public class MediaFileRequestProxy extends Proxy{
 	public Optional<MediaFileRequest> remove(Path path){
 		return Optional.make(requestMap.remove(path));
 	}
+	
 }

@@ -2,10 +2,8 @@ package com.nlogneg.transcodingService.encoding;
 
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
