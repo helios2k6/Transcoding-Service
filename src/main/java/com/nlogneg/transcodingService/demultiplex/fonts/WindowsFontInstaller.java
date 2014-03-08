@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts;
+package com.nlogneg.transcodingService.demultiplex.fonts;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -11,12 +11,14 @@ import org.apache.log4j.Logger;
  * @author anjohnson
  *
  */
-public final class InstallWindowsFontsCommand extends InstallFontsCommand{
-	private static final Logger Log = LogManager.getLogger(InstallWindowsFontsCommand.class);
+public final class WindowsFontInstaller implements FontInstaller{
+	private static final Logger Log = LogManager.getLogger(WindowsFontInstaller.class);
 	
 	@Override
-	protected void installFonts(Collection<Path> fontFiles){
+	public boolean installFonts(Collection<Path> fonts, Path fontFolder){
 		Log.info("Installing Windows fonts");
 		Log.warn("This does not install fonts on Windows.");
+		
+		return true;
 	}
 }

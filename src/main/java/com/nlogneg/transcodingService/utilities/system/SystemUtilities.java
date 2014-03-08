@@ -11,7 +11,12 @@ import org.apache.log4j.Logger;
 public final class SystemUtilities{
 	private static final Logger Log = LogManager.getLogger(SystemUtilities.class);
 	
-	private enum OperatingSystem{
+	/**
+	 * Denotes the Operating System
+	 * @author Andrew
+	 *
+	 */
+	public enum OperatingSystem{
 		UnixLike,
 		Windows,
 	}
@@ -49,6 +54,14 @@ public final class SystemUtilities{
 		default:
 			throw new RuntimeException("Unable to determine operating system.");
 		}
+	}
+	
+	/**
+	 * Gets the Operating System 
+	 * @return
+	 */
+	public static OperatingSystem getOperatingSystem(){
+		return OS;
 	}
 	
 	/**

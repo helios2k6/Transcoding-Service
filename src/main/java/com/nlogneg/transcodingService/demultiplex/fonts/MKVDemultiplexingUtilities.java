@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts;
+package com.nlogneg.transcodingService.demultiplex.fonts;
 
 import java.util.Collection;
 import java.util.HashSet;

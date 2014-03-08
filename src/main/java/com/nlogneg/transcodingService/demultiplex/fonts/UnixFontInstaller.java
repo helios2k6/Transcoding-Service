@@ -1,4 +1,4 @@
-package com.nlogneg.transcodingService.demultiplex.mkv.attachments.fonts;
+package com.nlogneg.transcodingService.demultiplex.fonts;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,6 @@ import java.util.Collection;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 
 /**
@@ -17,37 +16,41 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
  * @author anjohnson
  *
  */
-public final class InstallLinuxFontsCommand extends InstallFontsCommand{
-	private static final Logger Log = LogManager.getLogger(InstallLinuxFontsCommand.class);
+public final class UnixFontInstaller implements FontInstaller{
+	private static final Logger Log = LogManager.getLogger(UnixFontInstaller.class);
 	
 	private static final String FontCacheProcessName = "fc-cache";
 	private static final String ForceRefreshArgument = "-f";
 	private static final String VerboseArgument = "-v";
 	
 	@Override
-	protected void installFonts(Collection<Path> fontFiles) {
+	public boolean installFonts(Collection<Path> fonts, Path fontFolder) {
 		Log.info("Installing fonts on Linux");
 		
-		ServerConfigurationProxy proxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
-		Path fontFolder = proxy.getConfigurationFile().getFontFolder();
+		boolean moveResult = moveAllFonts(fonts, fontFolder);
+		boolean refreshResult = refreshFontCache();
 		
-		moveAllFonts(fontFiles, fontFolder);
-		refreshFontCache();
+		Log.info("Finished installing fonts.");
+		return moveResult && refreshResult;
 	}
 
-	private static void moveAllFonts(Collection<Path> fontFiles, Path fontFolder){
+	private static boolean moveAllFonts(Collection<Path> fontFiles, Path fontFolder){
+		boolean result = true;
 		for(Path fontFile : fontFiles){
 			Path destFontFile = fontFolder.resolve(fontFile.getFileName());
 			Log.info("Installing font file: " + fontFile.toAbsolutePath().toString() + " to: " + destFontFile.toAbsolutePath().toString());
 			try{
 				Files.copy(fontFile, destFontFile);
 			}catch (IOException e){
-				Log.error("Could not move font.", e);;
+				Log.error("Could not move font.", e);
+				result = false;
 			}
 		}
+		
+		return result;
 	}
 	
-	private static void refreshFontCache(){
+	private static boolean refreshFontCache(){
 		ProcessBuilder builder = new ProcessBuilder(FontCacheProcessName, ForceRefreshArgument, VerboseArgument);
 		Log.info("Refreshing font cache");
 		
@@ -64,10 +67,14 @@ public final class InstallLinuxFontsCommand extends InstallFontsCommand{
 			
 			Log.debug("Font cache standard out result:\n" + standardOutResult);
 			Log.debug("Font cache standard error result:\n" + standardErrorResult);
+			
+			return true;
 		}catch (IOException e){
 			Log.error("Could not refresh font cache.", e);
 		}catch (InterruptedException e){
 			Log.error("Thread interrupted on process.waitFor().", e);
 		}
+		
+		return false;
 	}
 }

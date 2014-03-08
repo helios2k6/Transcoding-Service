@@ -14,6 +14,7 @@ import com.nlogneg.transcodingService.info.mkv.Attachment;
  */
 public final class DemultiplexMKVJob extends DemultiplexJob{
 	private final Map<Attachment, Path> attachmentToOutputMap;
+	private final Map<Attachment, Path> fontAttachmentMap;
 	private final Map<Track, Path> trackToOutputMap;
 	
 	/**
@@ -22,23 +23,34 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	 * @param trackToOutputMap
 	 */
 	public DemultiplexMKVJob(Path mediaFile,
-			Map<Attachment, 
-			Path> attachmentToOutputMap,
-			Map<Track, Path> trackToOutputMap){
+			Map<Attachment, Path> attachmentToOutputMap,
+			Map<Track, Path> trackToOutputMap,
+			Map<Attachment, Path> fontAttachmentMap){
 		super(mediaFile);
 		this.attachmentToOutputMap = attachmentToOutputMap;
 		this.trackToOutputMap = trackToOutputMap;
+		this.fontAttachmentMap = fontAttachmentMap;
 	}
+	
 	/**
 	 * @return the attachmentToOutputMap
 	 */
 	public Map<Attachment, Path> getAttachmentToOutputMap(){
 		return attachmentToOutputMap;
 	}
+	
 	/**
 	 * @return the trackToOutputMap
 	 */
 	public Map<Track, Path> getTrackToOutputMap(){
 		return trackToOutputMap;
 	}
+	
+	/**
+	 * @return the fontAttachmentMap
+	 */
+	public Map<Attachment, Path> getFontAttachmentMap() {
+		return fontAttachmentMap;
+	}
+	
 }
