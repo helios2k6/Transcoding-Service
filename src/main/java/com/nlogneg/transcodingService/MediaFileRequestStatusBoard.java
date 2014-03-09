@@ -15,18 +15,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  *
  */
 public final class MediaFileRequestStatusBoard{
-	/**
-	 * The row of statuses for a particular MediaFileRequest
-	 * @author Andrew
-	 *
-	 */
-	private final class StatusRowEntry{
-		public volatile JobStatus DemultiplexJobStatus = JobStatus.Pending;
-		public volatile JobStatus EncodingJobStatus = JobStatus.Pending;
-		public volatile JobStatus MultiplexJobStatus = JobStatus.Pending;
-	}
-	
-	private final ConcurrentMap<MediaFileRequest, StatusRowEntry> statusBoard = new ConcurrentHashMap<>();
+	private final ConcurrentMap<MediaFileRequest, MediaFileRequestStatus> statusBoard = new ConcurrentHashMap<>();
 	private final ConcurrentMap<DemultiplexJob, MediaFileRequest> demultiplexJobToRequestMap = new ConcurrentHashMap<>();
 	private final ConcurrentMap<EncodingJob, MediaFileRequest> encodingJobToRequestMap = new ConcurrentHashMap<>();
 	private final ConcurrentMap<MultiplexJob, MediaFileRequest> multiplexJobToRequestMap = new ConcurrentHashMap<>();
@@ -36,7 +25,7 @@ public final class MediaFileRequestStatusBoard{
 	 * @param request
 	 */
 	public void addMediaFileRequest(MediaFileRequest request){
-		StatusRowEntry rowEntry = new StatusRowEntry();
+		MediaFileRequestStatus rowEntry = new MediaFileRequestStatus();
 		
 		statusBoard.put(request, rowEntry);
 		demultiplexJobToRequestMap.put(request.getDemultiplexJob(), request);
@@ -50,13 +39,13 @@ public final class MediaFileRequestStatusBoard{
 	 * @param map
 	 * @return
 	 */
-	private <T> Optional<StatusRowEntry> tryGetStatusRowEntry(T job, Map<T, MediaFileRequest> map){
+	private <T> Optional<MediaFileRequestStatus> tryGetStatusRowEntry(T job, Map<T, MediaFileRequest> map){
 		MediaFileRequest request = map.get(job);
 		if(request == null){
 			return Optional.none();
 		}
 		
-		StatusRowEntry row = statusBoard.get(request);
+		MediaFileRequestStatus row = statusBoard.get(request);
 		return Optional.make(row);
 	}
 	
@@ -66,12 +55,12 @@ public final class MediaFileRequestStatusBoard{
 	 * @param status
 	 */
 	public void updateJobStatus(DemultiplexJob job, JobStatus status){
-		Optional<StatusRowEntry> rowEntry = tryGetStatusRowEntry(job, demultiplexJobToRequestMap);
+		Optional<MediaFileRequestStatus> rowEntry = tryGetStatusRowEntry(job, demultiplexJobToRequestMap);
 		if(rowEntry.isNone()){
 			return;
 		}
 		
-		rowEntry.getValue().DemultiplexJobStatus = status;
+		rowEntry.getValue().setDemultiplexJobStatus(status);
 	}
 
 	/**
@@ -80,12 +69,12 @@ public final class MediaFileRequestStatusBoard{
 	 * @param status
 	 */
 	public void updateJobStatus(EncodingJob job, JobStatus status){
-		Optional<StatusRowEntry> rowEntry = tryGetStatusRowEntry(job, encodingJobToRequestMap);
+		Optional<MediaFileRequestStatus> rowEntry = tryGetStatusRowEntry(job, encodingJobToRequestMap);
 		if(rowEntry.isNone()){
 			return;
 		}
 		
-		rowEntry.getValue().EncodingJobStatus = status;
+		rowEntry.getValue().setEncodingJobStatus(status);
 	}
 	
 	/**
@@ -94,11 +83,11 @@ public final class MediaFileRequestStatusBoard{
 	 * @param status
 	 */
 	public void updateJobStatus(MultiplexJob job, JobStatus status){
-		Optional<StatusRowEntry> rowEntry = tryGetStatusRowEntry(job, multiplexJobToRequestMap);
+		Optional<MediaFileRequestStatus> rowEntry = tryGetStatusRowEntry(job, multiplexJobToRequestMap);
 		if(rowEntry.isNone()){
 			return;
 		}
 		
-		rowEntry.getValue().MultiplexJobStatus = status;
+		rowEntry.getValue().setMultiplexJobStatus(status);
 	}
 }

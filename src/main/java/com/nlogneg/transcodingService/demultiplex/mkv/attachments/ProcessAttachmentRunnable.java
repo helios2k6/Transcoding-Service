@@ -58,7 +58,7 @@ public final class ProcessAttachmentRunnable implements Runnable{
 	}
 
 	private static boolean extractAttachments(DemultiplexMKVJob job){
-		Map<Attachment, Path> attachments = job.getAttachmentToOutputMap();
+		Map<Attachment, Path> attachments = job.getAttachmentMap();
 		Set<Attachment> keyRing = attachments.keySet();
 		boolean successfullyExtractedAllAttachments = true;
 		

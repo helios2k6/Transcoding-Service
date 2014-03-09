@@ -42,4 +42,20 @@ public final class ProcessUtils{
 			process.getValue().destroy();
 		}
 	}
+	
+	/**
+	 * Trys to wait for a process to end
+	 * @param process
+	 * @return
+	 */
+	public static boolean tryWaitForProcess(Process process){
+		try {
+			process.waitFor();
+		}catch (InterruptedException e){
+			Log.error("Process waiting interrupted.", e);
+			return false;
+		}
+		
+		return true;
+	}
 }

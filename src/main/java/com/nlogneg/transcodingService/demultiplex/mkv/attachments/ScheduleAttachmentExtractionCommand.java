@@ -36,14 +36,12 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 		executorProxy.getService().submit(runnable);
 	}
 
-	
-	
 	/* (non-Javadoc)
 	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
 	 */
 	@Override
 	public void completed(Void result, DemultiplexMKVJob attachment){
-		Log.info("Attachment Extraction Successful for: " + attachment.getMediaFile());
+		Log.info("Attachment processing successful for: " + attachment.getMediaFile());
 		throw new RuntimeException("Gotta finish this method up. Let's use a Demultiplex Controller");
 	}
 
@@ -52,7 +50,7 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	 */
 	@Override
 	public void failed(Throwable exc, DemultiplexMKVJob attachment) {
-		Log.info("Attachment extraction failure for: " + attachment.getMediaFile());
+		Log.info("Attachment processing failed for: " + attachment.getMediaFile());
 		throw new RuntimeException("Gotta finish this method up. Let's use a Demultiplex Controller");
 	}
 }
