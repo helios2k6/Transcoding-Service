@@ -9,6 +9,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
+import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstaller;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstallerFactory;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
@@ -40,17 +41,17 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void completed(Void result, DemultiplexMKVJob attachment){
-		Log.info("Attachment processing successful for: " + attachment.getMediaFile());
-		throw new RuntimeException("Gotta finish this method up. Let's use a Demultiplex Controller");
+	public void completed(Void result, DemultiplexMKVJob job){
+		Log.info("Attachment processing successful for: " + job.getMediaFile());
+		sendNotification(Notifications.DemultiplexAttachmentCommandSuccessNotification, job);
 	}
 
 	/* (non-Javadoc)
 	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
 	 */
 	@Override
-	public void failed(Throwable exc, DemultiplexMKVJob attachment) {
-		Log.info("Attachment processing failed for: " + attachment.getMediaFile());
-		throw new RuntimeException("Gotta finish this method up. Let's use a Demultiplex Controller");
+	public void failed(Throwable exc, DemultiplexMKVJob job) {
+		Log.info("Attachment processing failed for: " + job.getMediaFile());
+		sendNotification(Notifications.DemultiplexAttachmentCOmmandFailureNotification, job);
 	}
 }

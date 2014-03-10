@@ -1,10 +1,8 @@
 package com.nlogneg.transcodingService.utilities.threads;
 
-import java.nio.channels.CompletionHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -17,18 +15,13 @@ import org.apache.log4j.Logger;
  * @author Andrew
  *
  */
-public final class InterProcessPipe<T> implements Runnable{
+public final class InterProcessPipe{
 	private static final Logger Log = LogManager.getLogger(InterProcessPipe.class);
 	
-	private static final AtomicLong IdGenerator = new AtomicLong();
-	
-	private final long id;
 	private final BlockingQueue<byte[]> queue = new LinkedBlockingQueue<>();
 	private final ProcessReader reader;
 	private final ProcessWriter writer;
 	private final ExecutorService service;
-	private final T t;
-	private final CompletionHandler<Void, T> completionHandler;
 	
 	private volatile boolean isCancelled = false;
 	private volatile boolean isFinished = false;
@@ -38,30 +31,18 @@ public final class InterProcessPipe<T> implements Runnable{
 	 * @param source The source process
 	 * @param sink The sink process
 	 * @param service The executor service
-	 * @param completionHandler The callback
-	 * @param t The payload to associate with this InterProcessPipe
-	 * @param completionHandler The completion handler to call when this process is finished
 	 * 
 	 */
-	public InterProcessPipe(Process source, Process sink, ExecutorService service, T t, CompletionHandler<Void, T> completionHandler){
-		this.id = IdGenerator.incrementAndGet();
+	public InterProcessPipe(Process source, Process sink, ExecutorService service){
 		this.reader = new ProcessReader(source, source.getInputStream(), service, queue);
 		this.writer = new ProcessWriter(sink, sink.getOutputStream(), service, queue);
 		this.service = service;
-		this.t = t;
-		this.completionHandler = completionHandler;
 	}
 	
 	/**
-	 * Get the id
-	 * @return
+	 * Pipes data between two processes
 	 */
-	public long getId(){
-		return id;
-	}
-	
-	@Override
-	public void run(){
+	public void pipe(){
 		Log.info("Processing inter-process communication");
 		
 		service.submit(reader);
@@ -85,11 +66,6 @@ public final class InterProcessPipe<T> implements Runnable{
 		if(isCancelled){
 			reader.cancel();
 			writer.cancel();
-			completionHandler.failed(null, t);
-		}
-		
-		if(isFinished){
-			completionHandler.completed(null, t);
 		}
 	}
 	
@@ -106,5 +82,13 @@ public final class InterProcessPipe<T> implements Runnable{
 	 */
 	public void cancel(){
 		isCancelled = true;
+	}
+	
+	/**
+	 * Gets whether this pipe finished
+	 * @return
+	 */
+	public boolean isFinished(){
+		return isFinished;
 	}
 }

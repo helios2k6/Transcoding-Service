@@ -21,8 +21,8 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
  * @author anjohnson
  *
  */
-public final class EncodeVideoCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
-	private static final Logger Log = LogManager.getLogger(EncodeVideoCommand.class);
+public final class ScheduleVideoEncodeCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
+	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
 	
 	private final DecoderArgumentBuilder decoderBuilder;
 	private final EncoderArgumentBuilder encoderBuilder;
@@ -31,7 +31,7 @@ public final class EncodeVideoCommand extends SimpleCommand implements Completio
 	 * @param decoderBuilder
 	 * @param encoderBuilder
 	 */
-	public EncodeVideoCommand(
+	public ScheduleVideoEncodeCommand(
 			DecoderArgumentBuilder decoderBuilder,
 			EncoderArgumentBuilder encoderBuilder){
 		this.decoderBuilder = decoderBuilder;

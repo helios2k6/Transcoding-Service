@@ -25,4 +25,12 @@ public final class Notifications {
 	public static final String EncodeAudioCommandSuccessNotification = "EncodeAudioCommandSuccessNotification";
 	
 	public static final String EncodeAudioCommandFailureNotification = "EncodeAudioCommandFailureNotification";
+	
+	public static final String DemultiplexTrackCommandSuccessNotification = "DemultiplexTrackCommandSuccessNotification";
+	
+	public static final String DemultiplexTrackCommandFailureNotification = "DemultiplexTrackCommandFailureNotification";
+	
+	public static final String DemultiplexAttachmentCommandSuccessNotification = "DemultiplexAttachmentCommandSuccessNotification";
+	
+	public static final String DemultiplexAttachmentCOmmandFailureNotification = "DemultiplexAttachmentCOmmandFailureNotification";
 }
