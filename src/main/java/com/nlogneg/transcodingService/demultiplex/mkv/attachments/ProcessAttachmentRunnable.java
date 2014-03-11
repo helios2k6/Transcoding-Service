@@ -1,6 +1,5 @@
 package com.nlogneg.transcodingService.demultiplex.mkv.attachments;
 
-import java.io.IOException;
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
 import java.util.Map;
@@ -12,6 +11,8 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstaller;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
+import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
@@ -86,16 +87,12 @@ public final class ProcessAttachmentRunnable implements Runnable{
 				job.getMediaFile().toAbsolutePath().toString(),
 				extractedAttachmentArgument.toString());
 		
-		try{
-			Process process = builder.start();
-			process.waitFor();
-			return true;
-		}catch (IOException e){
-			Log.error("An error occurred while extracting attachments.", e);
-		}catch (InterruptedException e){
-			Log.error("This thread was interrupted while waiting for an external process to end.", e);
+		Optional<Process> processOptional = ProcessUtils.tryStartProcess(builder);
+		if(processOptional.isNone()){
+			Log.error("Could not start process for attachment extraction");
+			return false;
 		}
 		
-		return false;
+		return ProcessUtils.tryWaitForProcess(processOptional.getValue());
 	}
 }

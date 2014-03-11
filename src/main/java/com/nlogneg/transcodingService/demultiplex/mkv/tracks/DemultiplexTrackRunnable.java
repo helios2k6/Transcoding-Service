@@ -19,8 +19,8 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  *
  */
-public final class TrackDemultiplexer implements Runnable{
-	private static final Logger Log = LogManager.getLogger(TrackDemultiplexer.class);
+public final class DemultiplexTrackRunnable implements Runnable{
+	private static final Logger Log = LogManager.getLogger(DemultiplexTrackRunnable.class);
 	private static final String TracksArgument = "tracks";
 	
 	private final DemultiplexMKVJob job;
@@ -30,7 +30,7 @@ public final class TrackDemultiplexer implements Runnable{
 	 * @param job
 	 * @param asyncCallback
 	 */
-	public TrackDemultiplexer(
+	public DemultiplexTrackRunnable(
 			DemultiplexMKVJob job,
 			CompletionHandler<Void, DemultiplexMKVJob> asyncCallback){
 		this.job = job;

@@ -25,7 +25,7 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 	@Override
 	public void execute(INotification notification){
 		DemultiplexMKVJob job = (DemultiplexMKVJob)notification.getBody();
-		TrackDemultiplexer multiplexer = new TrackDemultiplexer(job, this);
+		DemultiplexTrackRunnable multiplexer = new DemultiplexTrackRunnable(job, this);
 		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
 		ExecutorService service = proxy.getService();
 		service.submit(multiplexer);
