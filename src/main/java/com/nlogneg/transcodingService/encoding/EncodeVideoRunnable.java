@@ -24,9 +24,10 @@ public final class EncodeVideoRunnable implements Runnable{
 	private final CompletionHandler<Void, EncodingJob> callback;
 	private final ExecutorService service;
 	private final Lock lock = new ReentrantLock();
-	//TODO MAKE CANCELLABLE
+
 	private volatile Thread runningThread;
 	private volatile boolean isCancelled;
+	private volatile InterProcessPipe pipe;
 	
 	/**
 	 * @param job
@@ -52,37 +53,41 @@ public final class EncodeVideoRunnable implements Runnable{
 	 */
 	@Override
 	public void run(){
+		setThread();
 		executeJob();
 	}
 	
-	private void executeJob(){
-		//Start decoder
-		Optional<Process> decoder = startDecoder(job);
-		if(decoder.isNone()){
-			Log.error("Could not begin ffmpeg decoder process for: " + job.getRequest().getSourceFile());
-			return;
-		}
+	public void cancel(){
+		lock.lock();
+		isCancelled = true;
 		
-		//Start encoder
-		Optional<Process> encoder = startEncoder(job, job.getDestinationFilePath());
-		if(encoder.isNone()){
-			Log.error("Could not begin x264 encoder process");
-			ProcessUtils.tryCloseProcess(decoder);
-			return;
+		if(runningThread != null){
+			runningThread.interrupt();
 		}
-		
-		//Hook up pipe between the two
-		InterProcessPipe pipe = new InterProcessPipe(decoder.getValue(), encoder.getValue(), service);
-		pipe.pipe();
+		lock.unlock();
 	}
 	
-	private Optional<Process> startEncoder(EncodingJob job, Path outputFile){
+	private void setThread(){
+		lock.lock();
+		runningThread = Thread.currentThread();
+		lock.unlock();
+	}
+	
+	private void executeJob(){
+		//HOOK UP RUNNABLE
+	}
+	
+	private static Optional<InterProcessPipe> startPipe(Process decoder, Process encoder, ExecutorService service){
+		return Optional.make(new InterProcessPipe(decoder, encoder, service));
+	}
+	
+	private static Optional<Process> startEncoder(EncodingJob job, EncoderArgumentBuilder encoderBuilder, Path outputFile){
 		List<String> encodingOptions = encoderBuilder.getEncoderArguments(job, outputFile);
 		ProcessBuilder processBuilder = new ProcessBuilder(encodingOptions);
 		return ProcessUtils.tryStartProcess(processBuilder);
 	}
 	
-	private Optional<Process> startDecoder(EncodingJob job){
+	private static Optional<Process> startDecoder(EncodingJob job, DecoderArgumentBuilder decoderBuilder){
 		List<String> decodingOptions = decoderBuilder.getDecoderArguments(job);
 		ProcessBuilder processBuilder = new ProcessBuilder(decodingOptions);
 		return ProcessUtils.tryStartProcess(processBuilder);

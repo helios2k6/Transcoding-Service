@@ -66,13 +66,14 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
 		ExecutorService service = executorProxy.getService();
 		
+		/*
 		InterProcessPipe<EncodingJob> pipe = new InterProcessPipe<EncodingJob>(
 				decoder.getValue(), 
 				encoder.getValue(),
 				service,
 				job, 
 				this);
-		
+		*/
 		//Submit to executor
 		service.submit(pipe);
 	}
