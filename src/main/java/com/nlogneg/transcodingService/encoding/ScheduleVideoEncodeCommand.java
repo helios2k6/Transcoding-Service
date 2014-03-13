@@ -75,7 +75,7 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 				this);
 		*/
 		//Submit to executor
-		service.submit(pipe);
+		//service.submit(pipe);
 	}
 	
 	private Optional<Process> startEncoder(EncodingJob job, Path outputFile){
