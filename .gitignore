@@ -2,3 +2,4 @@ _Resharper*
 bin*
 obj*
 *.suo
+src/Media Information Service/packages/*

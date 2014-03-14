@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MediaInformationServicesRequest>
 	<Files>
-		<File>file://path/to/file.mkv<File>
-		<File>file://path/to/file2.mkv</File>
+		<File>
+			<Path>file://path/to/file.mkv</Path>
+		</File>
+		<File>
+			<Path>file://path/to/file2.mkv</Path>
+		</File>
 	</Files>
 </MediaInformationServicesRequest>
