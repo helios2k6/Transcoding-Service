@@ -15,9 +15,9 @@ import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
  * @author Andrew
  *
  */
-public class EncodeFileRunnable implements Runnable{
+public class EncodeAudioRunnable implements Runnable{
 
-	private static final Logger Log = LogManager.getLogger(EncodeFileRunnable.class);
+	private static final Logger Log = LogManager.getLogger(EncodeAudioRunnable.class);
 	
 	private final EncodingJob job;
 	private final CompletionHandler<Void, EncodingJob> callback;
@@ -28,7 +28,7 @@ public class EncodeFileRunnable implements Runnable{
 	 * @param callback
 	 * @param encoderArgumentBuilder
 	 */
-	public EncodeFileRunnable(
+	public EncodeAudioRunnable(
 			EncodingJob job,
 			CompletionHandler<Void, EncodingJob> callback,
 			EncoderArgumentBuilder encoderArgumentBuilder){

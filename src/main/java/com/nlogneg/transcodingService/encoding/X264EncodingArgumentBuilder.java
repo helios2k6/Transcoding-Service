@@ -1,12 +1,10 @@
 package com.nlogneg.transcodingService.encoding;
 
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import com.nlogneg.transcodingService.request.incoming.EncodingSettings;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
@@ -47,8 +45,7 @@ public final class X264EncodingArgumentBuilder implements EncoderArgumentBuilder
 		return arguments;
 	}
 	
-	private static Collection<String> getEncodingOptions(EncodingJob job){
-		//TODO: Have to finish this
-		throw new NotImplementedException();
+	private static List<String> getEncodingOptions(EncodingJob job){
+		return EncodingSettings.convertToArguments(job.getRequest().getEncodingSettings());
 	}
 }

@@ -32,7 +32,7 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements Compl
 		
 		Log.info("Scheduling audio encode for: " + job.getSourceFilePath());
 		
-		EncodeFileRunnable runnable = new EncodeFileRunnable(job, this, new NeroAacArgumentBuilder());
+		EncodeAudioRunnable runnable = new EncodeAudioRunnable(job, this, new NeroAacArgumentBuilder());
 		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
 		proxy.getService().submit(runnable);
 	}
