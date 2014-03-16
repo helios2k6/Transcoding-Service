@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 using MediaInformationService.Thirdparty;
-using MediaInformationService.XML.Request;
+using MediaInformationService.XML.Internal.Request;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using YAXLib;
 
@@ -20,7 +20,7 @@ namespace Unit_Tests
 		public void DeserializeRequest()
 		{
 			var deserializer = new DataContractSerializer(typeof(MediaInformationServicesRequest));
-			using (var stringReader = new StringReader(XmlStrings.ValidXMLRequest))
+			using (var stringReader = new StringReader(XmlStrings.ValidXmlRequest))
 			{
 				using (var xmlReader = new XmlTextReader(stringReader))
 				{
@@ -31,8 +31,8 @@ namespace Unit_Tests
 					var firstPath = actualRequest.Files.ElementAt(0);
 					var secondPath = actualRequest.Files.ElementAt(1);
 
-					Assert.IsTrue(XmlStrings.ValidXMLExpectedPath1.Equals(firstPath.Path, StringComparison.OrdinalIgnoreCase));
-					Assert.IsTrue(XmlStrings.ValidXMLExpectedPath2.Equals(secondPath.Path, StringComparison.OrdinalIgnoreCase));
+					Assert.IsTrue(XmlStrings.ValidXmlExpectedPath1.Equals(firstPath.Path, StringComparison.OrdinalIgnoreCase));
+					Assert.IsTrue(XmlStrings.ValidXmlExpectedPath2.Equals(secondPath.Path, StringComparison.OrdinalIgnoreCase));
 				}
 			}
 		}
@@ -42,15 +42,15 @@ namespace Unit_Tests
 		{
 			var deserializer = new YAXSerializer(typeof(MediaInformationServicesRequest));
 			MediaInformationServicesRequest actualRequest;
-			if (deserializer.TryDeserialize(XmlStrings.ValidXMLRequest, out actualRequest))
+			if (deserializer.TryDeserialize(XmlStrings.ValidXmlRequest, out actualRequest))
 			{
 				Assert.AreEqual(2, actualRequest.Files.Count());
 
 				var firstPath = actualRequest.Files.ElementAt(0);
 				var secondPath = actualRequest.Files.ElementAt(1);
 
-				Assert.IsTrue(XmlStrings.ValidXMLExpectedPath1.Equals(firstPath.Path, StringComparison.OrdinalIgnoreCase));
-				Assert.IsTrue(XmlStrings.ValidXMLExpectedPath2.Equals(secondPath.Path, StringComparison.OrdinalIgnoreCase));
+				Assert.IsTrue(XmlStrings.ValidXmlExpectedPath1.Equals(firstPath.Path, StringComparison.OrdinalIgnoreCase));
+				Assert.IsTrue(XmlStrings.ValidXmlExpectedPath2.Equals(secondPath.Path, StringComparison.OrdinalIgnoreCase));
 			}
 			else
 			{

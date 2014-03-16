@@ -1,4 +1,4 @@
-﻿namespace MediaInformationService.XML
+﻿namespace MediaInformationService.XML.Internal
 {
 	/// <summary>
 	/// XML string constants

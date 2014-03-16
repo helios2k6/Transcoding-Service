@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MediaInfoDeserializationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestDeserializationTest.cs" />
     <Compile Include="ResponseDeserializationTests.cs" />

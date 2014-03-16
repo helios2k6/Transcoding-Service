@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MediaInformationService.XML.Request
+namespace MediaInformationService.XML.Internal.Request
 {
 	/// <summary>
 	/// Represents the File node of a Media Information Service Request

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MediaInformationService.XML.Response
+namespace MediaInformationService.XML.Internal.Response
 {
 	/// <summary>
 	/// Base class for all Track XML nodes

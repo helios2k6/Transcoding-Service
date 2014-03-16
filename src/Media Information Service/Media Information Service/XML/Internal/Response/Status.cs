@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace MediaInformationService.XML.Response
+namespace MediaInformationService.XML.Internal.Response
 {
 	/// <summary>
 	/// The Status XML node

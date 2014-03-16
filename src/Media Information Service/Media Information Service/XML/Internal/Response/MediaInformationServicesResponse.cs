@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MediaInformationService.XML.Request
+namespace MediaInformationService.XML.Internal.Response
 {
 	/// <summary>
-	/// Represents the MediaInformationServicesRequest XML node
+	/// Represents the root XML node
 	/// </summary>
 	[Serializable]
-	[DataContract(Name = XmlConstants.Request, Namespace = XmlConstants.Namespace)]
-	public sealed class MediaInformationServicesRequest
+	[DataContract(Name = XmlConstants.Response, Namespace = XmlConstants.Namespace)]
+	public sealed class MediaInformationServicesResponse
 	{
 		/// <summary>
 		/// The Files XML node

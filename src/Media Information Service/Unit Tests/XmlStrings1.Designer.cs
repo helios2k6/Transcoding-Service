@@ -61,20 +61,40 @@ namespace Unit_Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Mediainfo version=&quot;0.7.67&quot;&gt;
+        ///	&lt;File&gt;
+        ///		&lt;track type=&quot;General&quot;&gt;
+        ///			&lt;Unique_ID&gt;185349421464521665070065006788652863604 (0x8B710006610C53A8968F1EE1ED9C9074)&lt;/Unique_ID&gt;
+        ///			&lt;Complete_name&gt;Weiss Survive (10).mkv&lt;/Complete_name&gt;
+        ///			&lt;Format&gt;Matroska&lt;/Format&gt;
+        ///			&lt;Format_version&gt;Version 1&lt;/Format_version&gt;
+        ///			&lt;File_size&gt;30.5 MiB&lt;/File_size&gt;
+        ///			&lt;Duration&gt;2mn 31s&lt;/Duration&gt;
+        ///			&lt;Overall_bit_rate_mode&gt;Variable&lt;/Overall_bit_rate_mode&gt;
+        ///			&lt;Overall_bit_rate&gt;1 686 Kbps&lt;/Overall_bit_rate&gt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ValidMediaInfoXml {
+            get {
+                return ResourceManager.GetString("ValidMediaInfoXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to file://path/to/file.mkv.
         /// </summary>
-        internal static string ValidXMLExpectedPath1 {
+        internal static string ValidXmlExpectedPath1 {
             get {
-                return ResourceManager.GetString("ValidXMLExpectedPath1", resourceCulture);
+                return ResourceManager.GetString("ValidXmlExpectedPath1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to file://path/to/file2.mkv.
         /// </summary>
-        internal static string ValidXMLExpectedPath2 {
+        internal static string ValidXmlExpectedPath2 {
             get {
-                return ResourceManager.GetString("ValidXMLExpectedPath2", resourceCulture);
+                return ResourceManager.GetString("ValidXmlExpectedPath2", resourceCulture);
             }
         }
         
@@ -91,9 +111,9 @@ namespace Unit_Tests {
         ///	&lt;/Files&gt;
         ///&lt;/MediaInformationServicesRequest&gt;.
         /// </summary>
-        internal static string ValidXMLRequest {
+        internal static string ValidXmlRequest {
             get {
-                return ResourceManager.GetString("ValidXMLRequest", resourceCulture);
+                return ResourceManager.GetString("ValidXmlRequest", resourceCulture);
             }
         }
         
@@ -121,9 +141,9 @@ namespace Unit_Tests {
         ///				&lt;VideoTracks&gt;
         ///					&lt;Vid [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ValidXMLResponse {
+        internal static string ValidXmlResponse {
             get {
-                return ResourceManager.GetString("ValidXMLResponse", resourceCulture);
+                return ResourceManager.GetString("ValidXmlResponse", resourceCulture);
             }
         }
     }
