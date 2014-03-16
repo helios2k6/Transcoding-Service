@@ -21,6 +21,7 @@
 		<io.version>2.4</io.version>
 		<collections.version>4.0</collections.version>
 		<math.version>3.2</math.version>
+		<functional.java.version>3.0</functional.java.version>
 	</properties>
 
 	<dependencies>
@@ -64,6 +65,13 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${io.version}</version>
+		</dependency>
+
+		<!-- Functional Java -->
+		<dependency>
+			<groupId>org.functionaljava</groupId>
+			<artifactId>functionaljava</artifactId>
+			<version>${functional.java.version}</version>
 		</dependency>
 
 		<!-- Commons Collections -->

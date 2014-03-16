@@ -1,8 +1,6 @@
 package com.nlogneg.transcodingService.encoding;
 
 import java.nio.channels.CompletionHandler;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.log4j.LogManager;
@@ -11,10 +9,8 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.constants.Notifications;
-import com.nlogneg.transcodingService.utilities.Optional;
-import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
+import com.nlogneg.transcodingService.encoding.ffmpeg.FFMPEGVideoDecodingArgumentBuilder;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
-import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
 
 /**
  * Encodes a media file
@@ -24,71 +20,19 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
 public final class ScheduleVideoEncodeCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
 	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
 	
-	private final DecoderArgumentBuilder decoderBuilder;
-	private final EncoderArgumentBuilder encoderBuilder;
-	
-	/**
-	 * @param decoderBuilder
-	 * @param encoderBuilder
-	 */
-	public ScheduleVideoEncodeCommand(
-			DecoderArgumentBuilder decoderBuilder,
-			EncoderArgumentBuilder encoderBuilder){
-		this.decoderBuilder = decoderBuilder;
-		this.encoderBuilder = encoderBuilder;
-	}
-
 	public final void execute(INotification notification){
+		Log.info("Scheduling encoder job");
+		
 		EncodingJob job = (EncodingJob)notification.getBody();
+		DecoderArgumentBuilder decoderBuilder = new FFMPEGVideoDecodingArgumentBuilder();
+		EncoderArgumentBuilder encoderBuilder = new X264EncodingArgumentBuilder();
+		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
+		ExecutorService service = proxy.getService();
 		
-		Log.info("Encoding file: " + job.getRequest().getSourceFile());
-		
-		executeJob(job);
+		EncodeVideoRunnable encoder = new EncodeVideoRunnable(job, decoderBuilder, encoderBuilder, this, service);
+		service.submit(encoder);
 	}
 	
-	private void executeJob(EncodingJob job){
-		//Start decoder
-		Optional<Process> decoder = startDecoder(job);
-		if(decoder.isNone()){
-			Log.error("Could not begin ffmpeg decoder process for: " + job.getRequest().getSourceFile());
-			return;
-		}
-		
-		//Start encoder
-		Optional<Process> encoder = startEncoder(job, job.getDestinationFilePath());
-		if(encoder.isNone()){
-			Log.error("Could not begin x264 encoder process");
-			ProcessUtils.tryCloseProcess(decoder);
-			return;
-		}
-		
-		//Hook up pipe between the two
-		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		ExecutorService service = executorProxy.getService();
-		
-		/*
-		InterProcessPipe<EncodingJob> pipe = new InterProcessPipe<EncodingJob>(
-				decoder.getValue(), 
-				encoder.getValue(),
-				service,
-				job, 
-				this);
-		*/
-		//Submit to executor
-		//service.submit(pipe);
-	}
-	
-	private Optional<Process> startEncoder(EncodingJob job, Path outputFile){
-		List<String> encodingOptions = encoderBuilder.getEncoderArguments(job, outputFile);
-		ProcessBuilder processBuilder = new ProcessBuilder(encodingOptions);
-		return ProcessUtils.tryStartProcess(processBuilder);
-	}
-	
-	private Optional<Process> startDecoder(EncodingJob job){
-		List<String> decodingOptions = decoderBuilder.getDecoderArguments(job);
-		ProcessBuilder processBuilder = new ProcessBuilder(decodingOptions);
-		return ProcessUtils.tryStartProcess(processBuilder);
-	}
 	
 	/* (non-Javadoc)
 	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
