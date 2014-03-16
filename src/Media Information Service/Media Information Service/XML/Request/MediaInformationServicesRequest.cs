@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Request
 {
-	[YAXSerializeAs("MediaInformationSerivcesRequest")]
+	/// <summary>
+	/// Represents the MediaInformationServicesRequest XML node
+	/// </summary>
 	[Serializable]
+	[DataContract(Name = XmlConstants.Request, Namespace = XmlConstants.Namespace)]
 	public sealed class MediaInformationServicesRequest
 	{
-		[YAXSerializeAs("Files")]
-		public IEnumerable<File> Files { get; set; }
+		/// <summary>
+		/// The Files XML node
+		/// </summary>
+		[DataMember(Name = XmlConstants.Files, IsRequired = true)]
+		public File[] Files { get; set; }
 	}
 }

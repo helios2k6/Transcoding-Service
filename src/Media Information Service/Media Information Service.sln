@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media Information Service", "Media Information Service\Media Information Service.csproj", "{94C4993B-EC2A-4BBD-B390-AB30938E7E2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{D2734889-8738-4E51-A614-9C5FDC6E47AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{94C4993B-EC2A-4BBD-B390-AB30938E7E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94C4993B-EC2A-4BBD-B390-AB30938E7E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94C4993B-EC2A-4BBD-B390-AB30938E7E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2734889-8738-4E51-A614-9C5FDC6E47AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2734889-8738-4E51-A614-9C5FDC6E47AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2734889-8738-4E51-A614-9C5FDC6E47AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2734889-8738-4E51-A614-9C5FDC6E47AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

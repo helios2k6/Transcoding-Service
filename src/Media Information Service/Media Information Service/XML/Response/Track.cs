@@ -1,5 +1,5 @@
 ﻿using System;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Response
 {
@@ -12,13 +12,13 @@ namespace MediaInformationService.XML.Response
 		/// <summary>
 		/// The Track ID (track number)
 		/// </summary>
-		[YAXSerializeAs("Id")]
+		[DataMember(Name = XmlConstants.Id, IsRequired = true)]
 		public int Id { get; set; }
 
 		/// <summary>
 		/// The Format XML node
 		/// </summary>
-		[YAXSerializeAs("Format")]
-		public string Format { get; set;}
+		[DataMember(Name = XmlConstants.Format, IsRequired = true)]
+		public string Format { get; set; }
 	}
 }

@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MediaInformationServicesResponse>
+<MediaInformationServicesResponse xmlns="http://nlogneg.com">
 	<Files>
 		<File>
-			<Path>file://path/to/file.mkv</Path>
-			<Status>SUCCESS</Status>
 			<MediaInfo>
-				<VideoTracks>
-					<VideoTrack>
-						<Id>1</Id>
-						<Format>AVC</Format>
-						<Width>1280</Width>
-						<Height>720</Height>
-						<DisplayAspectRatio>
-							<Width>16</Width>
-							<Height>9</Height>
-						</DisplayAspectRatio>
-						<FrameRate>
-							<Numerator>24000</Numerator>
-							<Denominator>1001</Denominator>
-						</FrameRate>
-					</VideoTrack>
-				</VideoTracks>
 				<AudioTracks>
 					<AudioTrack>
 						<Id>2</Id>
@@ -36,14 +18,32 @@
 						<Language>English</Language>
 					</SubtitleTrack>
 				</SubtitleTracks>
+				<VideoTracks>
+					<VideoTrack>
+						<Id>1</Id>
+						<Format>AVC</Format>
+						<DisplayAspectRatio>
+							<Height>9</Height>
+							<Width>16</Width>
+						</DisplayAspectRatio>
+						<FrameRate>
+							<Numerator>24000</Numerator>
+							<Denominator>1001</Denominator>
+						</FrameRate>
+						<Height>720</Height>
+						<Width>1280</Width>
+					</VideoTrack>
+				</VideoTracks>
 				<Attachments>
 				</Attachments>
 			</MediaInfo>
+			<Path>file://path/to/file.mkv</Path>
+			<Status>Success</Status>
 		</File>
 		<File>
-			<Path>file://path/to/file2.mkv</Path>
-			<Status>FAILURE</Status>
 			<MediaInfo/>
+			<Path>file://path/to/file2.mkv</Path>
+			<Status>Failure</Status>
 		</File>
 	</Files>
 </MediaInformationServicesResponse>

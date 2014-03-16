@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Response
 {
@@ -8,24 +7,25 @@ namespace MediaInformationService.XML.Response
 	/// The MediaInfo XML node
 	/// </summary>
 	[Serializable]
+	[DataContract(Name = XmlConstants.MediaInfo, Namespace = XmlConstants.Namespace)]
 	public sealed class MediaInfo
 	{
 		/// <summary>
 		/// The VideoTracks XML node
 		/// </summary>
-		[YAXSerializeAs("VideoTracks")]
-		public IEnumerable<VideoTrack> VideoTracks { get; set; }
+		[DataMember(Name = XmlConstants.VideoTracks, IsRequired = true)]
+		public VideoTrack[] VideoTracks { get; set; }
 
 		/// <summary>
 		/// The AudioTracks XML node
 		/// </summary>
-		[YAXSerializeAs("AudioTracks")]
-		public IEnumerable<AudioTrack> AudioTracks { get; set; }
+		[DataMember(Name = XmlConstants.AudioTracks, IsRequired = true)]
+		public AudioTrack[] AudioTracks { get; set; }
 
 		/// <summary>
 		/// The SubtitleTracks XML node
 		/// </summary>
-		[YAXSerializeAs("SubtitleTracks")]
-		public IEnumerable<SubtitleTrack> SubtitleTracks { get; set; }
+		[DataMember(Name = XmlConstants.SubtitleTracks, IsRequired = true)]
+		public SubtitleTrack[] SubtitleTracks { get; set; }
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Response
 {
@@ -7,12 +7,13 @@ namespace MediaInformationService.XML.Response
 	/// The SubtitleTrack XML node
 	/// </summary>
 	[Serializable]
+	[DataContract(Name = XmlConstants.SubtitleTracks, Namespace = XmlConstants.SubtitleTrack)]
 	public sealed class SubtitleTrack : Track
 	{
 		/// <summary>
 		/// The Language XML node
 		/// </summary>
-		[YAXSerializeAs("Language")]
+		[DataMember(Name = XmlConstants.Language, IsRequired = false)]
 		public string Language { get; set; }
 	}
 }

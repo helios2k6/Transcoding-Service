@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MediaInformationServicesRequest>
+<MediaInformationServicesRequest xmlns="http://nlogneg.com">
 	<Files>
 		<File>
 			<Path>file://path/to/file.mkv</Path>

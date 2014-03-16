@@ -1,5 +1,5 @@
 ﻿using System;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Response
 {
@@ -7,19 +7,19 @@ namespace MediaInformationService.XML.Response
 	/// The DisplayAspectRatio XML node
 	/// </summary>
 	[Serializable]
+	[DataContract(Name = XmlConstants.DisplayAspectRatio, Namespace = XmlConstants.Namespace)]
 	public sealed class DisplayAspectRatio
 	{
 		/// <summary>
 		/// The Width XML node
 		/// </summary>
-		[YAXSerializeAs("Width")]
+		[DataMember(Name = XmlConstants.Width, IsRequired = true)]
 		public int Width { get; set; }
 
 		/// <summary>
 		/// The Height XML node
 		/// </summary>
-		[YAXSerializeAs("Height")]
+		[DataMember(Name = XmlConstants.Height, IsRequired = true)]
 		public int Height { get; set; }
-
 	}
 }

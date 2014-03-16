@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Security.Policy;
-using YAXLib;
+using System.Runtime.Serialization;
 
 namespace MediaInformationService.XML.Request
 {
 	/// <summary>
 	/// Represents the File node of a Media Information Service Request
 	/// </summary>
-	[YAXSerializeAs("File")]
 	[Serializable]
+	[DataContract(Name = XmlConstants.File, Namespace = XmlConstants.Namespace)]
 	public sealed class File
 	{
 		/// <summary>
 		/// Get or set the Path of the File XML node
 		/// </summary>
-		[YAXSerializeAs("Path")]
-		public Url Path { get; set; }
+		[DataMember(Name = XmlConstants.Path, IsRequired = true)]
+		public string Path { get; set; }
 	}
 }
