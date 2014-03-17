@@ -48,4 +48,12 @@ public final class AudioTrackOption{
 	public Optional<AudioTrack> getAudioTrack(){
 		return audioTrack;
 	}
+	
+	/**
+	 * Gets whether or not this AudioOption has an audio track path
+	 * @return
+	 */
+	public boolean hasAudioTrackPath(){
+		return audioTrackFilePath.isSome();
+	}
 }

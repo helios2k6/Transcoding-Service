@@ -89,7 +89,7 @@ public final class DemultiplexTrackRunnable implements Runnable{
 		Optional<Process> process = ProcessUtils.tryStartProcess(builder);
 		
 		if(process.isNone()){
-			Log.error("Coudl not extract tracks for: " + job.getMediaFile());
+			Log.error("Could not extract tracks for: " + job.getMediaFile());
 			return false;
 		}
 		

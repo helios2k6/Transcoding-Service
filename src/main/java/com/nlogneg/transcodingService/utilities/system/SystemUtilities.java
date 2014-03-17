@@ -24,6 +24,7 @@ public final class SystemUtilities{
 	private static final String MkvExtractCore = "mkvextract";
 	private static final String MkvInfoCore = "mkvinfo";
 	private static final String MediaInfoCore = "mediainfo";
+	private static final String MP4BoxCore = "mp4box";
 	private static final String FFMPEGCore = "ffmpeg";
 	private static final String X264Core = "x264";
 	private static final String NeroAacCore = "neroAacEnc";
@@ -110,6 +111,14 @@ public final class SystemUtilities{
 	 */
 	public static String getNeroAacEncProcessName(){
 		return calculateProcessName(NeroAacCore);
+	}
+	
+	/**
+	 * Get the mp4box process name
+	 * @return
+	 */
+	public static String getMP4BoxProcessName(){
+		return calculateProcessName(MP4BoxCore);
 	}
 }
 

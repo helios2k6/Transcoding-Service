@@ -33,4 +33,8 @@ public final class Notifications {
 	public static final String DemultiplexAttachmentCommandSuccessNotification = "DemultiplexAttachmentCommandSuccessNotification";
 	
 	public static final String DemultiplexAttachmentCOmmandFailureNotification = "DemultiplexAttachmentCOmmandFailureNotification";
+	
+	public static final String MultiplexFileCommandSuccessNotificaiton = "MultiplexFileCommandSuccessNotificaiton";
+	
+	public static final String MultiplexFileCommandFailureNotificaiton = "MultiplexFileCommandFailureNotificaiton";
 }
