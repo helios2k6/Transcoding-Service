@@ -44,7 +44,7 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements Compl
 	@Override
 	public void completed(Void arg0, EncodingJob job){
 		Log.info("Audio encoding successful for media job: " + job.getSourceFilePath());
-		sendNotification(Notifications.EncodeAudioCommandSuccessNotification, job);
+		sendNotification(Notifications.EncodeAudioSuccess, job);
 	}
 
 	/* (non-Javadoc)
@@ -53,6 +53,6 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements Compl
 	@Override
 	public void failed(Throwable arg0, EncodingJob job){
 		Log.info("Audio encoding failed for media job: " + job.getSourceFilePath());
-		sendNotification(Notifications.EncodeAudioCommandFailureNotification, job);
+		sendNotification(Notifications.EncodeAudioFailure, job);
 	}
 }

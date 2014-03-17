@@ -58,6 +58,6 @@ public class ConfigureServerCommand extends SimpleCommand{
 			Log.fatal(message);
 		}
 		
-		sendNotification(Notifications.PrintHelpAndExitMacroCommandNotification);
+		sendNotification(Notifications.PrintHelpAndExit);
 	}
 }

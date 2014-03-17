@@ -39,7 +39,7 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 	 */
 	@Override
 	public void completed(Void arg0, EncodingJob job){
-		sendNotification(Notifications.EncodeVideoCommandSuccessNotification, job);
+		sendNotification(Notifications.EncodeVideoSuccess, job);
 	}
 
 	/* (non-Javadoc)
@@ -47,6 +47,6 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 	 */
 	@Override
 	public void failed(Throwable arg0, EncodingJob job){
-		sendNotification(Notifications.EncodeVideoCommandFailureNotification, job);;
+		sendNotification(Notifications.EncodeVideoFailure, job);;
 	}
 }

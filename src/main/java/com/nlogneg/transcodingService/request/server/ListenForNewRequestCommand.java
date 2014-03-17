@@ -37,7 +37,7 @@ public class ListenForNewRequestCommand extends SimpleCommand{
 			return;
 		}catch(IOException ex){
 			Log.error("An unknown IO Exception has occurred while listening to the socket.", ex);
-			sendNotification(Notifications.ExitSystemCommandNotification, new Integer(-1));
+			sendNotification(Notifications.ExitSystem, new Integer(-1));
 		}
 	}
 }

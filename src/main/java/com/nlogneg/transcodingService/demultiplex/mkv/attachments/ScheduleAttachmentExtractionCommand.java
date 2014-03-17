@@ -43,7 +43,7 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	@Override
 	public void completed(Void result, DemultiplexMKVJob job){
 		Log.info("Attachment processing successful for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexAttachmentCommandSuccessNotification, job);
+		sendNotification(Notifications.DemultiplexAttachmentSuccess, job);
 	}
 
 	/* (non-Javadoc)
@@ -52,6 +52,6 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	@Override
 	public void failed(Throwable exc, DemultiplexMKVJob job) {
 		Log.info("Attachment processing failed for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexAttachmentCOmmandFailureNotification, job);
+		sendNotification(Notifications.DemultiplexAttachmentFailure, job);
 	}
 }

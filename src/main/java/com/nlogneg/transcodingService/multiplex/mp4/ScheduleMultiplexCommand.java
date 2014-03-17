@@ -34,12 +34,12 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements Com
 	@Override
 	public void completed(Void result, MultiplexJob attachment){
 		Log.info("Multiplex job completed successfully : " + attachment.getDestinationFile());
-		sendNotification(Notifications.MultiplexFileCommandSuccessNotificaiton, attachment);
+		sendNotification(Notifications.MultiplexFileSuccess, attachment);
 	}
 
 	@Override
 	public void failed(Throwable exc, MultiplexJob attachment){
 		Log.error("Multiplexing job failed: " + attachment.getDestinationFile());
-		sendNotification(Notifications.MultiplexFileCommandFailureNotificaiton, attachment);
+		sendNotification(Notifications.MultiplexFileFailure, attachment);
 	}
 }

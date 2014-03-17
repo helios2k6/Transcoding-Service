@@ -34,12 +34,12 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 	@Override
 	public void completed(Void result, DemultiplexMKVJob job){
 		Log.info("Track demultiplex job succeeded for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexTrackCommandSuccessNotification, job);
+		sendNotification(Notifications.DemultiplexTrackSuccess, job);
 	}
 
 	@Override
 	public void failed(Throwable exc, DemultiplexMKVJob job){
 		Log.info("Track demultiplex job failed for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexTrackCommandFailureNotification, job);
+		sendNotification(Notifications.DemultiplexTrackFailure, job);
 	}
 }

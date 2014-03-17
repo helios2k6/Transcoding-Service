@@ -29,7 +29,7 @@ public class ConfigureServerSocketCommand extends SimpleCommand{
 			serverSocketProxy.setServerSocket(serverSocket);
 		}catch (IOException e){
 			Log.fatal("Could not bind to socket: " + portNumber);
-			sendNotification(Notifications.ExitSystemCommandNotification);
+			sendNotification(Notifications.ExitSystem);
 		}
 	}
 }
