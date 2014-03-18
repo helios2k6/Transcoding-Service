@@ -19,7 +19,7 @@ import com.nlogneg.transcodingService.constants.Notifications;
 public class DemultiplexController extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
-	
+
 	private enum Reaction
 	{
 		NotifySuccess,
@@ -28,17 +28,17 @@ public class DemultiplexController extends SimpleCommand{
 		ScheduleAttachment,
 		NoOp
 	}
-	
+
 	private static Map<StatusTuple, Reaction> generateStateMap(){
 		Class<JobStatus> clazz = JobStatus.class;
 		JobStatus[] possibleStatuses = clazz.getEnumConstants();
-		
+
 		Map<StatusTuple, Reaction> stateMap = new HashMap<>();
-		
+
 		for(JobStatus trackStatus : possibleStatuses){
 			for(JobStatus attachmentStatus : possibleStatuses){
 				StatusTuple tuple = new StatusTuple(trackStatus, attachmentStatus);
-				
+
 				if(trackStatus == JobStatus.Failed || attachmentStatus == JobStatus.Failed){
 					stateMap.put(tuple, Reaction.NotifyFailure);
 				}else{
@@ -62,10 +62,10 @@ public class DemultiplexController extends SimpleCommand{
 				}
 			}
 		}
-		
+
 		return stateMap;
 	}
-	
+
 	public void execute(INotification notification){
 		dispatchMessage(notification.getName(), (DemultiplexJob)notification.getBody());
 	}
@@ -94,39 +94,39 @@ public class DemultiplexController extends SimpleCommand{
 			throw new RuntimeException("Unknown message.");
 		}
 	}
-	
+
 	private void handleAttachmentSuccessMessage(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		proxy.setAttachmentStatus(job, JobStatus.Finished);
-		
+
 		evaluateJobState(job);
 	}
-	
+
 	private void handleTrackSuccessMessage(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		proxy.setTrackStatus(job, JobStatus.Finished);
-		
+
 		evaluateJobState(job);
 	}
-	
+
 	private void handleAttachmentFailureMessage(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		proxy.setAttachmentStatus(job, JobStatus.Failed);
-		
+
 		evaluateJobState(job);
 	}
-	
+
 	private void handleTrackFailureMessage(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		proxy.setTrackStatus(job, JobStatus.Failed);
-		
+
 		evaluateJobState(job);
 	}
-	
+
 	private void evaluateJobState(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		StatusTuple status = proxy.getStatus(job);
-		
+
 		Reaction reaction = StateMap.get(status);
 		switch(reaction){
 		case ScheduleTrack:
@@ -147,22 +147,22 @@ public class DemultiplexController extends SimpleCommand{
 			throw new RuntimeException("Unknown state for demultiplex controller.");
 		}
 	}
-	
+
 	private void cleanup(DemultiplexJob job){
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		proxy.removeJob(job);
 	}
-	
+
 	private void notifyFailure(DemultiplexJob job){
 		cleanup(job);
 		sendNotification(Notifications.DemultiplexJobFailure, job);
 	}
-	
+
 	private void notifySuccess(DemultiplexJob job){
 		cleanup(job);
 		sendNotification(Notifications.DemultiplexJobSuccess, job);
 	}
-	
+
 	private DemultiplexJobStatusProxy getStatusProxy(){
 		return (DemultiplexJobStatusProxy)getFacade().retrieveProxy(DemultiplexJobStatusProxy.PROXY_NAME);
 	}
