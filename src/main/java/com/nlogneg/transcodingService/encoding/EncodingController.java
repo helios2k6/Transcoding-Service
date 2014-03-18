@@ -98,9 +98,11 @@ public class EncodingController extends SimpleCommand{
 		Reaction reaction = StateMap.get(status);
 		switch(reaction){
 		case ScheduleVideo:
-			throw new RuntimeException("TODO");
+			sendNotification(Notifications.ScheduleVideoEncode, job);
+			break;
 		case ScheduleAudio:
-			throw new RuntimeException("TODO");
+			sendNotification(Notifications.ScheduleAudioEncode, job);
+			break;
 		case NotifySuccess:
 			notifySuccess(job);
 			break;

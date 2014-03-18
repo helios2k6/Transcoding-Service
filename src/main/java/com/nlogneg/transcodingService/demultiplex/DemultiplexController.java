@@ -137,9 +137,11 @@ public class DemultiplexController extends SimpleCommand{
 		Reaction reaction = StateMap.get(status);
 		switch(reaction){
 		case ScheduleTrack:
-			throw new RuntimeException("TODO");
+			sendNotification(Notifications.ScheduleTrackDemultiplexJob, job);
+			break;
 		case ScheduleAttachment:
-			throw new RuntimeException("TODO");
+			sendNotification(Notifications.ScheduleAttachmentDemultiplexJob, job);
+			break;
 		case NotifySuccess:
 			notifySuccess(job);
 			break;

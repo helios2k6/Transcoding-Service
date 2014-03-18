@@ -50,7 +50,11 @@ public final class Notifications {
 	
 	public static final String StartEncodingJob = "StartEncodingJob";
 	
-	public static final String EncodingJobSuccess = "";
+	public static final String EncodingJobSuccess = "EncodingJobSuccess";
 	
-	public static final String EncodingJobFailure = "";
+	public static final String EncodingJobFailure = "EncodingJobFailure";
+	
+	public static final String ScheduleVideoEncode = "ScheduleVideoEncode";
+	
+	public static final String ScheduleAudioEncode = "ScheduleAudioEncode";
 }
