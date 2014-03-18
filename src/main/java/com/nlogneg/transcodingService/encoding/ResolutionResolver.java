@@ -1,6 +1,6 @@
 package com.nlogneg.transcodingService.encoding;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -55,13 +55,13 @@ public final class ResolutionResolver{
 	
 	private static WidthHeightTuple tryGetResolution(EncodingJob job){
 		MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(job.getMediaInfo());
-		Set<VideoTrack> videoTracks = summary.getVideoTracks();
+		Collection<VideoTrack> videoTracks = summary.getVideoTracks();
 		VideoTrack chosenVideoTrack = getEarliestVideoTrack(videoTracks);
 		
 		return VideoTrackUtils.tryParsePixelAmount(chosenVideoTrack);
 	}
 	
-	private static <T extends MediaTrack> T getEarliestVideoTrack(Set<T> tracks){
+	private static <T extends MediaTrack> T getEarliestVideoTrack(Collection<T> tracks){
 		T lowestTrackId = null;
 		for(T t : tracks){
 			if(lowestTrackId == null){

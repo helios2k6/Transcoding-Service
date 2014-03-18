@@ -7,7 +7,7 @@ package com.nlogneg.transcodingService.request.incoming;
  * @author anjohnson
  *
  */
-public class Request{
+public final class Request{
 	
 	private final String sourceFile;
 	private final String destinationFile;

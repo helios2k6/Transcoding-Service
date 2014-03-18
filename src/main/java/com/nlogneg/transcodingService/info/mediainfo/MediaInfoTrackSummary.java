@@ -1,5 +1,6 @@
 package com.nlogneg.transcodingService.info.mediainfo;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import java.util.Set;
  */
 public class MediaInfoTrackSummary implements TrackVisitor{
 
+	private final Set<GeneralTrack> generalTracks = new HashSet<>();
 	private final Set<VideoTrack> videoTracks = new HashSet<>();
 	private final Set<AudioTrack> audioTracks = new HashSet<>();
 	private final Set<TextTrack> subtitleTracks = new HashSet<>();
@@ -21,22 +23,26 @@ public class MediaInfoTrackSummary implements TrackVisitor{
 	/**
 	 * @return the videoTracks
 	 */
-	public Set<VideoTrack> getVideoTracks(){
+	public Collection<VideoTrack> getVideoTracks(){
 		return videoTracks;
 	}
 
 	/**
 	 * @return the audioTracks
 	 */
-	public Set<AudioTrack> getAudioTracks(){
+	public Collection<AudioTrack> getAudioTracks(){
 		return audioTracks;
 	}
 
 	/**
 	 * @return the subtitleTracks
 	 */
-	public Set<TextTrack> getSubtitleTracks(){
+	public Collection<TextTrack> getSubtitleTracks(){
 		return subtitleTracks;
+	}
+	
+	public Collection<GeneralTrack> getGeneralTracks(){
+		return generalTracks;
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class MediaInfoTrackSummary implements TrackVisitor{
 
 	@Override
 	public void visit(GeneralTrack track){
-		//do nothing
+		generalTracks.add(track);
 	}
 
 	@Override
