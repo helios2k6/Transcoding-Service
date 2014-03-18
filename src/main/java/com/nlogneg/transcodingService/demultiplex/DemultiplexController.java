@@ -18,7 +18,8 @@ import com.nlogneg.transcodingService.constants.Notifications;
  */
 public class DemultiplexController extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
-
+	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
+	
 	private enum Reaction
 	{
 		NotifySuccess,
@@ -41,7 +42,23 @@ public class DemultiplexController extends SimpleCommand{
 				if(trackStatus == JobStatus.Failed || attachmentStatus == JobStatus.Failed){
 					stateMap.put(tuple, Reaction.NotifyFailure);
 				}else{
-					//TODO: Finish this
+					//Check in-progres conditions
+					if(trackStatus == JobStatus.InProgress || attachmentStatus == JobStatus.InProgress){
+						/*
+						 * Doesn't matter what anything else is since we 
+						 * know it's not in a failed state
+						 */
+						stateMap.put(tuple, Reaction.NoOp);
+					}else if(trackStatus == JobStatus.Pending){
+						//Need to extract tracks
+						stateMap.put(tuple, Reaction.ScheduleTrack);
+					}else if(attachmentStatus == JobStatus.Pending){
+						//Need to extract attachments
+						stateMap.put(tuple, Reaction.ScheduleAttachment);
+					}else{
+						//Looks like we've successfully done everything
+						stateMap.put(tuple, Reaction.NotifySuccess);
+					}
 				}
 			}
 		}
@@ -61,7 +78,10 @@ public class DemultiplexController extends SimpleCommand{
 			evaluateJobState(job);
 			break;
 		case Notifications.DemultiplexAttachmentFailure:
+			handleAttachmentFailureMessage(job);
+			break;
 		case Notifications.DemultiplexTrackFailure:
+			handleTrackFailureMessage(job);
 			break;
 		case Notifications.DemultiplexAttachmentSuccess:
 			handleAttachmentSuccessMessage(job);
@@ -107,14 +127,25 @@ public class DemultiplexController extends SimpleCommand{
 		DemultiplexJobStatusProxy proxy = getStatusProxy();
 		StatusTuple status = proxy.getStatus(job);
 		
-		//Check out tracks first
-		if(status.getTrackStatus() == JobStatus.Pending){
+		Reaction reaction = StateMap.get(status);
+		switch(reaction){
+		case ScheduleTrack:
+			break;
+		case ScheduleAttachment:
 			sendNotification(Notifications.ScheduleDemultiplexJob, job);
-		}else if(status.getTrackStatus() == JobStatus.Failed){
+			break;
+		case NotifySuccess:
+			notifySuccess(job);
+			break;
+		case NotifyFailure:
 			notifyFailure(job);
+			break;
+		case NoOp:
+			//Literally do nothing
+			break;
+		default:
+			throw new RuntimeException("Unknown state for demultiplex controller.");
 		}
-		
-		
 	}
 	
 	private void cleanup(DemultiplexJob job){
