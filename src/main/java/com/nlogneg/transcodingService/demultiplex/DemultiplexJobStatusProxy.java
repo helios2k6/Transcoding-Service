@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
 import com.nlogneg.transcodingService.JobStatus;
+import com.nlogneg.transcodingService.StatusTuple;
 
 
 /**

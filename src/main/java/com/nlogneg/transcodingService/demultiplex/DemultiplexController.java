@@ -9,6 +9,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.JobStatus;
+import com.nlogneg.transcodingService.StatusTuple;
 import com.nlogneg.transcodingService.constants.Notifications;
 
 /**
@@ -20,8 +21,7 @@ public class DemultiplexController extends SimpleCommand{
 	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
-	private enum Reaction
-	{
+	private enum Reaction{
 		NotifySuccess,
 		NotifyFailure,
 		ScheduleTrack,
@@ -66,27 +66,34 @@ public class DemultiplexController extends SimpleCommand{
 		return stateMap;
 	}
 
+	@Override
 	public void execute(INotification notification){
 		dispatchMessage(notification.getName(), (DemultiplexJob)notification.getBody());
 	}
 
 	private void dispatchMessage(String message, DemultiplexJob job){
+		Log.info("Dispatching message for demultiplexing job: " + job.getMediaFile());
 		switch(message){
 		case Notifications.StartDemultiplexJob:
+			Log.info("Start demultplexing.");
 			DemultiplexJobStatusProxy proxy = getStatusProxy();
 			proxy.addJob(job);
 			evaluateJobState(job);
 			break;
 		case Notifications.DemultiplexAttachmentFailure:
+			Log.info("Handle attachment demultiplexing failure: " + job.getMediaFile());
 			handleAttachmentFailureMessage(job);
 			break;
 		case Notifications.DemultiplexTrackFailure:
+			Log.info("Handle track demultiplexing failure: " + job.getMediaFile());
 			handleTrackFailureMessage(job);
 			break;
 		case Notifications.DemultiplexAttachmentSuccess:
+			Log.info("Handle attachment demultiplex success: " + job.getMediaFile());
 			handleAttachmentSuccessMessage(job);
 			break;
 		case Notifications.DemultiplexTrackSuccess:
+			Log.info("Handle track demultiplex success: " + job.getMediaFile());
 			handleTrackSuccessMessage(job);
 			break;
 		default:
@@ -130,10 +137,9 @@ public class DemultiplexController extends SimpleCommand{
 		Reaction reaction = StateMap.get(status);
 		switch(reaction){
 		case ScheduleTrack:
-			break;
+			throw new RuntimeException("TODO");
 		case ScheduleAttachment:
-			sendNotification(Notifications.ScheduleDemultiplexJob, job);
-			break;
+			throw new RuntimeException("TODO");
 		case NotifySuccess:
 			notifySuccess(job);
 			break;

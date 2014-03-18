@@ -40,9 +40,17 @@ public final class Notifications {
 	
 	public static final String StartDemultiplexJob = "StartDemultiplexJob";
 	
-	public static final String ScheduleDemultiplexJob = "ScheduleDemultiplexJob";
+	public static final String ScheduleTrackDemultiplexJob = "ScheduleTrackDemultiplexJob";
+	
+	public static final String ScheduleAttachmentDemultiplexJob = "ScheduleAttachmentDemultiplexJob";
 	
 	public static final String DemultiplexJobFailure = "DemultiplexJobFailure";
 	
 	public static final String DemultiplexJobSuccess = "DemultiplexJobSuccess";
+	
+	public static final String StartEncodingJob = "StartEncodingJob";
+	
+	public static final String EncodingJobSuccess = "";
+	
+	public static final String EncodingJobFailure = "";
 }
