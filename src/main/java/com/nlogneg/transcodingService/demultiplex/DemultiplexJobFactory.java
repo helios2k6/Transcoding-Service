@@ -6,7 +6,7 @@ import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mediainfo.GeneralTrack;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
-import com.nlogneg.transcodingService.info.mediainfo.Track;
+import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummaryFactory;
 import com.nlogneg.transcodingService.request.incoming.Request;
 import com.nlogneg.transcodingService.utilities.CollectionUtilities;
 
@@ -28,8 +28,7 @@ public final class DemultiplexJobFactory{
 	 */
 	public static DemultiplexJob createDemultiplexJob(Request request, MediaInfo mediaInfo){
 		//Get tracks and summary
-		Collection<Track> tracks = getTracks(mediaInfo);
-		MediaInfoTrackSummary summary = getSummary(tracks);
+		MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(mediaInfo);
 
 		//Figure out what type of media file this is
 		Collection<GeneralTrack> generalTracks = summary.getGeneralTracks();
@@ -37,25 +36,12 @@ public final class DemultiplexJobFactory{
 
 		switch(type){
 		case MKV:
-			//Detect tracks to extract and create MKV job
+			return createDemultiplexMKVJob(request, mediaInfo);
 		case Other:
 			return new NoOpDemultiplexJob(null, null);
 		default:
 			throw new RuntimeException("Unknown media type detected");
 		}
-	}
-
-	private static Collection<Track> getTracks(MediaInfo mediaInfo){
-		return mediaInfo.getFile().getTracks();
-	}
-
-	private static MediaInfoTrackSummary getSummary(Collection<Track> tracks){
-		MediaInfoTrackSummary summary = new MediaInfoTrackSummary();
-		for(Track t : tracks){
-			t.accept(summary);
-		}
-
-		return summary;
 	}
 
 	private static MediaFileType detectMediaFileType(Collection<GeneralTrack> tracks){

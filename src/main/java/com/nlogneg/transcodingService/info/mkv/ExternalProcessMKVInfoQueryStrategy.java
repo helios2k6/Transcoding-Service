@@ -16,7 +16,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  *
  */
-public class ExternalProcessMKVInfoQueryStrategy implements MKVInfoQueryStrategy<Path, String>{
+public class ExternalProcessMKVInfoQueryStrategy implements MKVInfoSource{
 
 	private static final Logger Log = LogManager.getLogger(ExternalProcessMKVInfoQueryStrategy.class);
 	
@@ -44,4 +44,6 @@ public class ExternalProcessMKVInfoQueryStrategy implements MKVInfoQueryStrategy
 			return Optional.none();
 		}
 	}
+	
+	
 }
