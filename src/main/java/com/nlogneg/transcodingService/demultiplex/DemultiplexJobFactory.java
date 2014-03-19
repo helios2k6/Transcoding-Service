@@ -123,7 +123,7 @@ public class DemultiplexJobFactory{
 		StringBuilder builder = new StringBuilder();
 		
 		builder
-			.append(sourceFile.getFileName().toString())
+			.append(sourceFile.toAbsolutePath().toString())
 			.append("_temp_")
 			.append(IdSeed.incrementAndGet())
 			.append("_.")
