@@ -10,7 +10,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
-import com.nlogneg.transcodingService.info.mediainfo.Track;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.MimeTypeUtilities;
 
@@ -60,10 +59,10 @@ public final class MKVDemultiplexingUtilities{
 	 * @param mediaTracks The media tracks to analyze
 	 * @return which track to use or null if no suitable track could be found
 	 */
-	public static Track deduceMostLikelyTrack(Collection<MediaTrack> mediaTracks){
-		MediaTrack selectedTrack = null;
+	public static <T extends MediaTrack> T deduceMostLikelyTrack(Collection<T> mediaTracks){
+		T selectedTrack = null;
 
-		for(MediaTrack track : mediaTracks){
+		for(T track : mediaTracks){
 			if(selectedTrack == null){
 				selectedTrack = track;
 			}else{
