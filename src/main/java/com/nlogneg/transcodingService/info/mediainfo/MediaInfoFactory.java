@@ -9,7 +9,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  *
  */
-public class MediaInfoFactory{
+public final class MediaInfoFactory{
 	
 	/**
 	 * Attempt to get the media info for a particular media file using the media info source

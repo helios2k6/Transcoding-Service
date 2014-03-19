@@ -5,7 +5,7 @@ package com.nlogneg.transcodingService.info.mediainfo;
  * @author anjohnson
  *
  */
-public class MediaInfo{
+public final class MediaInfo{
 	private final File file;
 
 	/**

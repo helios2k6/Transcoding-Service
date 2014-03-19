@@ -32,7 +32,7 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 			Map<Attachment, Path> attachmentMap,
 			Map<Attachment, Path> fontAttachmentMap,
 			Map<AudioTrack, Path> audioTrackMap,
-			Map<TextTrack, Path> subtitleTrackMap) {
+			Map<TextTrack, Path> subtitleTrackMap){
 		super(mediaFile, mediaInfo);
 		this.attachmentMap = attachmentMap;
 		this.fontAttachmentMap = fontAttachmentMap;
@@ -50,21 +50,21 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	/**
 	 * @return the fontAttachmentMap
 	 */
-	public Map<Attachment, Path> getFontAttachmentMap() {
+	public Map<Attachment, Path> getFontAttachmentMap(){
 		return fontAttachmentMap;
 	}
 
 	/**
 	 * @return the audioTrackMap
 	 */
-	public Map<AudioTrack, Path> getAudioTrackMap() {
+	public Map<AudioTrack, Path> getAudioTrackMap(){
 		return audioTrackMap;
 	}
 
 	/**
 	 * @return the subtitleTrackMap
 	 */
-	public Map<TextTrack, Path> getSubtitleTrackMap() {
+	public Map<TextTrack, Path> getSubtitleTrackMap(){
 		return subtitleTrackMap;
 	}
 }

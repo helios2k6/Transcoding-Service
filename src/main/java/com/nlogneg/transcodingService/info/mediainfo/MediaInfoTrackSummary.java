@@ -13,7 +13,7 @@ import java.util.Set;
  * @author anjohnson
  *
  */
-public class MediaInfoTrackSummary implements TrackVisitor{
+public final class MediaInfoTrackSummary implements TrackVisitor{
 
 	private final Set<GeneralTrack> generalTracks = new HashSet<>();
 	private final Set<VideoTrack> videoTracks = new HashSet<>();

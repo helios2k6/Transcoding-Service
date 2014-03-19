@@ -7,7 +7,7 @@ import java.util.List;
  * @author anjohnson
  *
  */
-public class MediaInfoTrackSummaryFactory{
+public final class MediaInfoTrackSummaryFactory{
 	
 	/**
 	 * Get the media info track summary for the given media info

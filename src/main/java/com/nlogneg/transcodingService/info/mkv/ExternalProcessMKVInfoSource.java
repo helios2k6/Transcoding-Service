@@ -16,17 +16,25 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  *
  */
-public class ExternalProcessMKVInfoQueryStrategy implements MKVInfoSource{
+public class ExternalProcessMKVInfoSource implements MKVInfoSource{
 
-	private static final Logger Log = LogManager.getLogger(ExternalProcessMKVInfoQueryStrategy.class);
-	
+	private static final Logger Log = LogManager.getLogger(ExternalProcessMKVInfoSource.class);
 	private static final String TrackArgument = "--track-info";
+	private static final ExternalProcessMKVInfoSource Instance = new ExternalProcessMKVInfoSource();
+	
+	/**
+	 * Get the singleton instance of this class
+	 * @return
+	 */
+	public static ExternalProcessMKVInfoSource getInstance(){
+		return Instance;
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.nlogneg.transcodingService.transcoding.mkv.MKVInfoQueryStrategy#queryForMKVInfo(java.lang.String)
 	 */
 	@Override
-	public Optional<String> queryForMKVInfo(Path sourceFile){
+	public Optional<String> tryGetMKVInfo(Path sourceFile){
 		Log.info("Requesting MKV info about: " + sourceFile);
 		
 		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMkvInfoProcessName(), TrackArgument, sourceFile.toAbsolutePath().toString());
@@ -44,6 +52,4 @@ public class ExternalProcessMKVInfoQueryStrategy implements MKVInfoSource{
 			return Optional.none();
 		}
 	}
-	
-	
 }

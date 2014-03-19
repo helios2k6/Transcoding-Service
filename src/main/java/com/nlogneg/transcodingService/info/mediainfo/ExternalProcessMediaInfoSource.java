@@ -15,7 +15,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  *
  */
-public class ExternalProcessMediaInfoSource implements MediaInfoSource {
+public final class ExternalProcessMediaInfoSource implements MediaInfoSource {
 	private static final Logger Log = LogManager.getLogger(ExternalProcessMediaInfoSource.class);
 	private static final String OutputArgument = "--output=XML";
 	private static final ExternalProcessMediaInfoSource Instance = new ExternalProcessMediaInfoSource();

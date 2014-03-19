@@ -19,7 +19,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * @author anjohnson
  *
  */
-public class FileSectionConverter implements Converter{
+public final class FileSectionConverter implements Converter{
 	private static final Logger Log = LogManager.getLogger(FileSectionConverter.class);
 	
 	@Override

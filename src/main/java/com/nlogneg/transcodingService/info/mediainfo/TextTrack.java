@@ -5,7 +5,7 @@ package com.nlogneg.transcodingService.info.mediainfo;
  * @author anjohnson
  *
  */
-public class TextTrack extends MediaTrack{
+public final class TextTrack extends MediaTrack{
 	/**
 	 * 
 	 */
