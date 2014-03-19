@@ -1,5 +1,7 @@
 package com.nlogneg.transcodingService.utilities.math;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 public final class IntegerUtils{
 	/**
 	 * Gets the GCD of two longs
@@ -46,5 +48,19 @@ public final class IntegerUtils{
 		}
 		
 		return (int)longResult;
+	}
+	
+	/**
+	 * Try to cast a string to an Integer
+	 * @param input
+	 * @return
+	 */
+	public static Optional<Integer> tryCastStringToInteger(String input){
+		try{
+			Integer i = Integer.parseInt(input);
+			return Optional.make(i);
+		}catch(NumberFormatException e){
+			return Optional.none();
+		}
 	}
 }

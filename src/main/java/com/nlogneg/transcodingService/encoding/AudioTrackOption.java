@@ -11,9 +11,9 @@ import com.nlogneg.transcodingService.utilities.Optional;
  *
  */
 public final class AudioTrackOption{
-	private final Optional<AudioTrack> audioTrack;
 	private final Optional<Path> audioTrackFilePath;
 	private final EncodingAction encodingAction;
+	private final Optional<AudioTrack> audioTrack;
 	
 	/**
 	 * @param audioTrackFilePath

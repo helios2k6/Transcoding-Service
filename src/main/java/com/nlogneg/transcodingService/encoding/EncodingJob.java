@@ -31,7 +31,8 @@ public final class EncodingJob{
 	 * @param outputVideoFile
 	 * @param outputAudioFile
 	 */
-	public EncodingJob(Request request, 
+	public EncodingJob(
+			Request request, 
 			MediaInfo mediaInfo,
 			AudioTrackOption audioTrackOption,
 			SubtitleTrackOption subtitleTrackOption,

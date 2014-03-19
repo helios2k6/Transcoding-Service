@@ -1,8 +1,5 @@
 package com.nlogneg.transcodingService.demultiplex;
 
-import java.nio.file.Path;
-
-import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 
 /**
  * Represents a demultiplex job that does nothing. Specifically used for files
@@ -12,8 +9,8 @@ import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
  */
 public final class NoOpDemultiplexJob extends DemultiplexJob{
 
-	public NoOpDemultiplexJob(Path mediaFile, MediaInfo mediaInfo) {
-		super(mediaFile, mediaInfo);
+	public NoOpDemultiplexJob(){
+		super(null, null, null, null);
 	}
 	
 }

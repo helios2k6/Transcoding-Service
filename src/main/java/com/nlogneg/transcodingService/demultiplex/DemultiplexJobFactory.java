@@ -3,7 +3,6 @@ package com.nlogneg.transcodingService.demultiplex;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,14 +16,17 @@ import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummary;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfoTrackSummaryFactory;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.MediaTrackUtils;
 import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.info.mkv.MKVInfo;
 import com.nlogneg.transcodingService.info.mkv.MKVInfoFactory;
 import com.nlogneg.transcodingService.request.incoming.Request;
+import com.nlogneg.transcodingService.request.incoming.Selector;
 import com.nlogneg.transcodingService.utilities.CollectionUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.Projections;
+import com.nlogneg.transcodingService.utilities.Tuple;
 
 import fj.F;
 
@@ -55,7 +57,7 @@ public class DemultiplexJobFactory{
 		case MKV:
 			return Optional.make(createDemultiplexMKVJob(request, mediaInfo, summary));
 		case Other:
-			return Optional.make(new NoOpDemultiplexJob(null, null));
+			return Optional.make(new NoOpDemultiplexJob());
 		default:
 			throw new RuntimeException("Unknown media type detected");
 		}
@@ -104,17 +106,19 @@ public class DemultiplexJobFactory{
 
 		Map<Attachment, Path> attachmentMap = CollectionUtilities.toMap(allAttachments, id, valueProj);
 		Map<Attachment, Path> fontAttachmentMap = CollectionUtilities.toMap(fontAttachments, id, valueProj);
-		Map<AudioTrack, Path> audioTrackMap = deduceAudioTracks(request, mediaInfo, summary);
-		Map<TextTrack, Path> subtitleTrackMap = deduceSubtitleTracks(request, mediaInfo, summary);
+		Optional<Tuple<AudioTrack, Path>> audioTrackMap = deduceAudioTrack(request, summary);
+		Optional<Tuple<TextTrack, Path>> subtitleTrackMap = deduceSubtitleTrack(request, summary);
 
-		return new DemultiplexMKVJob(sourceFile, mediaInfo, attachmentMap, fontAttachmentMap, audioTrackMap, subtitleTrackMap);
+		return new DemultiplexMKVJob(
+				sourceFile, 
+				mediaInfo, 
+				audioTrackMap,
+				subtitleTrackMap,
+				attachmentMap, 
+				fontAttachmentMap);
 	}
 
-	private static <T extends MediaTrack> Map<T, Path> deduceTrack(Request request, MediaInfo mediaInfo, Collection<T> tracks){
-		T chosenTrack = MKVDemultiplexingUtilities.deduceMostLikelyTrack(tracks);
-
-		Map<T, Path> audioTrackMap = new HashMap<>();
-
+	private static <T extends MediaTrack> Optional<Tuple<T, Path>> createTuple(Request request, T t){
 		Path sourceFile = Paths.get(request.getSourceFile());
 		StringBuilder builder = new StringBuilder();
 		
@@ -123,18 +127,34 @@ public class DemultiplexJobFactory{
 			.append("_temp_")
 			.append(IdSeed.incrementAndGet())
 			.append("_.")
-			.append(chosenTrack.getFormat());
-
-		audioTrackMap.put(chosenTrack, Paths.get(builder.toString()));
-
-		return audioTrackMap;
+			.append(t.getFormat());
+		
+		return Optional.make(new Tuple<T, Path>(t, Paths.get(builder.toString())));
+	}
+	
+	private static <T extends MediaTrack> Optional<Tuple<T, Path>> deduceTrack(Request request, Collection<T> tracks){
+		Optional<T> chosenTrack = MKVDemultiplexingUtilities.tryDeduceMostLikelyTrack(tracks);
+		if(chosenTrack.isNone()){
+			return Optional.none();
+		}
+		
+		return createTuple(request, chosenTrack.getValue());
 	}
 
-	private static Map<AudioTrack, Path> deduceAudioTracks(Request request, MediaInfo mediaInfo, MediaInfoTrackSummary summary){
-		return deduceTrack(request, mediaInfo, summary.getAudioTracks());
+	private static Optional<Tuple<AudioTrack, Path>> deduceAudioTrack(Request request, MediaInfoTrackSummary summary){
+		Selector selector = request.getSelector();
+		if(selector.isForceUseAudioTrack()){
+			int audioTrack = selector.getAudioTrack();
+			Optional<AudioTrack> track = MediaTrackUtils.tryGetMediaTrackById(summary.getAudioTracks(), audioTrack);
+			
+			if(track.isSome()){
+				return createTuple(request, track.getValue());
+			}
+		}
+		return deduceTrack(request, summary.getAudioTracks());
 	}
 
-	private static Map<TextTrack, Path> deduceSubtitleTracks(Request request, MediaInfo mediaInfo, MediaInfoTrackSummary summary){
-		return deduceTrack(request, mediaInfo, summary.getSubtitleTracks());
+	private static Optional<Tuple<TextTrack, Path>> deduceSubtitleTrack(Request request, MediaInfoTrackSummary summary){
+		return deduceTrack(request, summary.getSubtitleTracks());
 	}
 }

@@ -35,7 +35,7 @@ public abstract class Optional<T>{
 	 * @param t The object to enhance
 	 * @return a new optional 
 	 */
-	public static<T> Optional<T> make(T t){
+	public static <T> Optional<T> make(T t){
 		if(t == null){
 			return new None<T>();
 		}
@@ -47,7 +47,7 @@ public abstract class Optional<T>{
 	 * Returns a new None optional type
 	 * @return A new None optional type
 	 */
-	public static<T> Optional<T> none(){
+	public static <T> Optional<T> none(){
 		return new None<T>();
 	}
 	

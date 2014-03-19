@@ -2,15 +2,16 @@ package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 
 import java.nio.channels.CompletionHandler;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
+import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
+import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.Tuple;
 import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
@@ -39,8 +40,8 @@ public final class DemultiplexTrackRunnable implements Runnable{
 
 	@Override
 	public final void run(){
-		boolean audioTrackResult = extractAudioTracks();
-		boolean subtitleTrackResult = extractSubtitleTracks();
+		boolean audioTrackResult = extractAudioTrack();
+		boolean subtitleTrackResult = extractSubtitleTrack();
 		boolean finalResult = audioTrackResult && subtitleTrackResult;
 		
 		if(finalResult){
@@ -50,29 +51,28 @@ public final class DemultiplexTrackRunnable implements Runnable{
 		}
 	}
 	
-	private boolean extractAudioTracks(){
+	private boolean extractAudioTrack(){
 		Log.info("Extracting audio tracks");
-		return extractTracks(job.getAudioTrackMap());
-	}
-	
-	private boolean extractSubtitleTracks(){
-		Log.info("Extracting subtitle tracks.");
-		return extractTracks(job.getSubtitleTrackMap());
-	}
-	
-	private <T extends MediaTrack> boolean extractTracks(Map<T, Path> trackMap){
-		Set<T> keyRing = trackMap.keySet();
-		boolean extractionResult = true;
+		Optional<Tuple<AudioTrack, Path>> audioTrackTupleOptional = job.getAudioTrack();
 		
-		for(T track : keyRing){
-			Path outputPath = trackMap.get(track);
-			boolean currentResult = extractTrack(track, outputPath);
-			if(currentResult == false){
-				extractionResult = false;
-			}
+		if(audioTrackTupleOptional.isNone()){
+			return true;
 		}
 		
-		return extractionResult;
+		Tuple<AudioTrack, Path> audioTrackTuple = audioTrackTupleOptional.getValue();
+		return extractTrack(audioTrackTuple.item1(), audioTrackTuple.item2());
+	}
+	
+	private boolean extractSubtitleTrack(){
+		Log.info("Extracting subtitle tracks.");
+		Optional<Tuple<TextTrack, Path>> subtitleTrackTupleOptional = job.getSubtitleTrack();
+		
+		if(subtitleTrackTupleOptional.isNone()){
+			return true;
+		}
+		
+		Tuple<TextTrack, Path> subtitleTrackTuple = subtitleTrackTupleOptional.getValue();
+		return extractTrack(subtitleTrackTuple.item1(), subtitleTrackTuple.item2());
 	}
 	
 	private boolean extractTrack(MediaTrack track, Path outputFile){

@@ -8,6 +8,8 @@ import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
+import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.transcodingService.utilities.Tuple;
 
 /**
  * Represents the demultiplexing of an MKV file
@@ -17,29 +19,23 @@ import com.nlogneg.transcodingService.info.mkv.Attachment;
 public final class DemultiplexMKVJob extends DemultiplexJob{
 	private final Map<Attachment, Path> attachmentMap;
 	private final Map<Attachment, Path> fontAttachmentMap;
-	private final Map<AudioTrack, Path> audioTrackMap;
-	private final Map<TextTrack, Path> subtitleTrackMap;
-
+	
 	/**
 	 * @param mediaFile
 	 * @param mediaInfo
+	 * @param audioTrack
+	 * @param subtitleTrack
 	 * @param attachmentMap
 	 * @param fontAttachmentMap
-	 * @param audioTrackMap
-	 * @param subtitleTrackMap
 	 */
-	public DemultiplexMKVJob(
-			Path mediaFile, 
-			MediaInfo mediaInfo,
+	public DemultiplexMKVJob(Path mediaFile, MediaInfo mediaInfo,
+			Optional<Tuple<AudioTrack, Path>> audioTrack,
+			Optional<Tuple<TextTrack, Path>> subtitleTrack,
 			Map<Attachment, Path> attachmentMap,
-			Map<Attachment, Path> fontAttachmentMap,
-			Map<AudioTrack, Path> audioTrackMap,
-			Map<TextTrack, Path> subtitleTrackMap){
-		super(mediaFile, mediaInfo);
+			Map<Attachment, Path> fontAttachmentMap) {
+		super(mediaFile, mediaInfo, audioTrack, subtitleTrack);
 		this.attachmentMap = attachmentMap;
 		this.fontAttachmentMap = fontAttachmentMap;
-		this.audioTrackMap = audioTrackMap;
-		this.subtitleTrackMap = subtitleTrackMap;
 	}
 
 	/**
@@ -54,19 +50,5 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	 */
 	public Map<Attachment, Path> getFontAttachmentMap(){
 		return fontAttachmentMap;
-	}
-
-	/**
-	 * @return the audioTrackMap
-	 */
-	public Map<AudioTrack, Path> getAudioTrackMap(){
-		return audioTrackMap;
-	}
-
-	/**
-	 * @return the subtitleTrackMap
-	 */
-	public Map<TextTrack, Path> getSubtitleTrackMap(){
-		return subtitleTrackMap;
 	}
 }

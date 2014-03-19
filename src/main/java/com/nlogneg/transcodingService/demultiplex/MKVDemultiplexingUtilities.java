@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.info.mediainfo.MediaTrack;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.utilities.MimeTypeUtilities;
+import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
  * Utility class for demultiplexing MKV Files
@@ -59,21 +60,21 @@ public final class MKVDemultiplexingUtilities{
 	 * @param mediaTracks The media tracks to analyze
 	 * @return which track to use or null if no suitable track could be found
 	 */
-	public static <T extends MediaTrack> T deduceMostLikelyTrack(Collection<T> mediaTracks){
-		T selectedTrack = null;
+	public static <T extends MediaTrack> Optional<T> tryDeduceMostLikelyTrack(Collection<T> mediaTracks){
+		Optional<T> selectedTrack = Optional.none();
 
 		for(T track : mediaTracks){
-			if(selectedTrack == null){
-				selectedTrack = track;
+			if(selectedTrack.isNone()){
+				selectedTrack = Optional.make(track);
 			}else{
 				//See if the selected track is Japanese
-				if(isTrackJapanese(selectedTrack)){
+				if(isTrackJapanese(selectedTrack.getValue())){
 					/*
 					 * If so, then the only way we'll unseat the previous
 					 * selection is if the track ID is lower
 					 */
-					if(track.getId() < selectedTrack.getId()){
-						selectedTrack = track;
+					if(track.getId() < selectedTrack.getValue().getId()){
+						selectedTrack = Optional.make(track);
 					}
 				}else{
 					/*
@@ -83,8 +84,8 @@ public final class MKVDemultiplexingUtilities{
 					 * 2. The candidate track has a lower ID number 
 					 */
 					
-					if(isTrackJapanese(track) || track.getId() < selectedTrack.getId()){
-						selectedTrack = track;
+					if(isTrackJapanese(track) || track.getId() < selectedTrack.getValue().getId()){
+						selectedTrack = Optional.make(track);
 					}
 				}
 			}
