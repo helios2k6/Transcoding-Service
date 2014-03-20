@@ -15,63 +15,79 @@ import com.nlogneg.transcodingService.utilities.exceptions.InvalidOperationExcep
 
 /**
  * Holds all of the command line options that were passed to this application
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class CommandLineOptionsProxy extends Proxy{
+public class CommandLineOptionsProxy extends Proxy
+{
 	public static final String PROXY_NAME = "CommandLineOptionsProxy";
-	private static final Logger Log = LogManager.getLogger(CommandLineOptionsProxy.class);
-	
+	private static final Logger Log = LogManager
+			.getLogger(CommandLineOptionsProxy.class);
+
 	private final CommandLine commandLine;
 	private boolean legalParse = true;
-	
-	public CommandLineOptionsProxy(String[] args){
+
+	public CommandLineOptionsProxy(final String[] args)
+	{
 		super(PROXY_NAME);
-		
+
 		CommandLine temp = null;
-		try{
-			CommandLineParser parser = new BasicParser();
-			temp = parser.parse(CommandLineOptionsFactory.createOptions(), args);
-		}catch(ParseException ex){
+		try
+		{
+			final CommandLineParser parser = new BasicParser();
+			temp = parser
+					.parse(CommandLineOptionsFactory.createOptions(), args);
+		} catch (final ParseException ex)
+		{
 			Log.error("Could not parse command line options.", ex);
-			legalParse = false;
+			this.legalParse = false;
 			temp = null;
-		}finally{
-			commandLine = temp;
+		} finally
+		{
+			this.commandLine = temp;
 		}
 	}
-	
+
 	/**
 	 * Get whether or not the command line options passed are legal
 	 */
-	public boolean isCommandLineLegal(){
-		return legalParse;
+	public boolean isCommandLineLegal()
+	{
+		return this.legalParse;
 	}
-	
+
 	/**
 	 * Gets whether or not to show the help message
 	 */
-	public boolean getHelpOption(){
-		if(isCommandLineLegal() == false){
+	public boolean getHelpOption()
+	{
+		if (this.isCommandLineLegal() == false)
+		{
 			return true;
 		}
-		
-		if(commandLine.hasOption(CommandLineOptionsFactory.HelpArgument)){
+
+		if (this.commandLine.hasOption(CommandLineOptionsFactory.HelpArgument))
+		{
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Get configuration file
 	 */
-	public Path getConfigurationFile(){
-		if(isCommandLineLegal() == false){
-			throw new InvalidOperationException("Cannot get port number for illegal command line options");
+	public Path getConfigurationFile()
+	{
+		if (this.isCommandLineLegal() == false)
+		{
+			throw new InvalidOperationException(
+					"Cannot get port number for illegal command line options");
 		}
-		
-		String result = commandLine.getOptionValue(CommandLineOptionsFactory.ConfigurationFileArgument);
+
+		final String result = this.commandLine
+				.getOptionValue(CommandLineOptionsFactory.ConfigurationFileArgument);
 		return Paths.get(result);
 	}
 }

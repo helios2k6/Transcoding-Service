@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 
-public class MultiplexTracksRunnable implements Runnable{
-	private static final Logger Log = LogManager.getLogger(MultiplexTracksRunnable.class);
+public class MultiplexTracksRunnable implements Runnable
+{
+	private static final Logger Log = LogManager
+			.getLogger(MultiplexTracksRunnable.class);
 	private final MultiplexJob job;
 	private final MultiplexArgumentBuilder builder;
 	private final CompletionHandler<Void, MultiplexJob> callback;
@@ -20,42 +22,53 @@ public class MultiplexTracksRunnable implements Runnable{
 	 * @param builder
 	 * @param callback
 	 */
-	public MultiplexTracksRunnable(
-			MultiplexJob job,
-			MultiplexArgumentBuilder builder,
-			CompletionHandler<Void, MultiplexJob> callback) {
+	public MultiplexTracksRunnable(final MultiplexJob job,
+			final MultiplexArgumentBuilder builder,
+			final CompletionHandler<Void, MultiplexJob> callback)
+	{
 		this.job = job;
 		this.builder = builder;
 		this.callback = callback;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run(){
-		Log.info("Multiplexing files for job: " + job.getDestinationFile());
+	public void run()
+	{
+		Log.info("Multiplexing files for job: " + this.job.getDestinationFile());
 
-		List<String> args = builder.getMultiplexingArguments(job);
-		ProcessBuilder builder = new ProcessBuilder(args);
+		final List<String> args = this.builder
+				.getMultiplexingArguments(this.job);
+		final ProcessBuilder builder = new ProcessBuilder(args);
 
-		Optional<Process> process = ProcessUtils.tryStartProcess(builder);
-		if(process.isNone()){
-			fail();
+		final Optional<Process> process = ProcessUtils.tryStartProcess(builder);
+		if (process.isNone())
+		{
+			this.fail();
 			return;
 		}
 
-		boolean result = ProcessUtils.tryWaitForProcess(process.getValue());
-		if(result){
-			Log.info("Successfully multiplexed job for: " + job.getDestinationFile());
-			callback.completed(null, job);
-		}else{
-			fail();
+		final boolean result = ProcessUtils.tryWaitForProcess(process
+				.getValue());
+		if (result)
+		{
+			Log.info("Successfully multiplexed job for: "
+					+ this.job.getDestinationFile());
+			this.callback.completed(null, this.job);
+		} else
+		{
+			this.fail();
 		}
 	}
 
-	private void fail(){
-		Log.error("Could not start multiplexing job for: " + job.getDestinationFile());
-		callback.failed(null, job);
+	private void fail()
+	{
+		Log.error("Could not start multiplexing job for: "
+				+ this.job.getDestinationFile());
+		this.callback.failed(null, this.job);
 	}
 }

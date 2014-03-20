@@ -28,24 +28,29 @@ import com.thoughtworks.xstream.mapper.MapperWrapper;
 
 /**
  * A factory that generates XStream serializers
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class SerializerFactory {
-	
+public final class SerializerFactory
+{
+
 	/**
 	 * Generates the default Request serializer
+	 * 
 	 * @return The serializer
 	 */
-	public static final XStream generateDefaultRequestSerializer(){
-		XStream xstream = new XStream(new DomDriver());
+	public static final XStream generateDefaultRequestSerializer()
+	{
+		final XStream xstream = new XStream(new DomDriver());
 
 		mapRequestSerializerAliases(xstream);
-		
+
 		return xstream;
 	}
-	
-	private static void mapRequestSerializerAliases(XStream xstream){
+
+	private static void mapRequestSerializerAliases(final XStream xstream)
+	{
 		xstream.alias("request", Request.class);
 		xstream.alias("encodingSettings", EncodingSettings.class);
 		xstream.alias("rateControl", RateControl.class);
@@ -59,64 +64,75 @@ public final class SerializerFactory {
 		xstream.alias("sampleAspectRatio", SampleAspectRatio.class);
 		xstream.alias("selector", Selector.class);
 	}
-	
+
 	/**
 	 * Generates the default MediaInfo serializer
+	 * 
 	 * @return The serializer
 	 */
-	public static final XStream generateDefaultMediaInfoSerializer(){
-		XStream xstream = new XStream(new DomDriver()){
-			
+	public static final XStream generateDefaultMediaInfoSerializer()
+	{
+		final XStream xstream = new XStream(new DomDriver())
+		{
+
 			@Override
-			protected MapperWrapper wrapMapper(MapperWrapper next){
+			protected MapperWrapper wrapMapper(final MapperWrapper next)
+			{
 				return createMapperWrapper(next);
 			}
 		};
-		
+
 		mapMediaInfoAliases(xstream);
 		mapMediaInfoFieldAliases(xstream);
 		mapMediaInfoImplicitCollections(xstream);
 		mapMediaInfoDeserializerConverters(xstream);
 		mapMediaInfoImmutableClasses(xstream);
-		
+
 		return xstream;
 	}
-	
-	private static void mapMediaInfoAliases(XStream xstream){
+
+	private static void mapMediaInfoAliases(final XStream xstream)
+	{
 		xstream.alias("Mediainfo", MediaInfo.class);
 		xstream.alias("File", File.class);
 	}
-	private static void mapMediaInfoFieldAliases(XStream xstream){
+
+	private static void mapMediaInfoFieldAliases(final XStream xstream)
+	{
 		xstream.aliasField("File", MediaInfo.class, "file");
-		
+
 		xstream.aliasField("Format", Track.class, "format");
-		
+
 		xstream.aliasField("Complete_name", GeneralTrack.class, "completeName");
-		
+
 		xstream.aliasField("Codec_ID", MediaTrack.class, "codecID");
 		xstream.aliasField("ID", MediaTrack.class, "id");
-		
+
 		xstream.aliasField("Channel_s_", AudioTrack.class, "channels");
 		xstream.aliasField("Language", AudioTrack.class, "language");
-		
+
 		xstream.aliasField("Width", VideoTrack.class, "width");
 		xstream.aliasField("Height", VideoTrack.class, "height");
-		xstream.aliasField("Display_aspect_ratio", VideoTrack.class, "displayAspectRatio");
+		xstream.aliasField("Display_aspect_ratio", VideoTrack.class,
+				"displayAspectRatio");
 		xstream.aliasField("Frame_rate_mode", VideoTrack.class, "frameRateMode");
 		xstream.aliasField("Frame_rate", VideoTrack.class, "frameRate");
-		
+
 		xstream.aliasField("Language", TextTrack.class, "language");
 	}
-	
-	private static void mapMediaInfoImplicitCollections(XStream xstream){
+
+	private static void mapMediaInfoImplicitCollections(final XStream xstream)
+	{
 		xstream.addImplicitCollection(File.class, "tracks");
 	}
-	
-	private static void mapMediaInfoDeserializerConverters(XStream xstream){
+
+	private static void mapMediaInfoDeserializerConverters(final XStream xstream)
+	{
 		xstream.registerConverter(new FileSectionConverter());
 	}
-	
-	private static void mapMediaInfoImmutableClasses(XStream xstream){
+
+	private static void mapMediaInfoImmutableClasses(final XStream xstream)
+	{
 		xstream.addImmutableType(MediaInfo.class);
 		xstream.addImmutableType(File.class);
 		xstream.addImmutableType(Track.class);
@@ -126,32 +142,40 @@ public final class SerializerFactory {
 		xstream.addImmutableType(VideoTrack.class);
 		xstream.addImmutableType(TextTrack.class);
 	}
-	
-	private static MapperWrapper createMapperWrapper(MapperWrapper next){
-		return new MapperWrapper(next){
-			public boolean shouldSerializeMember(Class definedIn, String fieldName){
-				if(definedIn == Object.class){
+
+	private static MapperWrapper createMapperWrapper(final MapperWrapper next)
+	{
+		return new MapperWrapper(next)
+		{
+			@Override
+			public boolean shouldSerializeMember(final Class definedIn,
+					final String fieldName)
+			{
+				if (definedIn == Object.class)
+				{
 					return false;
 				}
-				
+
 				return super.shouldSerializeMember(definedIn, fieldName);
 			}
-		}; 
+		};
 	}
-	
-	public static final XStream getConfigurationFileSerializer(){
-		XStream xstream = new XStream(new DomDriver());
-		
+
+	public static final XStream getConfigurationFileSerializer()
+	{
+		final XStream xstream = new XStream(new DomDriver());
+
 		xstream.alias("configurationFile", ConfigurationFile.class);
 		xstream.registerConverter(new PathConverter());
-		
+
 		return xstream;
 	}
-	
-	public static final XStream getAcknowledgementSerializer(){
-		XStream xstream = new XStream(new DomDriver());
+
+	public static final XStream getAcknowledgementSerializer()
+	{
+		final XStream xstream = new XStream(new DomDriver());
 		xstream.alias("acknowledgement", Acknowledgement.class);
-		
+
 		return xstream;
 	}
 }

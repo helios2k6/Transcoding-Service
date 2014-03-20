@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SampleAspectRatio implements Serializable{
+public final class SampleAspectRatio implements Serializable
+{
 	/**
 	 * 
 	 */
@@ -13,76 +14,94 @@ public final class SampleAspectRatio implements Serializable{
 	private final int width;
 	private final int height;
 
-	public SampleAspectRatio(int width, int height){
+	public SampleAspectRatio(final int width, final int height)
+	{
 		this.width = width;
 		this.height = height;
 	}
 
 	/**
 	 * Get the width
+	 * 
 	 * @return the width
 	 */
-	public int getWidth() {
-		return width;
+	public int getWidth()
+	{
+		return this.width;
 	}
 
 	/**
 	 * Get the height
+	 * 
 	 * @return the height
 	 */
-	public int getHeight() {
-		return height;
+	public int getHeight()
+	{
+		return this.height;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + height;
-		result = prime * result + width;
+		result = (prime * result) + this.height;
+		result = (prime * result) + this.width;
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		SampleAspectRatio other = (SampleAspectRatio) obj;
-		if (height != other.height) {
+		final SampleAspectRatio other = (SampleAspectRatio) obj;
+		if (this.height != other.height)
+		{
 			return false;
 		}
-		if (width != other.width) {
+		if (this.width != other.width)
+		{
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Converts a SampleAspectRatio to a list of arguments for x264
+	 * 
 	 * @param ratio
 	 * @return
 	 */
-	public static List<String> convertToArguments(SampleAspectRatio ratio){
-		StringBuilder builder = new StringBuilder();
+	public static List<String> convertToArguments(final SampleAspectRatio ratio)
+	{
+		final StringBuilder builder = new StringBuilder();
 		builder.append(ratio.getWidth()).append(":").append(ratio.getHeight());
-		
-		List<String> arguments = new ArrayList<String>();
+
+		final List<String> arguments = new ArrayList<String>();
 		arguments.add("--sar");
 		arguments.add(builder.toString());
-		
+
 		return arguments;
 	}
 }

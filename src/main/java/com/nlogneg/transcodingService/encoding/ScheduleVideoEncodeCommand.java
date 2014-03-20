@@ -14,39 +14,55 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
 /**
  * Encodes a media file
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ScheduleVideoEncodeCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>{
-	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
-	
-	public final void execute(INotification notification){
+public final class ScheduleVideoEncodeCommand extends SimpleCommand implements
+		CompletionHandler<Void, EncodingJob>
+{
+	private static final Logger Log = LogManager
+			.getLogger(ScheduleVideoEncodeCommand.class);
+
+	@Override
+	public final void execute(final INotification notification)
+	{
 		Log.info("Scheduling encoder job");
-		
-		EncodingJob job = (EncodingJob)notification.getBody();
-		DecoderArgumentBuilder decoderBuilder = new FFMPEGVideoDecodingArgumentBuilder();
-		EncoderArgumentBuilder encoderBuilder = new X264EncodingArgumentBuilder();
-		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		ExecutorService service = proxy.getService();
-		
-		EncodeVideoRunnable encoder = new EncodeVideoRunnable(job, decoderBuilder, encoderBuilder, this, service);
+
+		final EncodingJob job = (EncodingJob) notification.getBody();
+		final DecoderArgumentBuilder decoderBuilder = new FFMPEGVideoDecodingArgumentBuilder();
+		final EncoderArgumentBuilder encoderBuilder = new X264EncodingArgumentBuilder();
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
+				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorService service = proxy.getService();
+
+		final EncodeVideoRunnable encoder = new EncodeVideoRunnable(job,
+				decoderBuilder, encoderBuilder, this, service);
 		service.submit(encoder);
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object,
+	 * java.lang.Object)
 	 */
 	@Override
-	public void completed(Void arg0, EncodingJob job){
-		sendNotification(Notifications.EncodeVideoSuccess, job);
+	public void completed(final Void arg0, final EncodingJob job)
+	{
+		this.sendNotification(Notifications.EncodeVideoSuccess, job);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable,
+	 * java.lang.Object)
 	 */
 	@Override
-	public void failed(Throwable arg0, EncodingJob job){
-		sendNotification(Notifications.EncodeVideoFailure, job);;
+	public void failed(final Throwable arg0, final EncodingJob job)
+	{
+		this.sendNotification(Notifications.EncodeVideoFailure, job);
+		;
 	}
 }

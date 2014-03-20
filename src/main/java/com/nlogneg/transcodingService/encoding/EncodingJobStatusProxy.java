@@ -12,73 +12,87 @@ import com.nlogneg.transcodingService.StatusTuple;
 
 /**
  * Holds the state of an EncodingJob
+ * 
  * @author Andrew
- *
+ * 
  */
-public class EncodingJobStatusProxy extends Proxy{
+public class EncodingJobStatusProxy extends Proxy
+{
 	public static final String PROXY_NAME = "EncodingJobStatusProxy";
-	
+
 	private final Map<EncodingJob, JobStatus> videoStatus = new HashMap<>();
 	private final Map<EncodingJob, JobStatus> audioStatus = new HashMap<>();
 	private final Lock lock = new ReentrantLock();
-	
-	public EncodingJobStatusProxy(){
+
+	public EncodingJobStatusProxy()
+	{
 		super(PROXY_NAME);
 	}
-	
+
 	/**
 	 * Add a job to the proxy
+	 * 
 	 * @param job
 	 */
-	public void addJob(EncodingJob job){
-		lock.lock();
-		videoStatus.put(job, JobStatus.Pending);
-		audioStatus.put(job, JobStatus.Pending);
-		lock.unlock();
+	public void addJob(final EncodingJob job)
+	{
+		this.lock.lock();
+		this.videoStatus.put(job, JobStatus.Pending);
+		this.audioStatus.put(job, JobStatus.Pending);
+		this.lock.unlock();
 	}
-	
+
 	/**
 	 * Set the status of a video encode
+	 * 
 	 * @param job
 	 * @param status
 	 */
-	public void setVideoStatus(EncodingJob job, JobStatus status){
-		lock.lock();
-		videoStatus.put(job, status);
-		lock.unlock();
+	public void setVideoStatus(final EncodingJob job, final JobStatus status)
+	{
+		this.lock.lock();
+		this.videoStatus.put(job, status);
+		this.lock.unlock();
 	}
-	
+
 	/**
 	 * Set the status of an audio encode
+	 * 
 	 * @param job
 	 * @param status
 	 */
-	public void setAudioStatus(EncodingJob job, JobStatus status){
-		lock.lock();
-		audioStatus.put(job, status);
-		lock.unlock();
+	public void setAudioStatus(final EncodingJob job, final JobStatus status)
+	{
+		this.lock.lock();
+		this.audioStatus.put(job, status);
+		this.lock.unlock();
 	}
-	
+
 	/**
 	 * Get the status of a particular job
+	 * 
 	 * @param job
 	 * @return
 	 */
-	public StatusTuple getStatus(EncodingJob job){
-		lock.lock();
-		StatusTuple tuple = new StatusTuple(videoStatus.get(job), audioStatus.get(job));
-		lock.unlock();
+	public StatusTuple getStatus(final EncodingJob job)
+	{
+		this.lock.lock();
+		final StatusTuple tuple = new StatusTuple(this.videoStatus.get(job),
+				this.audioStatus.get(job));
+		this.lock.unlock();
 		return tuple;
 	}
-	
+
 	/**
 	 * Remove a job
+	 * 
 	 * @param job
 	 */
-	public void removeJob(EncodingJob job){
-		lock.lock();
-		videoStatus.remove(job);
-		audioStatus.remove(job);
-		lock.unlock();
+	public void removeJob(final EncodingJob job)
+	{
+		this.lock.lock();
+		this.videoStatus.remove(job);
+		this.audioStatus.remove(job);
+		this.lock.unlock();
 	}
 }

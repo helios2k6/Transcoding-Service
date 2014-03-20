@@ -1,6 +1,7 @@
 package com.nlogneg.transcodingService.utilities.exceptions;
 
-public class NoValueException extends RuntimeException{
+public class NoValueException extends RuntimeException
+{
 
 	/**
 	 * 
@@ -10,7 +11,8 @@ public class NoValueException extends RuntimeException{
 	/**
 	 * 
 	 */
-	public NoValueException() {
+	public NoValueException()
+	{
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -21,8 +23,9 @@ public class NoValueException extends RuntimeException{
 	 * @param arg2
 	 * @param arg3
 	 */
-	public NoValueException(String arg0, Throwable arg1, boolean arg2,
-			boolean arg3) {
+	public NoValueException(final String arg0, final Throwable arg1,
+			final boolean arg2, final boolean arg3)
+	{
 		super(arg0, arg1, arg2, arg3);
 		// TODO Auto-generated constructor stub
 	}
@@ -31,7 +34,8 @@ public class NoValueException extends RuntimeException{
 	 * @param arg0
 	 * @param arg1
 	 */
-	public NoValueException(String arg0, Throwable arg1) {
+	public NoValueException(final String arg0, final Throwable arg1)
+	{
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}
@@ -39,7 +43,8 @@ public class NoValueException extends RuntimeException{
 	/**
 	 * @param arg0
 	 */
-	public NoValueException(String arg0) {
+	public NoValueException(final String arg0)
+	{
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
@@ -47,10 +52,10 @@ public class NoValueException extends RuntimeException{
 	/**
 	 * @param arg0
 	 */
-	public NoValueException(Throwable arg0) {
+	public NoValueException(final Throwable arg0)
+	{
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
 
-	
 }

@@ -1,14 +1,14 @@
 package com.nlogneg.transcodingService.request.incoming;
 
-
-
 /**
- * Represents a transcoding request. 
+ * Represents a transcoding request.
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class Request{
-	
+public final class Request
+{
+
 	private final String sourceFile;
 	private final String destinationFile;
 	private final EncodingSettings encodingSettings;
@@ -16,114 +16,152 @@ public final class Request{
 
 	/**
 	 * Constructs a new, immutable request
-	 * @param filePath The file path
-	 * @param outputPath The output path
-	 * @param settings The encoding settings for this request
-	 * @param selector The selector
+	 * 
+	 * @param filePath
+	 *            The file path
+	 * @param outputPath
+	 *            The output path
+	 * @param settings
+	 *            The encoding settings for this request
+	 * @param selector
+	 *            The selector
 	 */
-	protected Request(String filePath, String outputPath, EncodingSettings settings, Selector selector){
+	protected Request(final String filePath, final String outputPath,
+			final EncodingSettings settings, final Selector selector)
+	{
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;
 		this.encodingSettings = settings;
 		this.selector = selector;
 	}
-	
+
 	/**
 	 * @return the selector
 	 */
-	public Selector getSelector(){
-		return selector;
+	public Selector getSelector()
+	{
+		return this.selector;
 	}
 
 	/**
 	 * Get the file path
+	 * 
 	 * @return
 	 */
-	public String getSourceFile(){
-		return sourceFile;
+	public String getSourceFile()
+	{
+		return this.sourceFile;
 	}
 
 	/**
 	 * Get the output path
+	 * 
 	 * @return
 	 */
-	public String getDestinationFile(){
-		return destinationFile;
-	}
-	
-	/**
-	 * Gets the encoding settings for this request
-	 * @return The encoding settings
-	 */
-	public EncodingSettings getEncodingSettings(){
-		return encodingSettings;
-	}
-	
-	@Override
-	public String toString(){
-		return "Request[FilePath = " + sourceFile + ", OutputPath = " + destinationFile + "]";
+	public String getDestinationFile()
+	{
+		return this.destinationFile;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * Gets the encoding settings for this request
+	 * 
+	 * @return The encoding settings
+	 */
+	public EncodingSettings getEncodingSettings()
+	{
+		return this.encodingSettings;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Request[FilePath = " + this.sourceFile + ", OutputPath = "
+				+ this.destinationFile + "]";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((destinationFile == null) ? 0 : destinationFile.hashCode());
-		result = prime
-				* result
-				+ ((encodingSettings == null) ? 0 : encodingSettings.hashCode());
-		result = prime * result
-				+ ((selector == null) ? 0 : selector.hashCode());
-		result = prime * result
-				+ ((sourceFile == null) ? 0 : sourceFile.hashCode());
+		result = (prime * result)
+				+ ((this.destinationFile == null) ? 0 : this.destinationFile
+						.hashCode());
+		result = (prime * result)
+				+ ((this.encodingSettings == null) ? 0 : this.encodingSettings
+						.hashCode());
+		result = (prime * result)
+				+ ((this.selector == null) ? 0 : this.selector.hashCode());
+		result = (prime * result)
+				+ ((this.sourceFile == null) ? 0 : this.sourceFile.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		Request other = (Request) obj;
-		if (destinationFile == null) {
-			if (other.destinationFile != null) {
+		final Request other = (Request) obj;
+		if (this.destinationFile == null)
+		{
+			if (other.destinationFile != null)
+			{
 				return false;
 			}
-		} else if (!destinationFile.equals(other.destinationFile)) {
+		} else if (!this.destinationFile.equals(other.destinationFile))
+		{
 			return false;
 		}
-		if (encodingSettings == null) {
-			if (other.encodingSettings != null) {
+		if (this.encodingSettings == null)
+		{
+			if (other.encodingSettings != null)
+			{
 				return false;
 			}
-		} else if (!encodingSettings.equals(other.encodingSettings)) {
+		} else if (!this.encodingSettings.equals(other.encodingSettings))
+		{
 			return false;
 		}
-		if (selector == null) {
-			if (other.selector != null) {
+		if (this.selector == null)
+		{
+			if (other.selector != null)
+			{
 				return false;
 			}
-		} else if (!selector.equals(other.selector)) {
+		} else if (!this.selector.equals(other.selector))
+		{
 			return false;
 		}
-		if (sourceFile == null) {
-			if (other.sourceFile != null) {
+		if (this.sourceFile == null)
+		{
+			if (other.sourceFile != null)
+			{
 				return false;
 			}
-		} else if (!sourceFile.equals(other.sourceFile)) {
+		} else if (!this.sourceFile.equals(other.sourceFile))
+		{
 			return false;
 		}
 		return true;

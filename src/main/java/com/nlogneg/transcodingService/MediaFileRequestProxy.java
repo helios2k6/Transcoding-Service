@@ -10,43 +10,52 @@ import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
  * Contains all of the MediaFileRequests
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class MediaFileRequestProxy extends Proxy{
+public class MediaFileRequestProxy extends Proxy
+{
 	public static final String PROXY_NAME = "MediaFileRequestProxy";
-	
+
 	private final ConcurrentMap<Path, MediaFileRequest> requestMap = new ConcurrentHashMap<Path, MediaFileRequest>();
-	
-	public MediaFileRequestProxy(){
+
+	public MediaFileRequestProxy()
+	{
 		super(PROXY_NAME);
 	}
-	
+
 	/**
 	 * Put a mapping in the proxy
+	 * 
 	 * @param path
 	 * @param request
 	 */
-	public void put(Path path, MediaFileRequest request){
-		requestMap.putIfAbsent(path, request);
+	public void put(final Path path, final MediaFileRequest request)
+	{
+		this.requestMap.putIfAbsent(path, request);
 	}
-	
+
 	/**
 	 * Get a MediaFileRequest
+	 * 
 	 * @param path
 	 * @return
 	 */
-	public Optional<MediaFileRequest> get(Path path){
-		return Optional.make(requestMap.get(path));
+	public Optional<MediaFileRequest> get(final Path path)
+	{
+		return Optional.make(this.requestMap.get(path));
 	}
-	
+
 	/**
 	 * Remove a media file request
+	 * 
 	 * @param path
 	 * @return
 	 */
-	public Optional<MediaFileRequest> remove(Path path){
-		return Optional.make(requestMap.remove(path));
+	public Optional<MediaFileRequest> remove(final Path path)
+	{
+		return Optional.make(this.requestMap.remove(path));
 	}
-	
+
 }

@@ -4,29 +4,35 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
 /**
  * Proxy that holds the server configuration
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ServerConfigurationProxy extends Proxy{
+public final class ServerConfigurationProxy extends Proxy
+{
 	public static final String PROXY_NAME = "";
-	
+
 	private ConfigurationFile configurationFile;
-	
-	public ServerConfigurationProxy(){
+
+	public ServerConfigurationProxy()
+	{
 		super(PROXY_NAME);
 	}
 
 	/**
 	 * @return the configurationFile
 	 */
-	public ConfigurationFile getConfigurationFile() {
-		return configurationFile;
+	public ConfigurationFile getConfigurationFile()
+	{
+		return this.configurationFile;
 	}
 
 	/**
-	 * @param configurationFile the configurationFile to set
+	 * @param configurationFile
+	 *            the configurationFile to set
 	 */
-	public void setConfigurationFile(ConfigurationFile configurationFile) {
+	public void setConfigurationFile(final ConfigurationFile configurationFile)
+	{
 		this.configurationFile = configurationFile;
 	}
 }

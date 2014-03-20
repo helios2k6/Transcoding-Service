@@ -8,43 +8,53 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
 /**
  * Represents the queue of sockets that must be serviced
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class SocketProxy extends Proxy{
+public class SocketProxy extends Proxy
+{
 	public static final String PROXY_NAME = "SocketProxy";
-	
+
 	private final BlockingQueue<Socket> sockets = new LinkedBlockingDeque<>();
 
 	/**
 	 * Constructs a new SocketProxy
 	 */
-	public SocketProxy(){
+	public SocketProxy()
+	{
 		super(PROXY_NAME);
 	}
-	
+
 	/**
 	 * Add a socket to the queue of sockets
-	 * @param socket The socket to add
+	 * 
+	 * @param socket
+	 *            The socket to add
 	 */
-	public void addSocketToQueue(Socket socket){
-		sockets.add(socket);
+	public void addSocketToQueue(final Socket socket)
+	{
+		this.sockets.add(socket);
 	}
-	
+
 	/**
-	 * Attempts to take the next socket. 
-	 * @return The next socket to service. Null if there aren't any other sockets
-	 * to service
+	 * Attempts to take the next socket.
+	 * 
+	 * @return The next socket to service. Null if there aren't any other
+	 *         sockets to service
 	 */
-	public Socket getNextSocket(){
-		return sockets.poll();
+	public Socket getNextSocket()
+	{
+		return this.sockets.poll();
 	}
-	
+
 	/**
 	 * Queries whether or not any sockets need to be serviced
+	 * 
 	 * @return
 	 */
-	public boolean anySocketsToService(){
-		return sockets.isEmpty() == false;
+	public boolean anySocketsToService()
+	{
+		return this.sockets.isEmpty() == false;
 	}
 }

@@ -6,10 +6,12 @@ import java.util.List;
 
 /**
  * Represents the profile levels
+ * 
  * @author anjohnson
- *
+ * 
  */
-public enum Profile implements Serializable{
+public enum Profile implements Serializable
+{
 	/**
 	 * The main profile
 	 */
@@ -30,17 +32,20 @@ public enum Profile implements Serializable{
 	 * The High 10-bit depth capable 4:4:4 color space profile
 	 */
 	High444;
-	
+
 	/**
 	 * Convert this Profile to x264 arguments
+	 * 
 	 * @param profile
 	 * @return
 	 */
-	public static List<String> convertToArguments(Profile profile){
-		List<String> arguments = new ArrayList<String>();
+	public static List<String> convertToArguments(final Profile profile)
+	{
+		final List<String> arguments = new ArrayList<String>();
 		arguments.add("--profile");
-		
-		switch(profile){
+
+		switch (profile)
+		{
 		case High:
 			arguments.add("high");
 			break;
@@ -57,7 +62,7 @@ public enum Profile implements Serializable{
 			arguments.add("main");
 			break;
 		}
-		
+
 		return arguments;
 	}
 }

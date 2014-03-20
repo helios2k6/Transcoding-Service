@@ -5,12 +5,15 @@ import java.util.List;
 
 /**
  * An object that can determine the encoding arguments for an encoding job
+ * 
  * @author Andrew
- *
+ * 
  */
-public interface EncoderArgumentBuilder{
+public interface EncoderArgumentBuilder
+{
 	/**
-	 * Get the encoder arguments 
+	 * Get the encoder arguments
+	 * 
 	 * @param job
 	 * @param outputFile
 	 * @return

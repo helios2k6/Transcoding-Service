@@ -19,45 +19,64 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 
 /**
- * Configures this server application 
+ * Configures this server application
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class ConfigureServerCommand extends SimpleCommand{
+public class ConfigureServerCommand extends SimpleCommand
+{
 
-	private static final Logger Log = LogManager.getLogger(ConfigureServerCommand.class);
+	private static final Logger Log = LogManager
+			.getLogger(ConfigureServerCommand.class);
 
-	public void execute(INotification notification){
-		CommandLineOptionsProxy proxy = (CommandLineOptionsProxy)getFacade().retrieveProxy(CommandLineOptionsProxy.PROXY_NAME);
-		Path configFile = proxy.getConfigurationFile();
-		
-		if(Files.exists(configFile, LinkOption.NOFOLLOW_LINKS) == false){
-			fail("Config file cannot be found at: " + configFile.toAbsolutePath().toString(), null);
+	@Override
+	public void execute(final INotification notification)
+	{
+		final CommandLineOptionsProxy proxy = (CommandLineOptionsProxy) this
+				.getFacade().retrieveProxy(CommandLineOptionsProxy.PROXY_NAME);
+		final Path configFile = proxy.getConfigurationFile();
+
+		if (Files.exists(configFile, LinkOption.NOFOLLOW_LINKS) == false)
+		{
+			this.fail("Config file cannot be found at: "
+					+ configFile.toAbsolutePath().toString(), null);
 		}
-		
-		try{
-			List<String> lines = Files.readAllLines(configFile, Charset.defaultCharset());
-			String flattenedFile = ListUtilities.flatten(lines);
-			
-			XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
-			ConfigurationFile file = (ConfigurationFile)deserializer.fromXML(flattenedFile);
-			
-			ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
+
+		try
+		{
+			final List<String> lines = Files.readAllLines(configFile,
+					Charset.defaultCharset());
+			final String flattenedFile = ListUtilities.flatten(lines);
+
+			final XStream deserializer = SerializerFactory
+					.getConfigurationFileSerializer();
+			final ConfigurationFile file = (ConfigurationFile) deserializer
+					.fromXML(flattenedFile);
+
+			final ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy) this
+					.getFacade().retrieveProxy(
+							ServerConfigurationProxy.PROXY_NAME);
 			serverConfigProxy.setConfigurationFile(file);
-		}catch(IOException e){
-			fail("Could not read config file.", e);
-		}catch(XStreamException ex){
-			fail("Could not deserialize configuration file.", ex);
+		} catch (final IOException e)
+		{
+			this.fail("Could not read config file.", e);
+		} catch (final XStreamException ex)
+		{
+			this.fail("Could not deserialize configuration file.", ex);
 		}
 	}
 
-	private void fail(String message, Exception ex){
-		if(ex != null){
+	private void fail(final String message, final Exception ex)
+	{
+		if (ex != null)
+		{
 			Log.fatal(message, ex);
-		}else{
+		} else
+		{
 			Log.fatal(message);
 		}
-		
-		sendNotification(Notifications.PrintHelpAndExit);
+
+		this.sendNotification(Notifications.PrintHelpAndExit);
 	}
 }

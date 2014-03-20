@@ -14,32 +14,47 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
 /**
  * Schedules MKV track demultiplexion
+ * 
  * @author Andrew
- *
+ * 
  */
-public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>{
-	private static final Logger Log = LogManager.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
-	/* (non-Javadoc)
-	 * @see org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org.puremvc.java.multicore.interfaces.INotification)
+public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand
+		implements CompletionHandler<Void, DemultiplexMKVJob>
+{
+	private static final Logger Log = LogManager
+			.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org
+	 * .puremvc.java.multicore.interfaces.INotification)
 	 */
 	@Override
-	public void execute(INotification notification){
-		DemultiplexMKVJob job = (DemultiplexMKVJob)notification.getBody();
-		DemultiplexTrackRunnable multiplexer = new DemultiplexTrackRunnable(job, this);
-		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		ExecutorService service = proxy.getService();
+	public void execute(final INotification notification)
+	{
+		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification
+				.getBody();
+		final DemultiplexTrackRunnable multiplexer = new DemultiplexTrackRunnable(
+				job, this);
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
+				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorService service = proxy.getService();
 		service.submit(multiplexer);
 	}
 
 	@Override
-	public void completed(Void result, DemultiplexMKVJob job){
+	public void completed(final Void result, final DemultiplexMKVJob job)
+	{
 		Log.info("Track demultiplex job succeeded for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexTrackSuccess, job);
+		this.sendNotification(Notifications.DemultiplexTrackSuccess, job);
 	}
 
 	@Override
-	public void failed(Throwable exc, DemultiplexMKVJob job){
+	public void failed(final Throwable exc, final DemultiplexMKVJob job)
+	{
 		Log.info("Track demultiplex job failed for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexTrackFailure, job);
+		this.sendNotification(Notifications.DemultiplexTrackFailure, job);
 	}
 }

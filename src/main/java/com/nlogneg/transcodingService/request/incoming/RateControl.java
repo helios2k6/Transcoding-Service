@@ -6,15 +6,17 @@ import java.util.List;
 
 /**
  * Represents the rate control setting for Encoding settings
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class RateControl implements Serializable{
-	
+public class RateControl implements Serializable
+{
+
 	private static final String BitRateArgument = "--bitrate";
 	private static final String ConstantBitRateArgument = "--crf";
 	private static final String QPArgument = "--qp";
-	
+
 	/**
 	 * 
 	 */
@@ -22,87 +24,109 @@ public class RateControl implements Serializable{
 
 	/**
 	 * The type of rate control to use
+	 * 
 	 * @author anjohnson
-	 *
+	 * 
 	 */
-	public enum Type{
-		ConstantRateFactor,
-		QuantizationParameter,
-		BitRate,
+	public enum Type
+	{
+		ConstantRateFactor, QuantizationParameter, BitRate,
 	}
-	
+
 	private final Type type;
 	private final double setting;
-	
+
 	/**
 	 * Constructs a new Rate Control object
-	 * @param type The type of rate control
-	 * @param setting The setting for the rate control
+	 * 
+	 * @param type
+	 *            The type of rate control
+	 * @param setting
+	 *            The setting for the rate control
 	 */
-	public RateControl(Type type, double setting){
+	public RateControl(final Type type, final double setting)
+	{
 		this.type = type;
 		this.setting = setting;
 	}
-	
+
 	/**
 	 * Get the type of rate control to use
+	 * 
 	 * @return The type of rate control
 	 */
-	public Type getType() {
-		return type;
-	}
-	
-	/**
-	 * Get the setting for the rate control
-	 * @return The setting
-	 */
-	public double getSetting() {
-		return setting;
+	public Type getType()
+	{
+		return this.type;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * Get the setting for the rate control
+	 * 
+	 * @return The setting
+	 */
+	public double getSetting()
+	{
+		return this.setting;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(setting);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		temp = Double.doubleToLongBits(this.setting);
+		result = (prime * result) + (int) (temp ^ (temp >>> 32));
+		result = (prime * result)
+				+ ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		RateControl other = (RateControl) obj;
-		if (Double.doubleToLongBits(setting) != Double
-				.doubleToLongBits(other.setting)) {
+		final RateControl other = (RateControl) obj;
+		if (Double.doubleToLongBits(this.setting) != Double
+				.doubleToLongBits(other.setting))
+		{
 			return false;
 		}
-		if (type != other.type) {
+		if (this.type != other.type)
+		{
 			return false;
 		}
 		return true;
 	}
-	
-	public static List<String> convertToArguments(RateControl control){
-		List<String> arguments = new LinkedList<String>();
-		
-		switch(control.getType()){
+
+	public static List<String> convertToArguments(final RateControl control)
+	{
+		final List<String> arguments = new LinkedList<String>();
+
+		switch (control.getType())
+		{
 		case BitRate:
 			arguments.add(BitRateArgument);
 			break;
@@ -111,10 +135,10 @@ public class RateControl implements Serializable{
 			break;
 		case QuantizationParameter:
 			arguments.add(QPArgument);
-			arguments.add(Integer.toString((int)control.getSetting()));
+			arguments.add(Integer.toString((int) control.getSetting()));
 			return arguments;
 		}
-		
+
 		arguments.add(Double.toString(control.getSetting()));
 		return arguments;
 	}

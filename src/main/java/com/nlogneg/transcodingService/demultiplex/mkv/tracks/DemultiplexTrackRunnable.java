@@ -17,82 +17,101 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * Demultiplexes a type of track
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class DemultiplexTrackRunnable implements Runnable{
-	private static final Logger Log = LogManager.getLogger(DemultiplexTrackRunnable.class);
+public final class DemultiplexTrackRunnable implements Runnable
+{
+	private static final Logger Log = LogManager
+			.getLogger(DemultiplexTrackRunnable.class);
 	private static final String TracksArgument = "tracks";
-	
+
 	private final DemultiplexMKVJob job;
 	private final CompletionHandler<Void, DemultiplexMKVJob> asyncCallback;
-	
+
 	/**
 	 * @param job
 	 * @param asyncCallback
 	 */
-	public DemultiplexTrackRunnable(
-			DemultiplexMKVJob job,
-			CompletionHandler<Void, DemultiplexMKVJob> asyncCallback){
+	public DemultiplexTrackRunnable(final DemultiplexMKVJob job,
+			final CompletionHandler<Void, DemultiplexMKVJob> asyncCallback)
+	{
 		this.job = job;
 		this.asyncCallback = asyncCallback;
 	}
 
 	@Override
-	public final void run(){
-		boolean audioTrackResult = extractAudioTrack();
-		boolean subtitleTrackResult = extractSubtitleTrack();
-		boolean finalResult = audioTrackResult && subtitleTrackResult;
-		
-		if(finalResult){
-			asyncCallback.completed(null, job);
-		}else{
-			asyncCallback.failed(null, job);
+	public final void run()
+	{
+		final boolean audioTrackResult = this.extractAudioTrack();
+		final boolean subtitleTrackResult = this.extractSubtitleTrack();
+		final boolean finalResult = audioTrackResult && subtitleTrackResult;
+
+		if (finalResult)
+		{
+			this.asyncCallback.completed(null, this.job);
+		} else
+		{
+			this.asyncCallback.failed(null, this.job);
 		}
 	}
-	
-	private boolean extractAudioTrack(){
+
+	private boolean extractAudioTrack()
+	{
 		Log.info("Extracting audio tracks");
-		Optional<Tuple<AudioTrack, Path>> audioTrackTupleOptional = job.getAudioTrack();
-		
-		if(audioTrackTupleOptional.isNone()){
+		final Optional<Tuple<AudioTrack, Path>> audioTrackTupleOptional = this.job
+				.getAudioTrack();
+
+		if (audioTrackTupleOptional.isNone())
+		{
 			return true;
 		}
-		
-		Tuple<AudioTrack, Path> audioTrackTuple = audioTrackTupleOptional.getValue();
-		return extractTrack(audioTrackTuple.item1(), audioTrackTuple.item2());
+
+		final Tuple<AudioTrack, Path> audioTrackTuple = audioTrackTupleOptional
+				.getValue();
+		return this.extractTrack(audioTrackTuple.item1(),
+				audioTrackTuple.item2());
 	}
-	
-	private boolean extractSubtitleTrack(){
+
+	private boolean extractSubtitleTrack()
+	{
 		Log.info("Extracting subtitle tracks.");
-		Optional<Tuple<TextTrack, Path>> subtitleTrackTupleOptional = job.getSubtitleTrack();
-		
-		if(subtitleTrackTupleOptional.isNone()){
+		final Optional<Tuple<TextTrack, Path>> subtitleTrackTupleOptional = this.job
+				.getSubtitleTrack();
+
+		if (subtitleTrackTupleOptional.isNone())
+		{
 			return true;
 		}
-		
-		Tuple<TextTrack, Path> subtitleTrackTuple = subtitleTrackTupleOptional.getValue();
-		return extractTrack(subtitleTrackTuple.item1(), subtitleTrackTuple.item2());
+
+		final Tuple<TextTrack, Path> subtitleTrackTuple = subtitleTrackTupleOptional
+				.getValue();
+		return this.extractTrack(subtitleTrackTuple.item1(),
+				subtitleTrackTuple.item2());
 	}
-	
-	private boolean extractTrack(MediaTrack track, Path outputFile){
-		String mediaFileName = job.getMediaFile().toAbsolutePath().toString();
-		StringBuilder argument = new StringBuilder();
-		argument.append(track.getId()).append(":").append(outputFile.toAbsolutePath());
-		
-		ProcessBuilder builder = new ProcessBuilder(
-				SystemUtilities.getMkvExtractProcessName(), 
-				TracksArgument, 
-				mediaFileName,
-				argument.toString());
-		
-		Optional<Process> process = ProcessUtils.tryStartProcess(builder);
-		
-		if(process.isNone()){
-			Log.error("Could not extract tracks for: " + job.getMediaFile());
+
+	private boolean extractTrack(final MediaTrack track, final Path outputFile)
+	{
+		final String mediaFileName = this.job.getMediaFile().toAbsolutePath()
+				.toString();
+		final StringBuilder argument = new StringBuilder();
+		argument.append(track.getId()).append(":")
+				.append(outputFile.toAbsolutePath());
+
+		final ProcessBuilder builder = new ProcessBuilder(
+				SystemUtilities.getMkvExtractProcessName(), TracksArgument,
+				mediaFileName, argument.toString());
+
+		final Optional<Process> process = ProcessUtils.tryStartProcess(builder);
+
+		if (process.isNone())
+		{
+			Log.error("Could not extract tracks for: "
+					+ this.job.getMediaFile());
 			return false;
 		}
-		
+
 		return ProcessUtils.tryWaitForProcess(process.getValue());
 	}
 }

@@ -1,5 +1,8 @@
-_Resharper*
-bin*
-obj*
-*.suo
-src/Media Information Service/packages/*
+.DS_Store
+.class
+.war
+target/*
+.jar
+.settings
+.project
+.classpath

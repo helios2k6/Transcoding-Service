@@ -8,54 +8,70 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
- * A Process utility class that allows an interrelationship with the 
- * Optional type
+ * A Process utility class that allows an interrelationship with the Optional
+ * type
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ProcessUtils{
+public final class ProcessUtils
+{
 	private static final Logger Log = LogManager.getLogger(ProcessUtils.class);
+
 	/**
 	 * Attempts to start a process from a process builder
-	 * @param builder The process builder
+	 * 
+	 * @param builder
+	 *            The process builder
 	 * @return An optional with the Started process
 	 */
-	public static Optional<Process> tryStartProcess(ProcessBuilder builder){
+	public static Optional<Process> tryStartProcess(final ProcessBuilder builder)
+	{
 		Log.info("Attempting to start process.");
-		try{
-			Process process = builder.start();
+		try
+		{
+			final Process process = builder.start();
 			Log.info("Process start successful.");
 			return Optional.make(process);
-		}catch(IOException e){
-			Log.error("Could not start process.", e);;
+		} catch (final IOException e)
+		{
+			Log.error("Could not start process.", e);
+			;
 		}
-		
+
 		return Optional.none();
 	}
-	
+
 	/**
-	 * Attempts to close the process 
+	 * Attempts to close the process
+	 * 
 	 * @param process
 	 */
-	public static void tryCloseProcess(Optional<Process> process){
-		if(process.isSome()){
+	public static void tryCloseProcess(final Optional<Process> process)
+	{
+		if (process.isSome())
+		{
 			process.getValue().destroy();
 		}
 	}
-	
+
 	/**
 	 * Trys to wait for a process to end
+	 * 
 	 * @param process
 	 * @return
 	 */
-	public static boolean tryWaitForProcess(Process process){
-		try {
+	public static boolean tryWaitForProcess(final Process process)
+	{
+		try
+		{
 			process.waitFor();
-		}catch (InterruptedException e){
+		} catch (final InterruptedException e)
+		{
 			Log.error("Process waiting interrupted.", e);
 			return false;
 		}
-		
+
 		return true;
 	}
 }

@@ -13,50 +13,63 @@ import com.nlogneg.transcodingService.StatusTuple;
 import com.nlogneg.transcodingService.constants.Notifications;
 
 /**
- * The main demultiplexing controller that reports directly to the Super Controller
+ * The main demultiplexing controller that reports directly to the Super
+ * Controller
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class DemultiplexController extends SimpleCommand{
-	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
+public class DemultiplexController extends SimpleCommand
+{
+	private static final Logger Log = LogManager
+			.getLogger(DemultiplexController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
-	private enum Reaction{
-		NotifySuccess,
-		NotifyFailure,
-		ScheduleTrack,
-		ScheduleAttachment,
-		NoOp
+	private enum Reaction
+	{
+		NotifySuccess, NotifyFailure, ScheduleTrack, ScheduleAttachment, NoOp
 	}
 
-	private static Map<StatusTuple, Reaction> generateStateMap(){
-		Class<JobStatus> clazz = JobStatus.class;
-		JobStatus[] possibleStatuses = clazz.getEnumConstants();
+	private static Map<StatusTuple, Reaction> generateStateMap()
+	{
+		final Class<JobStatus> clazz = JobStatus.class;
+		final JobStatus[] possibleStatuses = clazz.getEnumConstants();
 
-		Map<StatusTuple, Reaction> stateMap = new HashMap<>();
+		final Map<StatusTuple, Reaction> stateMap = new HashMap<>();
 
-		for(JobStatus trackStatus : possibleStatuses){
-			for(JobStatus attachmentStatus : possibleStatuses){
-				StatusTuple tuple = new StatusTuple(trackStatus, attachmentStatus);
+		for (final JobStatus trackStatus : possibleStatuses)
+		{
+			for (final JobStatus attachmentStatus : possibleStatuses)
+			{
+				final StatusTuple tuple = new StatusTuple(trackStatus,
+						attachmentStatus);
 
-				if(trackStatus == JobStatus.Failed || attachmentStatus == JobStatus.Failed){
+				if ((trackStatus == JobStatus.Failed)
+						|| (attachmentStatus == JobStatus.Failed))
+				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
-				}else{
-					//Check in-progres conditions
-					if(trackStatus == JobStatus.InProgress || attachmentStatus == JobStatus.InProgress){
+				} else
+				{
+					// Check in-progres conditions
+					if ((trackStatus == JobStatus.InProgress)
+							|| (attachmentStatus == JobStatus.InProgress))
+					{
 						/*
-						 * Doesn't matter what anything else is since we 
-						 * know it's not in a failed state
+						 * Doesn't matter what anything else is since we know
+						 * it's not in a failed state
 						 */
 						stateMap.put(tuple, Reaction.NoOp);
-					}else if(trackStatus == JobStatus.Pending){
-						//Need to extract tracks
+					} else if (trackStatus == JobStatus.Pending)
+					{
+						// Need to extract tracks
 						stateMap.put(tuple, Reaction.ScheduleTrack);
-					}else if(attachmentStatus == JobStatus.Pending){
-						//Need to extract attachments
+					} else if (attachmentStatus == JobStatus.Pending)
+					{
+						// Need to extract attachments
 						stateMap.put(tuple, Reaction.ScheduleAttachment);
-					}else{
-						//Looks like we've successfully done everything
+					} else
+					{
+						// Looks like we've successfully done everything
 						stateMap.put(tuple, Reaction.NotifySuccess);
 					}
 				}
@@ -67,111 +80,134 @@ public class DemultiplexController extends SimpleCommand{
 	}
 
 	@Override
-	public void execute(INotification notification){
-		dispatchMessage(notification.getName(), (DemultiplexJob)notification.getBody());
+	public void execute(final INotification notification)
+	{
+		this.dispatchMessage(notification.getName(),
+				(DemultiplexJob) notification.getBody());
 	}
 
-	private void dispatchMessage(String message, DemultiplexJob job){
-		Log.info("Dispatching message for demultiplexing job: " + job.getMediaFile());
-		switch(message){
+	private void dispatchMessage(final String message, final DemultiplexJob job)
+	{
+		Log.info("Dispatching message for demultiplexing job: "
+				+ job.getMediaFile());
+		switch (message)
+		{
 		case Notifications.StartDemultiplexJob:
 			Log.info("Start demultplexing.");
-			DemultiplexJobStatusProxy proxy = getStatusProxy();
+			final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 			proxy.addJob(job);
-			evaluateJobState(job);
+			this.evaluateJobState(job);
 			break;
 		case Notifications.DemultiplexAttachmentFailure:
-			Log.info("Handle attachment demultiplexing failure: " + job.getMediaFile());
-			handleAttachmentFailureMessage(job);
+			Log.info("Handle attachment demultiplexing failure: "
+					+ job.getMediaFile());
+			this.handleAttachmentFailureMessage(job);
 			break;
 		case Notifications.DemultiplexTrackFailure:
-			Log.info("Handle track demultiplexing failure: " + job.getMediaFile());
-			handleTrackFailureMessage(job);
+			Log.info("Handle track demultiplexing failure: "
+					+ job.getMediaFile());
+			this.handleTrackFailureMessage(job);
 			break;
 		case Notifications.DemultiplexAttachmentSuccess:
-			Log.info("Handle attachment demultiplex success: " + job.getMediaFile());
-			handleAttachmentSuccessMessage(job);
+			Log.info("Handle attachment demultiplex success: "
+					+ job.getMediaFile());
+			this.handleAttachmentSuccessMessage(job);
 			break;
 		case Notifications.DemultiplexTrackSuccess:
 			Log.info("Handle track demultiplex success: " + job.getMediaFile());
-			handleTrackSuccessMessage(job);
+			this.handleTrackSuccessMessage(job);
 			break;
 		default:
-			Log.error("Unknown message received by Demultiplex Controller: " + message);
+			Log.error("Unknown message received by Demultiplex Controller: "
+					+ message);
 			throw new RuntimeException("Unknown message.");
 		}
 	}
 
-	private void handleAttachmentSuccessMessage(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
+	private void handleAttachmentSuccessMessage(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setAttachmentStatus(job, JobStatus.Finished);
 
-		evaluateJobState(job);
+		this.evaluateJobState(job);
 	}
 
-	private void handleTrackSuccessMessage(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
+	private void handleTrackSuccessMessage(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setTrackStatus(job, JobStatus.Finished);
 
-		evaluateJobState(job);
+		this.evaluateJobState(job);
 	}
 
-	private void handleAttachmentFailureMessage(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
+	private void handleAttachmentFailureMessage(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setAttachmentStatus(job, JobStatus.Failed);
 
-		evaluateJobState(job);
+		this.evaluateJobState(job);
 	}
 
-	private void handleTrackFailureMessage(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
+	private void handleTrackFailureMessage(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setTrackStatus(job, JobStatus.Failed);
 
-		evaluateJobState(job);
+		this.evaluateJobState(job);
 	}
 
-	private void evaluateJobState(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
-		StatusTuple status = proxy.getStatus(job);
+	private void evaluateJobState(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
+		final StatusTuple status = proxy.getStatus(job);
 
-		Reaction reaction = StateMap.get(status);
-		switch(reaction){
+		final Reaction reaction = StateMap.get(status);
+		switch (reaction)
+		{
 		case ScheduleTrack:
-			sendNotification(Notifications.ScheduleTrackDemultiplexJob, job);
+			this.sendNotification(Notifications.ScheduleTrackDemultiplexJob,
+					job);
 			break;
 		case ScheduleAttachment:
-			sendNotification(Notifications.ScheduleAttachmentDemultiplexJob, job);
+			this.sendNotification(
+					Notifications.ScheduleAttachmentDemultiplexJob, job);
 			break;
 		case NotifySuccess:
-			notifySuccess(job);
+			this.notifySuccess(job);
 			break;
 		case NotifyFailure:
-			notifyFailure(job);
+			this.notifyFailure(job);
 			break;
 		case NoOp:
-			//Literally do nothing
+			// Literally do nothing
 			break;
 		default:
-			throw new RuntimeException("Unknown state for demultiplex controller.");
+			throw new RuntimeException(
+					"Unknown state for demultiplex controller.");
 		}
 	}
 
-	private void cleanup(DemultiplexJob job){
-		DemultiplexJobStatusProxy proxy = getStatusProxy();
+	private void cleanup(final DemultiplexJob job)
+	{
+		final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 		proxy.removeJob(job);
 	}
 
-	private void notifyFailure(DemultiplexJob job){
-		cleanup(job);
-		sendNotification(Notifications.DemultiplexJobFailure, job);
+	private void notifyFailure(final DemultiplexJob job)
+	{
+		this.cleanup(job);
+		this.sendNotification(Notifications.DemultiplexJobFailure, job);
 	}
 
-	private void notifySuccess(DemultiplexJob job){
-		cleanup(job);
-		sendNotification(Notifications.DemultiplexJobSuccess, job);
+	private void notifySuccess(final DemultiplexJob job)
+	{
+		this.cleanup(job);
+		this.sendNotification(Notifications.DemultiplexJobSuccess, job);
 	}
 
-	private DemultiplexJobStatusProxy getStatusProxy(){
-		return (DemultiplexJobStatusProxy)getFacade().retrieveProxy(DemultiplexJobStatusProxy.PROXY_NAME);
+	private DemultiplexJobStatusProxy getStatusProxy()
+	{
+		return (DemultiplexJobStatusProxy) this.getFacade().retrieveProxy(
+				DemultiplexJobStatusProxy.PROXY_NAME);
 	}
 }

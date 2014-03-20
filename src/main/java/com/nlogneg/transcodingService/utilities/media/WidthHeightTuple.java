@@ -2,18 +2,21 @@ package com.nlogneg.transcodingService.utilities.media;
 
 /**
  * Represents the width and height of a video
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class WidthHeightTuple{
+public final class WidthHeightTuple
+{
 	private final int width;
 	private final int height;
-	
+
 	/**
 	 * @param width
 	 * @param height
 	 */
-	public WidthHeightTuple(int width, int height) {
+	public WidthHeightTuple(final int width, final int height)
+	{
 		this.width = width;
 		this.height = height;
 	}
@@ -21,48 +24,61 @@ public final class WidthHeightTuple{
 	/**
 	 * @return the width
 	 */
-	public int getWidth() {
-		return width;
+	public int getWidth()
+	{
+		return this.width;
 	}
 
 	/**
 	 * @return the height
 	 */
-	public int getHeight() {
-		return height;
+	public int getHeight()
+	{
+		return this.height;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + height;
-		result = prime * result + width;
+		result = (prime * result) + this.height;
+		result = (prime * result) + this.width;
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		WidthHeightTuple other = (WidthHeightTuple) obj;
-		if (height != other.height) {
+		final WidthHeightTuple other = (WidthHeightTuple) obj;
+		if (this.height != other.height)
+		{
 			return false;
 		}
-		if (width != other.width) {
+		if (this.width != other.width)
+		{
 			return false;
 		}
 		return true;

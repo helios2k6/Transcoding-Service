@@ -13,14 +13,17 @@ import org.apache.log4j.Logger;
 import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
- * A deserializer for the output produced by the mkvinfo tool that's a part of the 
- * mkvtoolnix suite.
+ * A deserializer for the output produced by the mkvinfo tool that's a part of
+ * the mkvtoolnix suite.
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class MKVInfoDeserializer{
+public final class MKVInfoDeserializer
+{
 
-	private static final Logger Log = LogManager.getLogger(MKVInfoDeserializer.class);
+	private static final Logger Log = LogManager
+			.getLogger(MKVInfoDeserializer.class);
 
 	private static final String AttachedHeader = "+ ATTACHED";
 	private static final String FileNameLabel = "+ FILE NAME:";
@@ -28,25 +31,29 @@ public final class MKVInfoDeserializer{
 	private static final String FileUIDLabel = "+ FILE UID:";
 
 	/**
-	 * Deserializes an MKVInfo from the given string, which is expected to be the 
-	 * actual raw input, not the name of a file
+	 * Deserializes an MKVInfo from the given string, which is expected to be
+	 * the actual raw input, not the name of a file
 	 */
-	public static Optional<MKVInfo> deserializeRawMKVInfo(Path inputFile, String rawMkvInfo){
-		String[] splitString = rawMkvInfo.split("\\|");
+	public static Optional<MKVInfo> deserializeRawMKVInfo(final Path inputFile,
+			final String rawMkvInfo)
+	{
+		final String[] splitString = rawMkvInfo.split("\\|");
 
-		List<Attachment> attachments = new ArrayList<Attachment>();
+		final List<Attachment> attachments = new ArrayList<Attachment>();
 
 		long attachmentId = 0;
 		Optional<String> fileName = Optional.none();
 		Optional<MimeType> mimeType = Optional.none();
 		Optional<Long> fileUID = Optional.none();
 
-		for(String item : splitString){
-			String toUpper = item.toUpperCase().trim();
+		for (final String item : splitString)
+		{
+			final String toUpper = item.toUpperCase().trim();
 
-			//Find attachment header
-			if(toUpper.contains(AttachedHeader)){
-				//Increment counter and reset all references
+			// Find attachment header
+			if (toUpper.contains(AttachedHeader))
+			{
+				// Increment counter and reset all references
 				attachmentId++;
 				fileName = Optional.none();
 				mimeType = Optional.none();
@@ -54,72 +61,89 @@ public final class MKVInfoDeserializer{
 				continue;
 			}
 
-			//Found file name
-			if(toUpper.contains(FileNameLabel)){
+			// Found file name
+			if (toUpper.contains(FileNameLabel))
+			{
 				fileName = tryParseDataFromTag(item);
 			}
 
-			//Found MIME type
-			if(toUpper.contains(MimeLabel)){
+			// Found MIME type
+			if (toUpper.contains(MimeLabel))
+			{
 				mimeType = tryParseMimeTypeFromTag(item);
 			}
 
-			if(toUpper.contains(FileUIDLabel)){
+			if (toUpper.contains(FileUIDLabel))
+			{
 				fileUID = tryParseFileUID(item);
 			}
 
-			//Check to see if we can make a new Attachment
-			if(fileName.isSome() && mimeType.isSome() && fileUID.isSome()){
-				Attachment attachment = new Attachment(attachmentId, fileName.getValue(), mimeType.getValue(), fileUID.getValue());
+			// Check to see if we can make a new Attachment
+			if (fileName.isSome() && mimeType.isSome() && fileUID.isSome())
+			{
+				final Attachment attachment = new Attachment(attachmentId,
+						fileName.getValue(), mimeType.getValue(),
+						fileUID.getValue());
 				attachments.add(attachment);
-				
-				//Clear out these references
+
+				// Clear out these references
 				fileName = Optional.none();
 				mimeType = Optional.none();
 				fileUID = Optional.none();
 			}
 		}
 
-		if(attachments.size() > 0){
+		if (attachments.size() > 0)
+		{
 			return Optional.make(new MKVInfo(inputFile, attachments));
 		}
-		
+
 		return Optional.none();
 	}
 
-	private static Optional<Long> tryParseFileUID(String data){
-		Optional<String> rawParsedString = tryParseDataFromTag(data);
-		if(rawParsedString.isNone()){
+	private static Optional<Long> tryParseFileUID(final String data)
+	{
+		final Optional<String> rawParsedString = tryParseDataFromTag(data);
+		if (rawParsedString.isNone())
+		{
 			return Optional.none();
 		}
 
-		try{
-			Long fileUID = Long.parseLong(rawParsedString.getValue());
+		try
+		{
+			final Long fileUID = Long.parseLong(rawParsedString.getValue());
 			return Optional.make(fileUID);
-		}catch(NumberFormatException e){
+		} catch (final NumberFormatException e)
+		{
 			Log.error("Could not parse File UID.", e);
 			return Optional.none();
 		}
 	}
 
-	private static Optional<MimeType> tryParseMimeTypeFromTag(String data){
-		Optional<String> rawParsedString = tryParseDataFromTag(data);
-		if(rawParsedString.isNone()){
+	private static Optional<MimeType> tryParseMimeTypeFromTag(final String data)
+	{
+		final Optional<String> rawParsedString = tryParseDataFromTag(data);
+		if (rawParsedString.isNone())
+		{
 			return Optional.none();
 		}
 
-		try {
-			MimeType mimeType = new MimeType(rawParsedString.getValue());
+		try
+		{
+			final MimeType mimeType = new MimeType(rawParsedString.getValue());
 			return Optional.make(mimeType);
-		} catch (MimeTypeParseException e) {
+		} catch (final MimeTypeParseException e)
+		{
 			Log.error("Could not parse MIME type", e);
 			return Optional.none();
 		}
 	}
 
-	private static Optional<String> tryParseDataFromTag(String data){
-		String[] splitData = data.split(":");
-		if(splitData.length == 2){
+	private static Optional<String> tryParseDataFromTag(final String data)
+	{
+		final String[] splitData = data.split(":");
+		if (splitData.length == 2)
+		{
 			return Optional.make(splitData[1].trim());
 		}
 		return Optional.none();

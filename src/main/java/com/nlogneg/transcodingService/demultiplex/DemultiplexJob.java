@@ -10,10 +10,12 @@ import com.nlogneg.transcodingService.utilities.Tuple;
 
 /**
  * Represents what needs to be demultiplexed and extracted from a file
+ * 
  * @author anjohnson
- *
+ * 
  */
-public abstract class DemultiplexJob{
+public abstract class DemultiplexJob
+{
 	private final Path mediaFile;
 	private final MediaInfo mediaInfo;
 	private final Optional<Tuple<AudioTrack, Path>> audioTrack;
@@ -25,9 +27,10 @@ public abstract class DemultiplexJob{
 	 * @param audioTrack
 	 * @param subtitleTrack
 	 */
-	public DemultiplexJob(Path mediaFile, MediaInfo mediaInfo,
-			Optional<Tuple<AudioTrack, Path>> audioTrack,
-			Optional<Tuple<TextTrack, Path>> subtitleTrack) {
+	public DemultiplexJob(final Path mediaFile, final MediaInfo mediaInfo,
+			final Optional<Tuple<AudioTrack, Path>> audioTrack,
+			final Optional<Tuple<TextTrack, Path>> subtitleTrack)
+	{
 		this.mediaFile = mediaFile;
 		this.mediaInfo = mediaInfo;
 		this.audioTrack = audioTrack;
@@ -37,28 +40,32 @@ public abstract class DemultiplexJob{
 	/**
 	 * @return the mediaFile
 	 */
-	public Path getMediaFile() {
-		return mediaFile;
+	public Path getMediaFile()
+	{
+		return this.mediaFile;
 	}
 
 	/**
 	 * @return the mediaInfo
 	 */
-	public MediaInfo getMediaInfo() {
-		return mediaInfo;
+	public MediaInfo getMediaInfo()
+	{
+		return this.mediaInfo;
 	}
 
 	/**
 	 * @return the audioTrack
 	 */
-	public Optional<Tuple<AudioTrack, Path>> getAudioTrack() {
-		return audioTrack;
+	public Optional<Tuple<AudioTrack, Path>> getAudioTrack()
+	{
+		return this.audioTrack;
 	}
 
 	/**
 	 * @return the subtitleTrack
 	 */
-	public Optional<Tuple<TextTrack, Path>> getSubtitleTrack() {
-		return subtitleTrack;
+	public Optional<Tuple<TextTrack, Path>> getSubtitleTrack()
+	{
+		return this.subtitleTrack;
 	}
 }

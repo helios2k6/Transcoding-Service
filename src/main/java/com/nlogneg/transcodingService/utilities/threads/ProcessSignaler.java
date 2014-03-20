@@ -8,70 +8,85 @@ import org.apache.log4j.Logger;
 
 /**
  * Monitors for the death of an external Process
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ProcessSignaler implements Runnable{
-	private static final Logger Log = LogManager.getLogger(ProcessSignaler.class);
+public final class ProcessSignaler implements Runnable
+{
+	private static final Logger Log = LogManager
+			.getLogger(ProcessSignaler.class);
 
 	private final Lock lock = new ReentrantLock();
 	private volatile boolean isProcessFinished = false;
 	private volatile boolean isCancelled = false;
-	
+
 	private final Process process;
 	private Thread runningThread;
 
-	public ProcessSignaler(Process process){
+	public ProcessSignaler(final Process process)
+	{
 		this.process = process;
 	}
 
 	/**
 	 * @return the isProcessFinished
 	 */
-	public boolean isProcessFinished(){
-		return isProcessFinished;
+	public boolean isProcessFinished()
+	{
+		return this.isProcessFinished;
 	}
 
 	/**
 	 * Gets whether or not this process has been cancelled
-	 * @return 
+	 * 
+	 * @return
 	 */
-	public boolean isCancelled(){
-		return isCancelled;
+	public boolean isCancelled()
+	{
+		return this.isCancelled;
 	}
-	
+
 	/**
 	 * Cancels this Process Signaler
+	 * 
 	 * @throws InterruptedException
 	 */
-	public void cancel(){
-		lock.lock();
-		
-		isCancelled = true;
-		if(runningThread != null){
-			runningThread.interrupt();
+	public void cancel()
+	{
+		this.lock.lock();
+
+		this.isCancelled = true;
+		if (this.runningThread != null)
+		{
+			this.runningThread.interrupt();
 		}
-		
-		lock.unlock();
+
+		this.lock.unlock();
 	}
 
 	@Override
-	public void run(){
-		setCurrentThread();
-		
-		while(isProcessFinished == false && isCancelled == false){
-			try{
-				process.waitFor();
-				isProcessFinished = true;
-			}catch (InterruptedException e){
+	public void run()
+	{
+		this.setCurrentThread();
+
+		while ((this.isProcessFinished == false) && (this.isCancelled == false))
+		{
+			try
+			{
+				this.process.waitFor();
+				this.isProcessFinished = true;
+			} catch (final InterruptedException e)
+			{
 				Log.error("Process Signaller interrupted", e);
 			}
 		}
 	}
 
-	private void setCurrentThread(){
-		lock.lock();
-		runningThread = Thread.currentThread();
-		lock.unlock();
+	private void setCurrentThread()
+	{
+		this.lock.lock();
+		this.runningThread = Thread.currentThread();
+		this.lock.unlock();
 	}
 }

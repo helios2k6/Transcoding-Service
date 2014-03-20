@@ -9,12 +9,14 @@ import com.nlogneg.transcodingService.request.incoming.Request;
 
 /**
  * Represents a transcoding job
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class EncodingJob{
+public final class EncodingJob
+{
 	private static final AtomicLong IDSeed = new AtomicLong(0);
-	
+
 	private final long id;
 	private final Request request;
 	private final MediaInfo mediaInfo;
@@ -31,13 +33,11 @@ public final class EncodingJob{
 	 * @param outputVideoFile
 	 * @param outputAudioFile
 	 */
-	public EncodingJob(
-			Request request, 
-			MediaInfo mediaInfo,
-			AudioTrackOption audioTrackOption,
-			SubtitleTrackOption subtitleTrackOption,
-			Path outputVideoFile,
-			Path outputAudioFile){
+	public EncodingJob(final Request request, final MediaInfo mediaInfo,
+			final AudioTrackOption audioTrackOption,
+			final SubtitleTrackOption subtitleTrackOption,
+			final Path outputVideoFile, final Path outputAudioFile)
+	{
 		this.id = IDSeed.incrementAndGet();
 		this.request = request;
 		this.mediaInfo = mediaInfo;
@@ -50,65 +50,76 @@ public final class EncodingJob{
 	/**
 	 * @return the id
 	 */
-	public long getId(){
-		return id;
+	public long getId()
+	{
+		return this.id;
 	}
 
 	/**
 	 * @return the request
 	 */
-	public Request getRequest(){
-		return request;
+	public Request getRequest()
+	{
+		return this.request;
 	}
 
 	/**
 	 * @return the mediaInfo
 	 */
-	public MediaInfo getMediaInfo(){
-		return mediaInfo;
+	public MediaInfo getMediaInfo()
+	{
+		return this.mediaInfo;
 	}
 
 	/**
 	 * @return the audioTrackOption
 	 */
-	public AudioTrackOption getAudioTrackOption(){
-		return audioTrackOption;
+	public AudioTrackOption getAudioTrackOption()
+	{
+		return this.audioTrackOption;
 	}
 
 	/**
 	 * @return the subtitleTrackOption
 	 */
-	public SubtitleTrackOption getSubtitleTrackOption(){
-		return subtitleTrackOption;
+	public SubtitleTrackOption getSubtitleTrackOption()
+	{
+		return this.subtitleTrackOption;
 	}
-	
+
 	/**
 	 * Gets the source file as a Path
+	 * 
 	 * @return
 	 */
-	public Path getSourceFilePath(){
-		return Paths.get(request.getSourceFile());
+	public Path getSourceFilePath()
+	{
+		return Paths.get(this.request.getSourceFile());
 	}
-	
+
 	/**
 	 * Gets the destination file as a Path
+	 * 
 	 * @return
 	 */
-	public Path getDestinationFilePath(){
-		return Paths.get(request.getDestinationFile());
+	public Path getDestinationFilePath()
+	{
+		return Paths.get(this.request.getDestinationFile());
 	}
 
 	/**
 	 * @return the output video file
 	 */
-	public Path getOutputVideoFile(){
-		return outputVideoFile;
+	public Path getOutputVideoFile()
+	{
+		return this.outputVideoFile;
 	}
-	
+
 	/**
 	 * @return the output audio file
 	 */
-	public Path getOutputAudioFile(){
-		return outputAudioFile;
+	public Path getOutputAudioFile()
+	{
+		return this.outputAudioFile;
 	}
 }

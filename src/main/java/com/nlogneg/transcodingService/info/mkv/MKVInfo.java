@@ -5,19 +5,25 @@ import java.util.List;
 
 /**
  * Holds metadata about an MKV File
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class MKVInfo{
+public final class MKVInfo
+{
 	private final Path filePath;
 	private final List<Attachment> attachments;
 
 	/**
 	 * Creates an MKV Info object
-	 * @param filePath The file path to the MKV file
-	 * @param attachments The attachments
+	 * 
+	 * @param filePath
+	 *            The file path to the MKV file
+	 * @param attachments
+	 *            The attachments
 	 */
-	public MKVInfo(Path filePath, List<Attachment> attachments) {
+	public MKVInfo(final Path filePath, final List<Attachment> attachments)
+	{
 		this.filePath = filePath;
 		this.attachments = attachments;
 	}
@@ -25,58 +31,75 @@ public final class MKVInfo{
 	/**
 	 * @return The file path of the MKV file
 	 */
-	public Path getFilePath(){
-		return filePath;
+	public Path getFilePath()
+	{
+		return this.filePath;
 	}
-	
+
 	/**
 	 * @return the attachments
 	 */
-	public List<Attachment> getAttachments() {
-		return attachments;
+	public List<Attachment> getAttachments()
+	{
+		return this.attachments;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((attachments == null) ? 0 : attachments.hashCode());
-		result = prime * result
-				+ ((filePath == null) ? 0 : filePath.hashCode());
+		result = (prime * result)
+				+ ((this.attachments == null) ? 0 : this.attachments.hashCode());
+		result = (prime * result)
+				+ ((this.filePath == null) ? 0 : this.filePath.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		MKVInfo other = (MKVInfo) obj;
-		if (attachments == null) {
-			if (other.attachments != null) {
+		final MKVInfo other = (MKVInfo) obj;
+		if (this.attachments == null)
+		{
+			if (other.attachments != null)
+			{
 				return false;
 			}
-		} else if (!attachments.equals(other.attachments)) {
+		} else if (!this.attachments.equals(other.attachments))
+		{
 			return false;
 		}
-		if (filePath == null) {
-			if (other.filePath != null) {
+		if (this.filePath == null)
+		{
+			if (other.filePath != null)
+			{
 				return false;
 			}
-		} else if (!filePath.equals(other.filePath)) {
+		} else if (!this.filePath.equals(other.filePath))
+		{
 			return false;
 		}
 		return true;

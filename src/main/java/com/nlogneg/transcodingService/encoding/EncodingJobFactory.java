@@ -11,74 +11,92 @@ import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
  * A factory class for creating Encoding Jobs
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class EncodingJobFactory{
-	
-	public EncodingJob createEncodingJob(
-			Request request, 
-			MediaInfo mediaInfo,
-			Optional<AudioTrack> demultiplexAudioTrack,
-			Optional<TextTrack> demultiplexSubtitleTrack,
-			Optional<Path> demultiplexedAudioTrackFile, 
-			Optional<Path> demultiplexedSubtitlePath){
-		
-		AudioTrackOption audio = deduceAudioTrackOption(demultiplexAudioTrack, demultiplexedAudioTrackFile);
-		SubtitleTrackOption subs = deduceSubtitleTrackOption(demultiplexSubtitleTrack, demultiplexedSubtitlePath);
-		
-		Path videoTrack = generateVideoFileName(request);
+public final class EncodingJobFactory
+{
+
+	public EncodingJob createEncodingJob(final Request request,
+			final MediaInfo mediaInfo,
+			final Optional<AudioTrack> demultiplexAudioTrack,
+			final Optional<TextTrack> demultiplexSubtitleTrack,
+			final Optional<Path> demultiplexedAudioTrackFile,
+			final Optional<Path> demultiplexedSubtitlePath)
+	{
+
+		final AudioTrackOption audio = deduceAudioTrackOption(
+				demultiplexAudioTrack, demultiplexedAudioTrackFile);
+		final SubtitleTrackOption subs = deduceSubtitleTrackOption(
+				demultiplexSubtitleTrack, demultiplexedSubtitlePath);
+
+		final Path videoTrack = generateVideoFileName(request);
 		Path audioTrack = null;
-		
-		if(audio.hasAudioTrackPath() && audio.getEncodingAction() == EncodingAction.Encode){
-			audioTrack = generateAudioFileName(request, audio.getAudioTrack().getValue());
-		}else if(demultiplexAudioTrack.isSome() && audio.getEncodingAction() == EncodingAction.Multiplex){
+
+		if (audio.hasAudioTrackPath()
+				&& (audio.getEncodingAction() == EncodingAction.Encode))
+		{
+			audioTrack = generateAudioFileName(request, audio.getAudioTrack()
+					.getValue());
+		} else if (demultiplexAudioTrack.isSome()
+				&& (audio.getEncodingAction() == EncodingAction.Multiplex))
+		{
 			audioTrack = demultiplexedAudioTrackFile.getValue();
 		}
-		
-		return new EncodingJob(request, mediaInfo, audio, subs, videoTrack, audioTrack);
+
+		return new EncodingJob(request, mediaInfo, audio, subs, videoTrack,
+				audioTrack);
 	}
-	
+
 	private static AudioTrackOption deduceAudioTrackOption(
-			Optional<AudioTrack> audioTrack, 
-			Optional<Path> demultiplexAudioTrack){
-		
-		if(audioTrack.isNone() && demultiplexAudioTrack.isNone()){
-			return new AudioTrackOption(
-					Optional.<Path>none(), 
-					EncodingAction.Ignore, 
-					Optional.<AudioTrack>none());
+			final Optional<AudioTrack> audioTrack,
+			final Optional<Path> demultiplexAudioTrack)
+	{
+
+		if (audioTrack.isNone() && demultiplexAudioTrack.isNone())
+		{
+			return new AudioTrackOption(Optional.<Path> none(),
+					EncodingAction.Ignore, Optional.<AudioTrack> none());
 		}
-		
-		AudioTrack track = audioTrack.getValue();
+
+		final AudioTrack track = audioTrack.getValue();
 		EncodingAction action = EncodingAction.Encode;
-		
-		if(track.getFormat().equalsIgnoreCase("AAC")){
+
+		if (track.getFormat().equalsIgnoreCase("AAC"))
+		{
 			action = EncodingAction.Multiplex;
 		}
-		
+
 		return new AudioTrackOption(demultiplexAudioTrack, action, audioTrack);
 	}
-	
+
 	private static SubtitleTrackOption deduceSubtitleTrackOption(
-			Optional<TextTrack> demultiplexSubtitleTrack, 
-			Optional<Path> demultiplexedSubtitlePath)
+			final Optional<TextTrack> demultiplexSubtitleTrack,
+			final Optional<Path> demultiplexedSubtitlePath)
 	{
 		EncodingAction action = EncodingAction.Ignore;
-		if(demultiplexSubtitleTrack.isSome()){
+		if (demultiplexSubtitleTrack.isSome())
+		{
 			action = EncodingAction.Encode;
 		}
-		
-		return new SubtitleTrackOption(demultiplexedSubtitlePath, action, demultiplexSubtitleTrack);
+
+		return new SubtitleTrackOption(demultiplexedSubtitlePath, action,
+				demultiplexSubtitleTrack);
 	}
-	
-	private static Path generateVideoFileName(Request request){
-		String fileName = Paths.get(request.getSourceFile()).toAbsolutePath().toString();
+
+	private static Path generateVideoFileName(final Request request)
+	{
+		final String fileName = Paths.get(request.getSourceFile())
+				.toAbsolutePath().toString();
 		return Paths.get(fileName + "_temp_encoded.264");
 	}
-	
-	private static Path generateAudioFileName(Request request, AudioTrack track){
-		String fileName = Paths.get(request.getSourceFile()).toAbsolutePath().toString();
+
+	private static Path generateAudioFileName(final Request request,
+			final AudioTrack track)
+	{
+		final String fileName = Paths.get(request.getSourceFile())
+				.toAbsolutePath().toString();
 		return Paths.get(fileName + "_temp_encoded.m4a");
 	}
 }

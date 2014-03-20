@@ -8,40 +8,50 @@ import com.nlogneg.transcodingService.multiplex.MultiplexArgumentBuilder;
 import com.nlogneg.transcodingService.multiplex.MultiplexJob;
 import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
-public class MP4BoxArgumentBuilder implements MultiplexArgumentBuilder{
+public class MP4BoxArgumentBuilder implements MultiplexArgumentBuilder
+{
 
 	private static final String AddArg = "-add";
 	private static final String NewArg = "-new";
-	
-	/* (non-Javadoc)
-	 * @see com.nlogneg.transcodingService.multiplex.MultiplexArgumentBuilder#getMultiplexingArguments(com.nlogneg.transcodingService.encoding.EncodingJob)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nlogneg.transcodingService.multiplex.MultiplexArgumentBuilder#
+	 * getMultiplexingArguments
+	 * (com.nlogneg.transcodingService.encoding.EncodingJob)
 	 */
 	@Override
-	public List<String> getMultiplexingArguments(MultiplexJob job){
-		List<String> args = new LinkedList<String>();
-		
+	public List<String> getMultiplexingArguments(final MultiplexJob job)
+	{
+		final List<String> args = new LinkedList<String>();
+
 		args.add(SystemUtilities.getMP4BoxProcessName());
-		
-		//Add the video bit stream
+
+		// Add the video bit stream
 		addFile(args, job.getEncodedVideoFile());
-		
-		//Add audio bit stream if possible
-		if(job.getAudioTrackOption().hasAudioTrackPath()){
-			addFile(args, job.getAudioTrackOption().getAudioTrackFilePath().getValue());
+
+		// Add audio bit stream if possible
+		if (job.getAudioTrackOption().hasAudioTrackPath())
+		{
+			addFile(args, job.getAudioTrackOption().getAudioTrackFilePath()
+					.getValue());
 		}
-		
-		//Add the output file
+
+		// Add the output file
 		addNewFileArg(args, job.getDestinationFile());
-		
+
 		return args;
 	}
-	
-	private static void addFile(List<String> args, Path file){
+
+	private static void addFile(final List<String> args, final Path file)
+	{
 		args.add(AddArg);
 		args.add(file.toAbsolutePath().toString());
 	}
 
-	private static void addNewFileArg(List<String> args, Path file){
+	private static void addNewFileArg(final List<String> args, final Path file)
+	{
 		args.add(NewArg);
 		args.add(file.toAbsolutePath().toString());
 	}

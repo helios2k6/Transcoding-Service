@@ -12,46 +12,57 @@ import com.nlogneg.transcodingService.JobStatus;
 import com.nlogneg.transcodingService.StatusTuple;
 import com.nlogneg.transcodingService.constants.Notifications;
 
-public class EncodingController extends SimpleCommand{
-	private static final Logger Log = LogManager.getLogger(EncodingController.class);
+public class EncodingController extends SimpleCommand
+{
+	private static final Logger Log = LogManager
+			.getLogger(EncodingController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
-	
-	private enum Reaction{
-		NotifySuccess,
-		NotifyFailure,
-		ScheduleVideo,
-		ScheduleAudio,
-		NoOp
+
+	private enum Reaction
+	{
+		NotifySuccess, NotifyFailure, ScheduleVideo, ScheduleAudio, NoOp
 	}
-	
-	private static Map<StatusTuple, Reaction> generateStateMap(){
-		Class<JobStatus> clazz = JobStatus.class;
-		JobStatus[] possibleStatuses = clazz.getEnumConstants();
 
-		Map<StatusTuple, Reaction> stateMap = new HashMap<>();
+	private static Map<StatusTuple, Reaction> generateStateMap()
+	{
+		final Class<JobStatus> clazz = JobStatus.class;
+		final JobStatus[] possibleStatuses = clazz.getEnumConstants();
 
-		for(JobStatus videoStatus : possibleStatuses){
-			for(JobStatus audioStatus : possibleStatuses){
-				StatusTuple tuple = new StatusTuple(videoStatus, audioStatus);
+		final Map<StatusTuple, Reaction> stateMap = new HashMap<>();
 
-				if(videoStatus == JobStatus.Failed || audioStatus == JobStatus.Failed){
+		for (final JobStatus videoStatus : possibleStatuses)
+		{
+			for (final JobStatus audioStatus : possibleStatuses)
+			{
+				final StatusTuple tuple = new StatusTuple(videoStatus,
+						audioStatus);
+
+				if ((videoStatus == JobStatus.Failed)
+						|| (audioStatus == JobStatus.Failed))
+				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
-				}else{
-					//Check in-progres conditions
-					if(videoStatus == JobStatus.InProgress || audioStatus == JobStatus.InProgress){
+				} else
+				{
+					// Check in-progres conditions
+					if ((videoStatus == JobStatus.InProgress)
+							|| (audioStatus == JobStatus.InProgress))
+					{
 						/*
-						 * Doesn't matter what anything else is since we 
-						 * know it's not in a failed state
+						 * Doesn't matter what anything else is since we know
+						 * it's not in a failed state
 						 */
 						stateMap.put(tuple, Reaction.NoOp);
-					}else if(videoStatus == JobStatus.Pending){
-						//Need to extract tracks
+					} else if (videoStatus == JobStatus.Pending)
+					{
+						// Need to extract tracks
 						stateMap.put(tuple, Reaction.ScheduleVideo);
-					}else if(audioStatus == JobStatus.Pending){
-						//Need to extract attachments
+					} else if (audioStatus == JobStatus.Pending)
+					{
+						// Need to extract attachments
 						stateMap.put(tuple, Reaction.ScheduleAudio);
-					}else{
-						//Looks like we've successfully done everything
+					} else
+					{
+						// Looks like we've successfully done everything
 						stateMap.put(tuple, Reaction.NotifySuccess);
 					}
 				}
@@ -60,108 +71,125 @@ public class EncodingController extends SimpleCommand{
 
 		return stateMap;
 	}
-	
+
 	@Override
-	public void execute(INotification notification){
-		dispatchMessage(notification.getName(), (EncodingJob)notification.getBody());
+	public void execute(final INotification notification)
+	{
+		this.dispatchMessage(notification.getName(),
+				(EncodingJob) notification.getBody());
 	}
-	
-	private void dispatchMessage(String message, EncodingJob job){
-		switch(message){
+
+	private void dispatchMessage(final String message, final EncodingJob job)
+	{
+		switch (message)
+		{
 		case Notifications.StartEncodingJob:
-			EncodingJobStatusProxy proxy = getStatusProxy();
+			final EncodingJobStatusProxy proxy = this.getStatusProxy();
 			proxy.addJob(job);
-			evaluateJobStatus(job);
+			this.evaluateJobStatus(job);
 			break;
 		case Notifications.EncodeVideoFailure:
-			handleVideoFailure(job);
+			this.handleVideoFailure(job);
 			break;
 		case Notifications.EncodeAudioFailure:
-			handleAudioFailure(job);
+			this.handleAudioFailure(job);
 			break;
 		case Notifications.EncodeVideoSuccess:
-			handleVideoSuccess(job);
+			this.handleVideoSuccess(job);
 			break;
 		case Notifications.EncodeAudioSuccess:
-			handleAudioSuccess(job);
+			this.handleAudioSuccess(job);
 			break;
 		default:
-			Log.error("Unknown message received by EncodingController: " + message);
+			Log.error("Unknown message received by EncodingController: "
+					+ message);
 			throw new RuntimeException("Unknown message: " + message);
 		}
 	}
-	
-	private void evaluateJobStatus(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
-		StatusTuple status = proxy.getStatus(job);
-		
-		Reaction reaction = StateMap.get(status);
-		switch(reaction){
+
+	private void evaluateJobStatus(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
+		final StatusTuple status = proxy.getStatus(job);
+
+		final Reaction reaction = StateMap.get(status);
+		switch (reaction)
+		{
 		case ScheduleVideo:
-			sendNotification(Notifications.ScheduleVideoEncode, job);
+			this.sendNotification(Notifications.ScheduleVideoEncode, job);
 			break;
 		case ScheduleAudio:
-			sendNotification(Notifications.ScheduleAudioEncode, job);
+			this.sendNotification(Notifications.ScheduleAudioEncode, job);
 			break;
 		case NotifySuccess:
-			notifySuccess(job);
+			this.notifySuccess(job);
 			break;
 		case NotifyFailure:
-			notifyFailure(job);
+			this.notifyFailure(job);
 			break;
 		case NoOp:
-			//Literally do nothing
+			// Literally do nothing
 			break;
 		default:
 			Log.error("Unknown state for EncodingController.");
-			throw new RuntimeException("Unknown state of EncodingController: " + reaction);
+			throw new RuntimeException("Unknown state of EncodingController: "
+					+ reaction);
 		}
 	}
-	
-	private void handleVideoSuccess(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
+
+	private void handleVideoSuccess(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setVideoStatus(job, JobStatus.Finished);
-		
-		evaluateJobStatus(job);
+
+		this.evaluateJobStatus(job);
 	}
-	
-	private void handleAudioSuccess(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
+
+	private void handleAudioSuccess(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setAudioStatus(job, JobStatus.Finished);
-		
-		evaluateJobStatus(job);
+
+		this.evaluateJobStatus(job);
 	}
-	
-	private void handleVideoFailure(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
+
+	private void handleVideoFailure(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setVideoStatus(job, JobStatus.Failed);
-		
-		evaluateJobStatus(job);
+
+		this.evaluateJobStatus(job);
 	}
-	
-	private void handleAudioFailure(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
+
+	private void handleAudioFailure(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
 		proxy.setAudioStatus(job, JobStatus.Failed);
-		
-		evaluateJobStatus(job);
+
+		this.evaluateJobStatus(job);
 	}
-	
-	private void cleanup(EncodingJob job){
-		EncodingJobStatusProxy proxy = getStatusProxy();
+
+	private void cleanup(final EncodingJob job)
+	{
+		final EncodingJobStatusProxy proxy = this.getStatusProxy();
 		proxy.removeJob(job);
 	}
-	
-	private void notifyFailure(EncodingJob job){
-		cleanup(job);
-		sendNotification(Notifications.EncodingJobFailure, job);
+
+	private void notifyFailure(final EncodingJob job)
+	{
+		this.cleanup(job);
+		this.sendNotification(Notifications.EncodingJobFailure, job);
 	}
-	
-	private void notifySuccess(EncodingJob job){
-		cleanup(job);
-		sendNotification(Notifications.EncodingJobSuccess, job);
+
+	private void notifySuccess(final EncodingJob job)
+	{
+		this.cleanup(job);
+		this.sendNotification(Notifications.EncodingJobSuccess, job);
 	}
-	
-	private EncodingJobStatusProxy getStatusProxy(){
-		return (EncodingJobStatusProxy)getFacade().retrieveProxy(EncodingJobStatusProxy.PROXY_NAME);
+
+	private EncodingJobStatusProxy getStatusProxy()
+	{
+		return (EncodingJobStatusProxy) this.getFacade().retrieveProxy(
+				EncodingJobStatusProxy.PROXY_NAME);
 	}
 }

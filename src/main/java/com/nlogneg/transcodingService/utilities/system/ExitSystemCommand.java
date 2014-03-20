@@ -5,19 +5,23 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 /**
  * Calls System.Exit with the return code
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class ExitSystemCommand extends SimpleCommand{
-	
+public class ExitSystemCommand extends SimpleCommand
+{
+
 	@Override
-	public void execute(INotification notification){
-		Object body = notification.getBody();
-		if(body != null && body instanceof Integer){
-			Integer returnCode = (Integer)body;
+	public void execute(final INotification notification)
+	{
+		final Object body = notification.getBody();
+		if ((body != null) && (body instanceof Integer))
+		{
+			final Integer returnCode = (Integer) body;
 			System.exit(returnCode);
 		}
-		
+
 		System.exit(0);
 	}
 }

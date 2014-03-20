@@ -13,87 +13,103 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * Encapsulates the organization of ffmpeg decoding arguments
+ * 
  * @author Andrew
- *
+ * 
  */
-public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgumentBuilder{
+public final class FFMPEGVideoDecodingArgumentBuilder implements
+		DecoderArgumentBuilder
+{
 	private static final String StandardOutArgument = "-";
 	private static final String VideoCodecArgument = "-codec:v";
 	private static final String MuteAudioArgument = "-an";
 	private static final String InputFileArgument = "-i";
 	private static final String PixelFormatArgument = "-pix_fmt";
 	private static final String FormatArgument = "-f";
-	
+
 	private static final String RawVideoFormat = "rawvideo";
 	private static final String Yuv4MpegPipeFormat = "yuv4mpegpipe";
 	private static final String Yuv420pPixelFormat = "yuv420p";
-	
-	private List<String> calculateArgumentArray(EncodingJob encodingJob){
-		List<String> arguments = new LinkedList<String>();
-		
-		addFfmpegProcessName(arguments);
-		
-		muteAudio(arguments);
-		addInputFile(arguments, encodingJob);
-		
-		addFilters(arguments, encodingJob);
-		
-		addVideoCodecFormat(arguments);
-		addMediaContainerFormat(arguments);
-		addPixelFormat(arguments);
-		
-		//Must be last
-		addStandardOut(arguments);
-		
+
+	private List<String> calculateArgumentArray(final EncodingJob encodingJob)
+	{
+		final List<String> arguments = new LinkedList<String>();
+
+		this.addFfmpegProcessName(arguments);
+
+		this.muteAudio(arguments);
+		this.addInputFile(arguments, encodingJob);
+
+		this.addFilters(arguments, encodingJob);
+
+		this.addVideoCodecFormat(arguments);
+		this.addMediaContainerFormat(arguments);
+		this.addPixelFormat(arguments);
+
+		// Must be last
+		this.addStandardOut(arguments);
+
 		return arguments;
 	}
-	
-	private void addFfmpegProcessName(List<String> arguments){
+
+	private void addFfmpegProcessName(final List<String> arguments)
+	{
 		arguments.add(0, SystemUtilities.getFFMPEGProcessName());
 	}
-	
-	private void addFilters(List<String> arguments, EncodingJob job){
-		WidthHeightTuple resolvedResolution = ResolutionResolver.resolveResolution(job);
-		SubtitleTrackOption option = job.getSubtitleTrackOption();
-		FFMPEGFilterArgumentBuilder builder = new FFMPEGFilterArgumentBuilder(Optional.make(resolvedResolution), option);
-		
+
+	private void addFilters(final List<String> arguments, final EncodingJob job)
+	{
+		final WidthHeightTuple resolvedResolution = ResolutionResolver
+				.resolveResolution(job);
+		final SubtitleTrackOption option = job.getSubtitleTrackOption();
+		final FFMPEGFilterArgumentBuilder builder = new FFMPEGFilterArgumentBuilder(
+				Optional.make(resolvedResolution), option);
+
 		builder.addVideoFilterArguments(arguments);
 	}
-	
-	private void addInputFile(List<String> arguments, EncodingJob job){
+
+	private void addInputFile(final List<String> arguments,
+			final EncodingJob job)
+	{
 		arguments.add(InputFileArgument);
 		arguments.add(job.getRequest().getSourceFile());
 	}
-	
-	private void addStandardOut(List<String> arguments){
+
+	private void addStandardOut(final List<String> arguments)
+	{
 		arguments.add(StandardOutArgument);
 	}
-	
-	private void addPixelFormat(List<String> arguments){
-		//Pixel format
+
+	private void addPixelFormat(final List<String> arguments)
+	{
+		// Pixel format
 		arguments.add(PixelFormatArgument);
 		arguments.add(Yuv420pPixelFormat);
 	}
 
-	private void addMediaContainerFormat(List<String> arguments){
-		//Output format container
+	private void addMediaContainerFormat(final List<String> arguments)
+	{
+		// Output format container
 		arguments.add(FormatArgument);
 		arguments.add(Yuv4MpegPipeFormat);
 	}
 
-	private void addVideoCodecFormat(List<String> arguments){
-		//Output video codec selection
+	private void addVideoCodecFormat(final List<String> arguments)
+	{
+		// Output video codec selection
 		arguments.add(VideoCodecArgument);
 		arguments.add(RawVideoFormat);
 	}
 
-	private void muteAudio(List<String> arguments){
-		//Mute audio
+	private void muteAudio(final List<String> arguments)
+	{
+		// Mute audio
 		arguments.add(MuteAudioArgument);
 	}
 
 	@Override
-	public List<String> getDecoderArguments(EncodingJob job) {
-		return calculateArgumentArray(job);
+	public List<String> getDecoderArguments(final EncodingJob job)
+	{
+		return this.calculateArgumentArray(job);
 	}
 }

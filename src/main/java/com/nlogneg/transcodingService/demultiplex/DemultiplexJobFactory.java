@@ -30,32 +30,41 @@ import com.nlogneg.transcodingService.utilities.Tuple;
 
 import fj.F;
 
-public class DemultiplexJobFactory{
+public class DemultiplexJobFactory
+{
 
-	private static final Logger Log = LogManager.getLogger(DemultiplexJobFactory.class);
+	private static final Logger Log = LogManager
+			.getLogger(DemultiplexJobFactory.class);
 	private static final AtomicInteger IdSeed = new AtomicInteger();
 
-	private enum MediaFileType{
-		MKV,
-		Other
+	private enum MediaFileType
+	{
+		MKV, Other
 	}
 
 	/**
 	 * Creates a new DemultiplexJob given a request
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public static Optional<? extends DemultiplexJob> tryCreateDemultiplexJob(Request request, MediaInfo mediaInfo){
-		//Get tracks and summary
-		MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(mediaInfo);
+	public static Optional<? extends DemultiplexJob> tryCreateDemultiplexJob(
+			final Request request, final MediaInfo mediaInfo)
+	{
+		// Get tracks and summary
+		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory
+				.getSummary(mediaInfo);
 
-		//Figure out what type of media file this is
-		Collection<GeneralTrack> generalTracks = summary.getGeneralTracks();
-		MediaFileType type = detectMediaFileType(generalTracks);
+		// Figure out what type of media file this is
+		final Collection<GeneralTrack> generalTracks = summary
+				.getGeneralTracks();
+		final MediaFileType type = detectMediaFileType(generalTracks);
 
-		switch(type){
+		switch (type)
+		{
 		case MKV:
-			return Optional.make(createDemultiplexMKVJob(request, mediaInfo, summary));
+			return Optional.make(createDemultiplexMKVJob(request, mediaInfo,
+					summary));
 		case Other:
 			return Optional.make(new NoOpDemultiplexJob());
 		default:
@@ -63,15 +72,19 @@ public class DemultiplexJobFactory{
 		}
 	}
 
-	private static MediaFileType detectMediaFileType(Collection<GeneralTrack> tracks){
-		if(tracks.size() < 1){
+	private static MediaFileType detectMediaFileType(
+			final Collection<GeneralTrack> tracks)
+	{
+		if (tracks.size() < 1)
+		{
 			return MediaFileType.Other;
 		}
 
-		GeneralTrack track = CollectionUtilities.first(tracks);
-		String format = track.getFormat();
+		final GeneralTrack track = CollectionUtilities.first(tracks);
+		final String format = track.getFormat();
 
-		if(format != null && format.equalsIgnoreCase("Matroska")){
+		if ((format != null) && format.equalsIgnoreCase("Matroska"))
+		{
 			return MediaFileType.MKV;
 		}
 
@@ -79,82 +92,99 @@ public class DemultiplexJobFactory{
 	}
 
 	private static DemultiplexMKVJob createDemultiplexMKVJob(
-			Request request, 
-			MediaInfo mediaInfo,
-			MediaInfoTrackSummary summary){
+			final Request request, final MediaInfo mediaInfo,
+			final MediaInfoTrackSummary summary)
+	{
 
-		Path sourceFile = Paths.get(request.getSourceFile());
-		Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(sourceFile);
+		final Path sourceFile = Paths.get(request.getSourceFile());
+		final Optional<MKVInfo> infoOptional = MKVInfoFactory
+				.tryGetMKVInfo(sourceFile);
 
-		//We can't get the info for some reason
-		if(infoOptional.isNone()){
-			Log.error("Could not create DemultiplexMKVJob for: " + request.getSourceFile());
+		// We can't get the info for some reason
+		if (infoOptional.isNone())
+		{
+			Log.error("Could not create DemultiplexMKVJob for: "
+					+ request.getSourceFile());
 			return null;
 		}
 
-		MKVInfo info = infoOptional.getValue();
+		final MKVInfo info = infoOptional.getValue();
 
-		Collection<Attachment> allAttachments = info.getAttachments();
-		Collection<Attachment> fontAttachments = MKVDemultiplexingUtilities.getFontAttachments(allAttachments);
+		final Collection<Attachment> allAttachments = info.getAttachments();
+		final Collection<Attachment> fontAttachments = MKVDemultiplexingUtilities
+				.getFontAttachments(allAttachments);
 
-		F<Attachment, Attachment> id = Projections.identity();
-		F<Attachment, Path> valueProj = new F<Attachment, Path>(){
-			public Path f(Attachment a){
+		final F<Attachment, Attachment> id = Projections.identity();
+		final F<Attachment, Path> valueProj = new F<Attachment, Path>()
+		{
+			@Override
+			public Path f(final Attachment a)
+			{
 				return Paths.get(a.getFileName());
 			}
 		};
 
-		Map<Attachment, Path> attachmentMap = CollectionUtilities.toMap(allAttachments, id, valueProj);
-		Map<Attachment, Path> fontAttachmentMap = CollectionUtilities.toMap(fontAttachments, id, valueProj);
-		Optional<Tuple<AudioTrack, Path>> audioTrackMap = deduceAudioTrack(request, summary);
-		Optional<Tuple<TextTrack, Path>> subtitleTrackMap = deduceSubtitleTrack(request, summary);
+		final Map<Attachment, Path> attachmentMap = CollectionUtilities.toMap(
+				allAttachments, id, valueProj);
+		final Map<Attachment, Path> fontAttachmentMap = CollectionUtilities
+				.toMap(fontAttachments, id, valueProj);
+		final Optional<Tuple<AudioTrack, Path>> audioTrackMap = deduceAudioTrack(
+				request, summary);
+		final Optional<Tuple<TextTrack, Path>> subtitleTrackMap = deduceSubtitleTrack(
+				request, summary);
 
-		return new DemultiplexMKVJob(
-				sourceFile, 
-				mediaInfo, 
-				audioTrackMap,
-				subtitleTrackMap,
-				attachmentMap, 
-				fontAttachmentMap);
+		return new DemultiplexMKVJob(sourceFile, mediaInfo, audioTrackMap,
+				subtitleTrackMap, attachmentMap, fontAttachmentMap);
 	}
 
-	private static <T extends MediaTrack> Optional<Tuple<T, Path>> createTuple(Request request, T t){
-		Path sourceFile = Paths.get(request.getSourceFile());
-		StringBuilder builder = new StringBuilder();
-		
-		builder
-			.append(sourceFile.toAbsolutePath().toString())
-			.append("_temp_")
-			.append(IdSeed.incrementAndGet())
-			.append("_.")
-			.append(t.getFormat());
-		
-		return Optional.make(new Tuple<T, Path>(t, Paths.get(builder.toString())));
+	private static <T extends MediaTrack> Optional<Tuple<T, Path>> createTuple(
+			final Request request, final T t)
+	{
+		final Path sourceFile = Paths.get(request.getSourceFile());
+		final StringBuilder builder = new StringBuilder();
+
+		builder.append(sourceFile.toAbsolutePath().toString()).append("_temp_")
+				.append(IdSeed.incrementAndGet()).append("_.")
+				.append(t.getFormat());
+
+		return Optional.make(new Tuple<T, Path>(t,
+				Paths.get(builder.toString())));
 	}
-	
-	private static <T extends MediaTrack> Optional<Tuple<T, Path>> deduceTrack(Request request, Collection<T> tracks){
-		Optional<T> chosenTrack = MKVDemultiplexingUtilities.tryDeduceMostLikelyTrack(tracks);
-		if(chosenTrack.isNone()){
+
+	private static <T extends MediaTrack> Optional<Tuple<T, Path>> deduceTrack(
+			final Request request, final Collection<T> tracks)
+	{
+		final Optional<T> chosenTrack = MKVDemultiplexingUtilities
+				.tryDeduceMostLikelyTrack(tracks);
+		if (chosenTrack.isNone())
+		{
 			return Optional.none();
 		}
-		
+
 		return createTuple(request, chosenTrack.getValue());
 	}
 
-	private static Optional<Tuple<AudioTrack, Path>> deduceAudioTrack(Request request, MediaInfoTrackSummary summary){
-		Selector selector = request.getSelector();
-		if(selector.isForceUseAudioTrack()){
-			int audioTrack = selector.getAudioTrack();
-			Optional<AudioTrack> track = MediaTrackUtils.tryGetMediaTrackById(summary.getAudioTracks(), audioTrack);
-			
-			if(track.isSome()){
+	private static Optional<Tuple<AudioTrack, Path>> deduceAudioTrack(
+			final Request request, final MediaInfoTrackSummary summary)
+	{
+		final Selector selector = request.getSelector();
+		if (selector.isForceUseAudioTrack())
+		{
+			final int audioTrack = selector.getAudioTrack();
+			final Optional<AudioTrack> track = MediaTrackUtils
+					.tryGetMediaTrackById(summary.getAudioTracks(), audioTrack);
+
+			if (track.isSome())
+			{
 				return createTuple(request, track.getValue());
 			}
 		}
 		return deduceTrack(request, summary.getAudioTracks());
 	}
 
-	private static Optional<Tuple<TextTrack, Path>> deduceSubtitleTrack(Request request, MediaInfoTrackSummary summary){
+	private static Optional<Tuple<TextTrack, Path>> deduceSubtitleTrack(
+			final Request request, final MediaInfoTrackSummary summary)
+	{
 		return deduceTrack(request, summary.getSubtitleTracks());
 	}
 }

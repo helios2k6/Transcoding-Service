@@ -12,40 +12,54 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 
 /**
  * An external process that uses mediaInfo to query for media info
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ExternalProcessMediaInfoSource implements MediaInfoSource {
-	private static final Logger Log = LogManager.getLogger(ExternalProcessMediaInfoSource.class);
+public final class ExternalProcessMediaInfoSource implements MediaInfoSource
+{
+	private static final Logger Log = LogManager
+			.getLogger(ExternalProcessMediaInfoSource.class);
 	private static final String OutputArgument = "--output=XML";
 	private static final ExternalProcessMediaInfoSource Instance = new ExternalProcessMediaInfoSource();
-	
+
 	/**
 	 * Get the singleton instance of this class
+	 * 
 	 * @return
 	 */
-	public static ExternalProcessMediaInfoSource getInstance(){
+	public static ExternalProcessMediaInfoSource getInstance()
+	{
 		return Instance;
 	}
-	
+
 	@Override
-	public Optional<String> tryGetMediaInfo(Path sourcePath) {
-		ProcessBuilder builder = new ProcessBuilder(SystemUtilities.getMediaInfoProcessName(), OutputArgument, sourcePath.toAbsolutePath().toString());
+	public Optional<String> tryGetMediaInfo(final Path sourcePath)
+	{
+		final ProcessBuilder builder = new ProcessBuilder(
+				SystemUtilities.getMediaInfoProcessName(), OutputArgument,
+				sourcePath.toAbsolutePath().toString());
 		Log.info("Requesting media info about: " + sourcePath);
 		Process process;
-		try {
+		try
+		{
 			process = builder.start();
-			
-			String output = InputStreamUtilities.readInputStreamToEnd(process.getInputStream());
-			process.waitFor(); //Shouldn't take long. 
+
+			final String output = InputStreamUtilities
+					.readInputStreamToEnd(process.getInputStream());
+			process.waitFor(); // Shouldn't take long.
 
 			return Optional.make(output);
-		} catch (IOException e) {
+		} catch (final IOException e)
+		{
 			Log.error("An error occured while gathering media info.", e);
-		} catch (InterruptedException e) {
-			Log.error("This thread was interrupted while gathering media info.", e);
+		} catch (final InterruptedException e)
+		{
+			Log.error(
+					"This thread was interrupted while gathering media info.",
+					e);
 		}
-		
+
 		return Optional.none();
 	}
 

@@ -6,93 +6,116 @@ import java.util.List;
 
 /**
  * Represents the H.264 level parameter
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class Level implements Serializable{
+public final class Level implements Serializable
+{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3106477457601267041L;
 	private final int major;
 	private final int minor;
-	
+
 	/**
 	 * Constructs a new level parameter
-	 * @param major The major level
-	 * @param minor The minor level
+	 * 
+	 * @param major
+	 *            The major level
+	 * @param minor
+	 *            The minor level
 	 */
-	public Level(int major, int minor){
+	public Level(final int major, final int minor)
+	{
 		this.major = major;
 		this.minor = minor;
 	}
 
 	/**
 	 * Gets the major level
+	 * 
 	 * @return the major
 	 */
-	public int getMajor() {
-		return major;
+	public int getMajor()
+	{
+		return this.major;
 	}
 
 	/**
 	 * Gets the minor level
+	 * 
 	 * @return the minor
 	 */
-	public int getMinor() {
-		return minor;
+	public int getMinor()
+	{
+		return this.minor;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + major;
-		result = prime * result + minor;
+		result = (prime * result) + this.major;
+		result = (prime * result) + this.minor;
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		Level other = (Level) obj;
-		if (major != other.major) {
+		final Level other = (Level) obj;
+		if (this.major != other.major)
+		{
 			return false;
 		}
-		if (minor != other.minor) {
+		if (this.minor != other.minor)
+		{
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Converts the Level to arguments for x264
+	 * 
 	 * @param level
 	 * @return
 	 */
-	public static List<String> convertToArguments(Level level){
-		StringBuilder builder = new StringBuilder();
+	public static List<String> convertToArguments(final Level level)
+	{
+		final StringBuilder builder = new StringBuilder();
 		builder.append(level.getMajor()).append(".").append(level.getMinor());
-		
-		List<String> arguments = new ArrayList<String>();
-		
+
+		final List<String> arguments = new ArrayList<String>();
+
 		arguments.add("--level");
 		arguments.add(builder.toString());
-		
+
 		return arguments;
 	}
 }

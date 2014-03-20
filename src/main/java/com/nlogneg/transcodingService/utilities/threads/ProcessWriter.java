@@ -8,17 +8,18 @@ import java.util.concurrent.ExecutorService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public final class ProcessWriter implements Runnable{
+public final class ProcessWriter implements Runnable
+{
 	private static final Logger Log = LogManager.getLogger(ProcessWriter.class);
-	
+
 	private final Process process;
 	private final OutputStream stream;
 	private final BlockingQueue<byte[]> queue;
 	private final ExecutorService service;
-	
+
 	private volatile boolean isCancelled = false;
 	private volatile boolean isFinished = false;
-	
+
 	/**
 	 * @param process
 	 * @param stream
@@ -26,12 +27,10 @@ public final class ProcessWriter implements Runnable{
 	 * @param service
 	 * @param isCancelled
 	 */
-	public ProcessWriter(
-			Process process, 
-			OutputStream stream,
-			ExecutorService service,
-			BlockingQueue<byte[]> queue){
-		
+	public ProcessWriter(final Process process, final OutputStream stream,
+			final ExecutorService service, final BlockingQueue<byte[]> queue)
+	{
+
 		this.process = process;
 		this.stream = stream;
 		this.service = service;
@@ -39,62 +38,78 @@ public final class ProcessWriter implements Runnable{
 	}
 
 	@Override
-	public void run(){
-		ProcessSignaler signaler = new ProcessSignaler(process);
-		service.submit(signaler);
-		
-		while(isCancelled == false && isFinished == false){
-			//Check to see if the external process is done
-			if(signaler.isProcessFinished()){
-				isFinished = true;
-			}else{
-				try{
-					byte[] chunk = queue.poll();
-					if(chunk == null){
-						//Sleep for some time
+	public void run()
+	{
+		final ProcessSignaler signaler = new ProcessSignaler(this.process);
+		this.service.submit(signaler);
+
+		while ((this.isCancelled == false) && (this.isFinished == false))
+		{
+			// Check to see if the external process is done
+			if (signaler.isProcessFinished())
+			{
+				this.isFinished = true;
+			} else
+			{
+				try
+				{
+					final byte[] chunk = this.queue.poll();
+					if (chunk == null)
+					{
+						// Sleep for some time
 						Thread.sleep(50);
-					}else{
-						stream.write(chunk);
+					} else
+					{
+						this.stream.write(chunk);
 					}
-				}catch(IOException e){
+				} catch (final IOException e)
+				{
 					Log.error("Could not write to process stream.", e);
-					isCancelled = true;
-				}catch (InterruptedException e){
+					this.isCancelled = true;
+				} catch (final InterruptedException e)
+				{
 					Log.error("Process writer interrupted.", e);
 				}
 			}
 		}
-		
-		checkCancelStatus(signaler);
-	}
-	
-	/**
-	 * Returns whether this Process Writer has been cancelled
-	 * @return the isCancelled
-	 */
-	public boolean isCancelled() {
-		return isCancelled;
+
+		this.checkCancelStatus(signaler);
 	}
 
 	/**
-	 * Returns whether or not this Process Reader finished reading from 
-	 * the process successfully. A cancelled Process Reader is not considered
+	 * Returns whether this Process Writer has been cancelled
+	 * 
+	 * @return the isCancelled
+	 */
+	public boolean isCancelled()
+	{
+		return this.isCancelled;
+	}
+
+	/**
+	 * Returns whether or not this Process Reader finished reading from the
+	 * process successfully. A cancelled Process Reader is not considered
 	 * finished
+	 * 
 	 * @return
 	 */
-	public boolean isFinished(){
-		return isFinished;
+	public boolean isFinished()
+	{
+		return this.isFinished;
 	}
-	
+
 	/**
 	 * Cancels this Process Writer
 	 */
-	public void cancel(){
-		isCancelled = true;
+	public void cancel()
+	{
+		this.isCancelled = true;
 	}
-	
-	private void checkCancelStatus(ProcessSignaler signaler){
-		if(isCancelled){
+
+	private void checkCancelStatus(final ProcessSignaler signaler)
+	{
+		if (this.isCancelled)
+		{
 			signaler.cancel();
 		}
 	}

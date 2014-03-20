@@ -12,46 +12,60 @@ import com.nlogneg.transcodingService.request.incoming.SerializedRequestProxy;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 
 /**
- * Attempts to service one request 
+ * Attempts to service one request
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class ReadClientRequestFromSocketCommand extends SimpleCommand{
-	private static final Logger Log = LogManager.getLogger(ReadClientRequestFromSocketCommand.class);
-	
-	public void execute(INotification notification){
+public class ReadClientRequestFromSocketCommand extends SimpleCommand
+{
+	private static final Logger Log = LogManager
+			.getLogger(ReadClientRequestFromSocketCommand.class);
+
+	@Override
+	public void execute(final INotification notification)
+	{
 		Log.info("Servicing request");
-		
-		Socket request = (Socket)notification.getBody();
-		
-		if(request == null){
+
+		final Socket request = (Socket) notification.getBody();
+
+		if (request == null)
+		{
 			Log.info("No requests to service");
-			//If there aren't any requests to service, do nothing
+			// If there aren't any requests to service, do nothing
 			return;
 		}
-		
-		String requestPayload = readFromSocket(request);
-		if(requestPayload == null){
+
+		final String requestPayload = readFromSocket(request);
+		if (requestPayload == null)
+		{
 			Log.error("Payload was null.");
 			return;
 		}
-		
-		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)getFacade().retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+
+		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) this
+				.getFacade().retrieveProxy(SerializedRequestProxy.PROXY_NAME);
 		serializedRequestProxy.addSerializedRequest(requestPayload);
 	}
-	
+
 	/**
 	 * Reads in all the input from a Socket
-	 * @param socket The socket to read from
+	 * 
+	 * @param socket
+	 *            The socket to read from
 	 * @return The String payload from the socket
 	 */
-	private static String readFromSocket(Socket socket){
-		try{
-			return InputStreamUtilities.readInputStreamToEnd(socket.getInputStream());
-		}catch(IOException exception){
+	private static String readFromSocket(final Socket socket)
+	{
+		try
+		{
+			return InputStreamUtilities.readInputStreamToEnd(socket
+					.getInputStream());
+		} catch (final IOException exception)
+		{
 			Log.error("Could not read from socket", exception);
 		}
-		
+
 		return null;
 	}
 }

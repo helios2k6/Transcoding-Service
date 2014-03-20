@@ -4,62 +4,82 @@ import java.util.List;
 
 /**
  * Represents the File section of a MediaInfo XML file
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class File{
+public class File
+{
 	private final List<Track> tracks;
 
 	/**
 	 * Constructs a File object
-	 * @param tracks The tracks of the File object
+	 * 
+	 * @param tracks
+	 *            The tracks of the File object
 	 */
-	public File(List<Track> tracks) {
+	public File(final List<Track> tracks)
+	{
 		this.tracks = tracks;
 	}
 
 	/**
 	 * Get the tracks
+	 * 
 	 * @return The tracks
 	 */
-	public List<Track> getTracks(){
-		return tracks;
+	public List<Track> getTracks()
+	{
+		return this.tracks;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode(){
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((tracks == null) ? 0 : tracks.hashCode());
+		result = (prime * result)
+				+ ((this.tracks == null) ? 0 : this.tracks.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj){
-		if (this == obj){
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null){
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()){
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		File other = (File) obj;
-		if (tracks == null){
-			if (other.tracks != null){
+		final File other = (File) obj;
+		if (this.tracks == null)
+		{
+			if (other.tracks != null)
+			{
 				return false;
 			}
-		} else if (!tracks.equals(other.tracks)){
+		} else if (!this.tracks.equals(other.tracks))
+		{
 			return false;
 		}
 		return true;
 	}
-	
+
 }

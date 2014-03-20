@@ -6,23 +6,29 @@ import java.util.List;
 
 /**
  * A representation of the psychoVisual rate-distortion setting
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class PsychoVisualSettings implements Serializable{
+public final class PsychoVisualSettings implements Serializable
+{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7133538179699030793L;
 	private final double alpha;
 	private final double beta;
-	
+
 	/**
 	 * Constructs a new Psychovisual Settings object
-	 * @param alpha The alpha value
-	 * @param beta The beta value
+	 * 
+	 * @param alpha
+	 *            The alpha value
+	 * @param beta
+	 *            The beta value
 	 */
-	public PsychoVisualSettings(double alpha, double beta) {
+	public PsychoVisualSettings(final double alpha, final double beta)
+	{
 		this.alpha = alpha;
 		this.beta = beta;
 	}
@@ -30,72 +36,89 @@ public final class PsychoVisualSettings implements Serializable{
 	/**
 	 * @return the alpha
 	 */
-	public double getAlpha() {
-		return alpha;
+	public double getAlpha()
+	{
+		return this.alpha;
 	}
 
 	/**
 	 * @return the beta
 	 */
-	public double getBeta() {
-		return beta;
+	public double getBeta()
+	{
+		return this.beta;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(alpha);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(beta);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.alpha);
+		result = (prime * result) + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.beta);
+		result = (prime * result) + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass())
+		{
 			return false;
 		}
-		PsychoVisualSettings other = (PsychoVisualSettings) obj;
-		if (Double.doubleToLongBits(alpha) != Double
-				.doubleToLongBits(other.alpha)) {
+		final PsychoVisualSettings other = (PsychoVisualSettings) obj;
+		if (Double.doubleToLongBits(this.alpha) != Double
+				.doubleToLongBits(other.alpha))
+		{
 			return false;
 		}
-		if (Double.doubleToLongBits(beta) != Double
-				.doubleToLongBits(other.beta)) {
+		if (Double.doubleToLongBits(this.beta) != Double
+				.doubleToLongBits(other.beta))
+		{
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Convert PsychoVisualSettings to arguments for x264
+	 * 
 	 * @param settings
 	 * @return
 	 */
-	public static List<String> convertToArguments(PsychoVisualSettings settings){
-		StringBuilder builder = new StringBuilder();
-		builder.append(settings.getAlpha()).append(":").append(settings.getBeta());
-		
-		List<String> arguments = new ArrayList<String>();
-		
+	public static List<String> convertToArguments(
+			final PsychoVisualSettings settings)
+	{
+		final StringBuilder builder = new StringBuilder();
+		builder.append(settings.getAlpha()).append(":")
+				.append(settings.getBeta());
+
+		final List<String> arguments = new ArrayList<String>();
+
 		arguments.add("--psy-rd");
 		arguments.add(builder.toString());
-		
+
 		return arguments;
 	}
 }

@@ -15,31 +15,42 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
 /**
  * Schedules a multiplexing job
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ScheduleMultiplexCommand extends SimpleCommand implements CompletionHandler<Void, MultiplexJob>{
-	private static final Logger Log = LogManager.getLogger(ScheduleMultiplexCommand.class);
-	
-	public void execute(INotification notification){
-		MultiplexJob job = (MultiplexJob)notification.getBody();
-		ExecutorProxy proxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		ExecutorService service = proxy.getService();
-		MP4BoxArgumentBuilder builder = new MP4BoxArgumentBuilder();
-		MultiplexTracksRunnable runnable = new MultiplexTracksRunnable(job, builder, this);
-		
-		service.submit(runnable);
-	}
-	
+public final class ScheduleMultiplexCommand extends SimpleCommand implements
+		CompletionHandler<Void, MultiplexJob>
+{
+	private static final Logger Log = LogManager
+			.getLogger(ScheduleMultiplexCommand.class);
+
 	@Override
-	public void completed(Void result, MultiplexJob attachment){
-		Log.info("Multiplex job completed successfully : " + attachment.getDestinationFile());
-		sendNotification(Notifications.MultiplexFileSuccess, attachment);
+	public void execute(final INotification notification)
+	{
+		final MultiplexJob job = (MultiplexJob) notification.getBody();
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
+				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorService service = proxy.getService();
+		final MP4BoxArgumentBuilder builder = new MP4BoxArgumentBuilder();
+		final MultiplexTracksRunnable runnable = new MultiplexTracksRunnable(
+				job, builder, this);
+
+		service.submit(runnable);
 	}
 
 	@Override
-	public void failed(Throwable exc, MultiplexJob attachment){
+	public void completed(final Void result, final MultiplexJob attachment)
+	{
+		Log.info("Multiplex job completed successfully : "
+				+ attachment.getDestinationFile());
+		this.sendNotification(Notifications.MultiplexFileSuccess, attachment);
+	}
+
+	@Override
+	public void failed(final Throwable exc, final MultiplexJob attachment)
+	{
 		Log.error("Multiplexing job failed: " + attachment.getDestinationFile());
-		sendNotification(Notifications.MultiplexFileFailure, attachment);
+		this.sendNotification(Notifications.MultiplexFileFailure, attachment);
 	}
 }

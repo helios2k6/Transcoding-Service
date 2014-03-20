@@ -13,13 +13,15 @@ import com.nlogneg.transcodingService.utilities.Tuple;
 
 /**
  * Represents the demultiplexing of an MKV file
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class DemultiplexMKVJob extends DemultiplexJob{
+public final class DemultiplexMKVJob extends DemultiplexJob
+{
 	private final Map<Attachment, Path> attachmentMap;
 	private final Map<Attachment, Path> fontAttachmentMap;
-	
+
 	/**
 	 * @param mediaFile
 	 * @param mediaInfo
@@ -28,11 +30,12 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	 * @param attachmentMap
 	 * @param fontAttachmentMap
 	 */
-	public DemultiplexMKVJob(Path mediaFile, MediaInfo mediaInfo,
-			Optional<Tuple<AudioTrack, Path>> audioTrack,
-			Optional<Tuple<TextTrack, Path>> subtitleTrack,
-			Map<Attachment, Path> attachmentMap,
-			Map<Attachment, Path> fontAttachmentMap) {
+	public DemultiplexMKVJob(final Path mediaFile, final MediaInfo mediaInfo,
+			final Optional<Tuple<AudioTrack, Path>> audioTrack,
+			final Optional<Tuple<TextTrack, Path>> subtitleTrack,
+			final Map<Attachment, Path> attachmentMap,
+			final Map<Attachment, Path> fontAttachmentMap)
+	{
 		super(mediaFile, mediaInfo, audioTrack, subtitleTrack);
 		this.attachmentMap = attachmentMap;
 		this.fontAttachmentMap = fontAttachmentMap;
@@ -41,14 +44,16 @@ public final class DemultiplexMKVJob extends DemultiplexJob{
 	/**
 	 * @return the attachmentToOutputMap
 	 */
-	public Map<Attachment, Path> getAttachmentMap(){
-		return attachmentMap;
+	public Map<Attachment, Path> getAttachmentMap()
+	{
+		return this.attachmentMap;
 	}
-	
+
 	/**
 	 * @return the fontAttachmentMap
 	 */
-	public Map<Attachment, Path> getFontAttachmentMap(){
-		return fontAttachmentMap;
+	public Map<Attachment, Path> getFontAttachmentMap()
+	{
+		return this.fontAttachmentMap;
 	}
 }

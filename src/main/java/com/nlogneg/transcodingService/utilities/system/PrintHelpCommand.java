@@ -9,14 +9,17 @@ import com.nlogneg.transcodingService.configuration.CommandLineOptionsFactory;
 
 /**
  * Prints the help to the screen
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class PrintHelpCommand extends SimpleCommand{
+public class PrintHelpCommand extends SimpleCommand
+{
 	@Override
-	public void execute(INotification notification){
-		Options options = CommandLineOptionsFactory.createOptions();
-		HelpFormatter formatter = new HelpFormatter();
+	public void execute(final INotification notification)
+	{
+		final Options options = CommandLineOptionsFactory.createOptions();
+		final HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp("<this program> [options]", options);
 	}
 }

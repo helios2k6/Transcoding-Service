@@ -5,23 +5,26 @@ import java.nio.file.Path;
 
 /**
  * Represents the configuration file
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ConfigurationFile implements Serializable{
+public final class ConfigurationFile implements Serializable
+{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5572831847912266818L;
-	
+
 	private final Path fontFolder;
 	private final int portNumber;
-	
+
 	/**
 	 * @param fontFolder
 	 * @param portNumber
 	 */
-	public ConfigurationFile(Path fontFolder, int portNumber) {
+	public ConfigurationFile(final Path fontFolder, final int portNumber)
+	{
 		this.fontFolder = fontFolder;
 		this.portNumber = portNumber;
 	}
@@ -29,14 +32,16 @@ public final class ConfigurationFile implements Serializable{
 	/**
 	 * @return the fontFolder
 	 */
-	public Path getFontFolder() {
-		return fontFolder;
+	public Path getFontFolder()
+	{
+		return this.fontFolder;
 	}
 
 	/**
 	 * @return the portNumber
 	 */
-	public int getPortNumber() {
-		return portNumber;
+	public int getPortNumber()
+	{
+		return this.portNumber;
 	}
 }

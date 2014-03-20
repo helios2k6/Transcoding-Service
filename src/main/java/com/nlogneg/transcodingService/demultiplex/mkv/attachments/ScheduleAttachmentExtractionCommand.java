@@ -16,42 +16,63 @@ import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
 /**
- * Represents the base class for extracting MKV attachments 
+ * Represents the base class for extracting MKV attachments
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ScheduleAttachmentExtractionCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>{
-	private static final Logger Log = LogManager.getLogger(ScheduleAttachmentExtractionCommand.class);
-	
-	public final void execute(INotification notification){
-		DemultiplexMKVJob job = (DemultiplexMKVJob)notification.getBody();
-		
-		Log.info("Scheduling MKV attachment extraction for: " + job.getMediaFile());
-		
-		ExecutorProxy executorProxy = (ExecutorProxy)getFacade().retrieveProxy(ExecutorProxy.PROXY_NAME);
-		ServerConfigurationProxy serverConfigurationProxy = (ServerConfigurationProxy)getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
-		Path fontFolder = serverConfigurationProxy.getConfigurationFile().getFontFolder();
-		FontInstaller fontInstaller = FontInstallerFactory.createFontInstaller();
-		
-		ProcessAttachmentRunnable runnable = new ProcessAttachmentRunnable(job, this, fontInstaller, fontFolder);
+public final class ScheduleAttachmentExtractionCommand extends SimpleCommand
+		implements CompletionHandler<Void, DemultiplexMKVJob>
+{
+	private static final Logger Log = LogManager
+			.getLogger(ScheduleAttachmentExtractionCommand.class);
+
+	@Override
+	public final void execute(final INotification notification)
+	{
+		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification
+				.getBody();
+
+		Log.info("Scheduling MKV attachment extraction for: "
+				+ job.getMediaFile());
+
+		final ExecutorProxy executorProxy = (ExecutorProxy) this.getFacade()
+				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ServerConfigurationProxy serverConfigurationProxy = (ServerConfigurationProxy) this
+				.getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
+		final Path fontFolder = serverConfigurationProxy.getConfigurationFile()
+				.getFontFolder();
+		final FontInstaller fontInstaller = FontInstallerFactory
+				.createFontInstaller();
+
+		final ProcessAttachmentRunnable runnable = new ProcessAttachmentRunnable(
+				job, this, fontInstaller, fontFolder);
 		executorProxy.getService().submit(runnable);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object,
+	 * java.lang.Object)
 	 */
 	@Override
-	public void completed(Void result, DemultiplexMKVJob job){
+	public void completed(final Void result, final DemultiplexMKVJob job)
+	{
 		Log.info("Attachment processing successful for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexAttachmentSuccess, job);
+		this.sendNotification(Notifications.DemultiplexAttachmentSuccess, job);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable,
+	 * java.lang.Object)
 	 */
 	@Override
-	public void failed(Throwable exc, DemultiplexMKVJob job) {
+	public void failed(final Throwable exc, final DemultiplexMKVJob job)
+	{
 		Log.info("Attachment processing failed for: " + job.getMediaFile());
-		sendNotification(Notifications.DemultiplexAttachmentFailure, job);
+		this.sendNotification(Notifications.DemultiplexAttachmentFailure, job);
 	}
 }

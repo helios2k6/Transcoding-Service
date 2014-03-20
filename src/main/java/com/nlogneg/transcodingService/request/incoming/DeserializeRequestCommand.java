@@ -13,45 +13,63 @@ import com.thoughtworks.xstream.XStreamException;
 
 /**
  * Represents the deserialization of a request
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class DeserializeRequestCommand extends SimpleCommand{
+public class DeserializeRequestCommand extends SimpleCommand
+{
 
-	private static final Logger Log = LogManager.getLogger(DeserializeRequestCommand.class);
-	
+	private static final Logger Log = LogManager
+			.getLogger(DeserializeRequestCommand.class);
+
 	private final XStream deserializer;
-	
+
 	/**
-	 * Constructs a new deserialize request command given the XStream deserializer
-	 * @param deserializer The deserializer
+	 * Constructs a new deserialize request command given the XStream
+	 * deserializer
+	 * 
+	 * @param deserializer
+	 *            The deserializer
 	 */
-	public DeserializeRequestCommand(XStream deserializer){
+	public DeserializeRequestCommand(final XStream deserializer)
+	{
 		this.deserializer = deserializer;
 	}
-	
+
 	/**
-	 * Constructs the default deserialize request command with the default XStream deserializer
+	 * Constructs the default deserialize request command with the default
+	 * XStream deserializer
 	 */
-	public DeserializeRequestCommand(){
-		this.deserializer = SerializerFactory.generateDefaultRequestSerializer();
+	public DeserializeRequestCommand()
+	{
+		this.deserializer = SerializerFactory
+				.generateDefaultRequestSerializer();
 	}
-	
-	public void Execute(INotification notification){
-		Facade facade = getFacade();
-		SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy)facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
-		Optional<String> request = serializedRequestProxy.getNextSerializedRequest();
-		
-		if(request.isNone()){
+
+	public void Execute(final INotification notification)
+	{
+		final Facade facade = this.getFacade();
+		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) facade
+				.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+		final Optional<String> request = serializedRequestProxy
+				.getNextSerializedRequest();
+
+		if (request.isNone())
+		{
 			Log.info("No requests to deserialize");
 			return;
 		}
-		
-		try{
-			Request deserializedRequest = (Request)deserializer.fromXML(request.getValue());
-			RequestProxy requestProxy = (RequestProxy)facade.retrieveProxy(RequestProxy.PROXY_NAME);
+
+		try
+		{
+			final Request deserializedRequest = (Request) this.deserializer
+					.fromXML(request.getValue());
+			final RequestProxy requestProxy = (RequestProxy) facade
+					.retrieveProxy(RequestProxy.PROXY_NAME);
 			requestProxy.addRequest(deserializedRequest);
-		}catch(XStreamException ex){
+		} catch (final XStreamException ex)
+		{
 			Log.error("Unable to deserialize request", ex);
 			return;
 		}

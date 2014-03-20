@@ -16,69 +16,92 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**
  * Custom converter for the File XML section of the media info object
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class FileSectionConverter implements Converter{
-	private static final Logger Log = LogManager.getLogger(FileSectionConverter.class);
-	
+public final class FileSectionConverter implements Converter
+{
+	private static final Logger Log = LogManager
+			.getLogger(FileSectionConverter.class);
+
 	@Override
-	public boolean canConvert(Class clazz) {
+	public boolean canConvert(final Class clazz)
+	{
 		return clazz == File.class;
 	}
 
 	@Override
-	public void marshal(
-			Object arg0, 
-			HierarchicalStreamWriter arg1,
-			MarshallingContext arg2){
-		
+	public void marshal(final Object arg0, final HierarchicalStreamWriter arg1,
+			final MarshallingContext arg2)
+	{
+
 		throw new NotImplementedException();
 	}
 
 	@Override
-	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context){
-		List<Track> tracks = new ArrayList<Track>();
-		
-		while(reader.hasMoreChildren()){
+	public Object unmarshal(final HierarchicalStreamReader reader,
+			final UnmarshallingContext context)
+	{
+		final List<Track> tracks = new ArrayList<Track>();
+
+		while (reader.hasMoreChildren())
+		{
 			reader.moveDown();
-			String currentNode = reader.getNodeName();
-			
-			if(currentNode.equalsIgnoreCase(SerializationConstants.TrackXmlName)){
-				Track track = deserializeTrack(reader, context, tracks);
-				
-				if(track != null){
+			final String currentNode = reader.getNodeName();
+
+			if (currentNode
+					.equalsIgnoreCase(SerializationConstants.TrackXmlName))
+			{
+				final Track track = deserializeTrack(reader, context, tracks);
+
+				if (track != null)
+				{
 					tracks.add(track);
-				}else{
+				} else
+				{
 					Log.error("Could not deserialize track");
 				}
 			}
-			
+
 			reader.moveUp();
 		}
-		
+
 		return new File(tracks);
 	}
-	
-	private static Track deserializeTrack(HierarchicalStreamReader reader, UnmarshallingContext context, Object contextReferencePoint){
-		String typeOfTrack = reader.getAttribute(SerializationConstants.TrackTypeAttributeName);
-		
-		if(typeOfTrack.equals(SerializationConstants.VideoTrackAttribute)){
-			return (Track)context.convertAnother(contextReferencePoint, VideoTrack.class);
+
+	private static Track deserializeTrack(
+			final HierarchicalStreamReader reader,
+			final UnmarshallingContext context,
+			final Object contextReferencePoint)
+	{
+		final String typeOfTrack = reader
+				.getAttribute(SerializationConstants.TrackTypeAttributeName);
+
+		if (typeOfTrack.equals(SerializationConstants.VideoTrackAttribute))
+		{
+			return (Track) context.convertAnother(contextReferencePoint,
+					VideoTrack.class);
 		}
-		
-		if(typeOfTrack.equals(SerializationConstants.AudioTrackAttribute)){
-			return (Track)context.convertAnother(contextReferencePoint, AudioTrack.class);
+
+		if (typeOfTrack.equals(SerializationConstants.AudioTrackAttribute))
+		{
+			return (Track) context.convertAnother(contextReferencePoint,
+					AudioTrack.class);
 		}
-		
-		if(typeOfTrack.equals(SerializationConstants.GeneralTrackAttribute)){
-			return (Track)context.convertAnother(contextReferencePoint, GeneralTrack.class);
+
+		if (typeOfTrack.equals(SerializationConstants.GeneralTrackAttribute))
+		{
+			return (Track) context.convertAnother(contextReferencePoint,
+					GeneralTrack.class);
 		}
-		
-		if(typeOfTrack.equals(SerializationConstants.TextTrackAttribute)){
-			return (Track)context.convertAnother(contextReferencePoint, TextTrack.class);
+
+		if (typeOfTrack.equals(SerializationConstants.TextTrackAttribute))
+		{
+			return (Track) context.convertAnother(contextReferencePoint,
+					TextTrack.class);
 		}
-		
+
 		return null;
 	}
 }
