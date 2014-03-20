@@ -38,9 +38,11 @@ public final class ProcessAttachmentRunnable implements Runnable
 	 * @param fontInstaller
 	 * @param fontFolder
 	 */
-	public ProcessAttachmentRunnable(final DemultiplexMKVJob job,
+	public ProcessAttachmentRunnable(
+			final DemultiplexMKVJob job,
 			final CompletionHandler<Void, DemultiplexMKVJob> asyncCallback,
-			final FontInstaller fontInstaller, final Path fontFolder)
+			final FontInstaller fontInstaller,
+			final Path fontFolder)
 	{
 		this.job = job;
 		this.asyncCallback = asyncCallback;

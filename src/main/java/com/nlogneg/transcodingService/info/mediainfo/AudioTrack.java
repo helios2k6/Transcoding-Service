@@ -31,8 +31,12 @@ public final class AudioTrack extends MediaTrack
 	 * @param language
 	 *            The language
 	 */
-	public AudioTrack(final String format, final String codecID, final int id,
-			final String channels, final String language)
+	public AudioTrack(
+			final String format,
+			final String codecID,
+			final int id,
+			final String channels,
+			final String language)
 	{
 		super(format, codecID, id);
 		this.channels = channels;

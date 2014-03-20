@@ -27,7 +27,9 @@ public abstract class DemultiplexJob
 	 * @param audioTrack
 	 * @param subtitleTrack
 	 */
-	public DemultiplexJob(final Path mediaFile, final MediaInfo mediaInfo,
+	public DemultiplexJob(
+			final Path mediaFile,
+			final MediaInfo mediaInfo,
 			final Optional<Tuple<AudioTrack, Path>> audioTrack,
 			final Optional<Tuple<TextTrack, Path>> subtitleTrack)
 	{

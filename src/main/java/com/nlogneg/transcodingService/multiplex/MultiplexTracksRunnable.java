@@ -22,7 +22,8 @@ public class MultiplexTracksRunnable implements Runnable
 	 * @param builder
 	 * @param callback
 	 */
-	public MultiplexTracksRunnable(final MultiplexJob job,
+	public MultiplexTracksRunnable(
+			final MultiplexJob job,
 			final MultiplexArgumentBuilder builder,
 			final CompletionHandler<Void, MultiplexJob> callback)
 	{

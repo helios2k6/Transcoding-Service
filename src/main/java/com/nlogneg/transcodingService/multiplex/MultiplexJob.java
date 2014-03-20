@@ -21,8 +21,10 @@ public final class MultiplexJob
 	 * @param audioTrackOption
 	 * @param destinationFile
 	 */
-	public MultiplexJob(final Path encodedVideoFile,
-			final AudioTrackOption audioTrackOption, final Path destinationFile)
+	public MultiplexJob(
+			final Path encodedVideoFile,
+			final AudioTrackOption audioTrackOption,
+			final Path destinationFile)
 	{
 		this.encodedVideoFile = encodedVideoFile;
 		this.audioTrackOption = audioTrackOption;

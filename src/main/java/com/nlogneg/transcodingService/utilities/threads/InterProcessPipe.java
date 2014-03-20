@@ -39,7 +39,9 @@ public final class InterProcessPipe
 	 *            The executor service
 	 * 
 	 */
-	public InterProcessPipe(final Process source, final Process sink,
+	public InterProcessPipe(
+			final Process source,
+			final Process sink,
 			final ExecutorService service)
 	{
 		this.reader = new ProcessReader(source, source.getInputStream(),

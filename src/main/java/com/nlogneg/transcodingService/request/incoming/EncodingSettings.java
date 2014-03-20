@@ -42,9 +42,12 @@ public final class EncodingSettings implements Serializable
 	 * @param psychoVisualSettings
 	 *            The psycho visual settings
 	 */
-	public EncodingSettings(final RateControl rateControl,
-			final Estimation estimation, final Profile profile,
-			final Level level, final Compatibility compatibility,
+	public EncodingSettings(
+			final RateControl rateControl,
+			final Estimation estimation,
+			final Profile profile,
+			final Level level,
+			final Compatibility compatibility,
 			final PsychoVisualSettings psychoVisualSettings)
 	{
 

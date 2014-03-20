@@ -24,8 +24,10 @@ public final class AsyncProcessSignaler<T> implements Runnable
 	private volatile boolean isCancelled = false;
 	private volatile boolean didFinishSuccessfully = false;
 
-	public AsyncProcessSignaler(final Process process,
-			final CompletionHandler<Void, T> completionHandler, final T token)
+	public AsyncProcessSignaler(
+			final Process process,
+			final CompletionHandler<Void, T> completionHandler,
+			final T token)
 	{
 		this.process = process;
 		this.completionHandler = completionHandler;

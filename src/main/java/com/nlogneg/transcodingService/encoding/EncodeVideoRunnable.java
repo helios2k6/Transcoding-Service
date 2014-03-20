@@ -34,7 +34,8 @@ public final class EncodeVideoRunnable implements Runnable
 	 * @param callback
 	 * @param service
 	 */
-	public EncodeVideoRunnable(final EncodingJob job,
+	public EncodeVideoRunnable(
+			final EncodingJob job,
 			final DecoderArgumentBuilder decoderBuilder,
 			final EncoderArgumentBuilder encoderBuilder,
 			final CompletionHandler<Void, EncodingJob> callback,

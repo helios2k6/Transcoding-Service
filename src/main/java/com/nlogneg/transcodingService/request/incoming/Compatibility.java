@@ -27,7 +27,8 @@ public final class Compatibility implements Serializable
 	 * @param useAccessUnitDelimiters
 	 *            Whether to use access unit delimiters
 	 */
-	public Compatibility(final SampleAspectRatio sampleAspectRatio,
+	public Compatibility(
+			final SampleAspectRatio sampleAspectRatio,
 			final boolean useAccessUnitDelimiters)
 	{
 		this.sampleAspectRatio = sampleAspectRatio;

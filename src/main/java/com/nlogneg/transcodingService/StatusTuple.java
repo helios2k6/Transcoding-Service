@@ -11,7 +11,8 @@ public class StatusTuple
 	private final JobStatus statusOne;
 	private final JobStatus statusTwo;
 
-	public StatusTuple(final JobStatus trackStatus,
+	public StatusTuple(
+			final JobStatus trackStatus,
 			final JobStatus attachmentStatus)
 	{
 		this.statusOne = trackStatus;

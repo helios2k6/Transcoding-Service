@@ -27,8 +27,11 @@ public final class ProcessWriter implements Runnable
 	 * @param service
 	 * @param isCancelled
 	 */
-	public ProcessWriter(final Process process, final OutputStream stream,
-			final ExecutorService service, final BlockingQueue<byte[]> queue)
+	public ProcessWriter(
+			final Process process,
+			final OutputStream stream,
+			final ExecutorService service,
+			final BlockingQueue<byte[]> queue)
 	{
 
 		this.process = process;

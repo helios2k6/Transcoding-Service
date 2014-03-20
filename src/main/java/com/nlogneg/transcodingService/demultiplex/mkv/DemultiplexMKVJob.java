@@ -30,7 +30,9 @@ public final class DemultiplexMKVJob extends DemultiplexJob
 	 * @param attachmentMap
 	 * @param fontAttachmentMap
 	 */
-	public DemultiplexMKVJob(final Path mediaFile, final MediaInfo mediaInfo,
+	public DemultiplexMKVJob(
+			final Path mediaFile,
+			final MediaInfo mediaInfo,
 			final Optional<Tuple<AudioTrack, Path>> audioTrack,
 			final Optional<Tuple<TextTrack, Path>> subtitleTrack,
 			final Map<Attachment, Path> attachmentMap,

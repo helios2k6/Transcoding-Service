@@ -34,9 +34,14 @@ public final class VideoTrack extends MediaTrack
 	 * @param frameRate
 	 *            The frame rate
 	 */
-	public VideoTrack(final String format, final String codecID, final int id,
-			final String width, final String height,
-			final String displayAspectRatio, final String frameRateMode,
+	public VideoTrack(
+			final String format,
+			final String codecID,
+			final int id,
+			final String width,
+			final String height,
+			final String displayAspectRatio,
+			final String frameRateMode,
 			final String frameRate)
 	{
 		super(format, codecID, id);

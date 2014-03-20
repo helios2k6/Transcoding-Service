@@ -34,7 +34,8 @@ public final class DemultiplexTrackRunnable implements Runnable
 	 * @param job
 	 * @param asyncCallback
 	 */
-	public DemultiplexTrackRunnable(final DemultiplexMKVJob job,
+	public DemultiplexTrackRunnable(
+			final DemultiplexMKVJob job,
 			final CompletionHandler<Void, DemultiplexMKVJob> asyncCallback)
 	{
 		this.job = job;

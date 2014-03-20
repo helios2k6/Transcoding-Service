@@ -29,8 +29,11 @@ public final class Attachment
 	 * @param uid
 	 *            The attachment UID
 	 */
-	public Attachment(final long id, final String fileName,
-			final MimeType mimeType, final long uid)
+	public Attachment(
+			final long id,
+			final String fileName,
+			final MimeType mimeType,
+			final long uid)
 	{
 		this.id = id;
 		this.fileName = fileName;

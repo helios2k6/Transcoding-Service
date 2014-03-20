@@ -26,8 +26,11 @@ public final class Request
 	 * @param selector
 	 *            The selector
 	 */
-	protected Request(final String filePath, final String outputPath,
-			final EncodingSettings settings, final Selector selector)
+	protected Request(
+			final String filePath,
+			final String outputPath,
+			final EncodingSettings settings,
+			final Selector selector)
 	{
 		this.sourceFile = filePath;
 		this.destinationFile = outputPath;

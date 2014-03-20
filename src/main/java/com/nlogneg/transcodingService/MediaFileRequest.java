@@ -21,8 +21,10 @@ public final class MediaFileRequest
 	 * @param encodingJob
 	 * @param multiplexJob
 	 */
-	public MediaFileRequest(final DemultiplexJob demultiplexJob,
-			final EncodingJob encodingJob, final MultiplexJob multiplexJob)
+	public MediaFileRequest(
+			final DemultiplexJob demultiplexJob,
+			final EncodingJob encodingJob,
+			final MultiplexJob multiplexJob)
 	{
 		this.demultiplexJob = demultiplexJob;
 		this.encodingJob = encodingJob;

@@ -32,7 +32,8 @@ public final class RespondToClientCommand extends SimpleCommand
 		 * @param acknowledgement
 		 * @param socket
 		 */
-		public ResponseTuple(final Acknowledgement acknowledgement,
+		public ResponseTuple(
+				final Acknowledgement acknowledgement,
 				final Socket socket)
 		{
 			this.acknowledgement = acknowledgement;

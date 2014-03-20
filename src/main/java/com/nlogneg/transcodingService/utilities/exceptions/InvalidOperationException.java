@@ -23,8 +23,11 @@ public class InvalidOperationException extends RuntimeException
 	 * @param arg2
 	 * @param arg3
 	 */
-	public InvalidOperationException(final String arg0, final Throwable arg1,
-			final boolean arg2, final boolean arg3)
+	public InvalidOperationException(
+			final String arg0,
+			final Throwable arg1,
+			final boolean arg2,
+			final boolean arg3)
 	{
 		super(arg0, arg1, arg2, arg3);
 		// TODO Auto-generated constructor stub

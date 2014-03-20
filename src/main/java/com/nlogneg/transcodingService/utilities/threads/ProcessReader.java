@@ -41,8 +41,11 @@ public final class ProcessReader implements Runnable
 	 * @param queue
 	 *            The queue to add bytes to
 	 */
-	public ProcessReader(final Process process, final InputStream stream,
-			final ExecutorService service, final BlockingQueue<byte[]> queue)
+	public ProcessReader(
+			final Process process,
+			final InputStream stream,
+			final ExecutorService service,
+			final BlockingQueue<byte[]> queue)
 	{
 		this.process = process;
 		this.stream = stream;

@@ -33,10 +33,13 @@ public final class EncodingJob
 	 * @param outputVideoFile
 	 * @param outputAudioFile
 	 */
-	public EncodingJob(final Request request, final MediaInfo mediaInfo,
+	public EncodingJob(
+			final Request request,
+			final MediaInfo mediaInfo,
 			final AudioTrackOption audioTrackOption,
 			final SubtitleTrackOption subtitleTrackOption,
-			final Path outputVideoFile, final Path outputAudioFile)
+			final Path outputVideoFile,
+			final Path outputAudioFile)
 	{
 		this.id = IDSeed.incrementAndGet();
 		this.request = request;

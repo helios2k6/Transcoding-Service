@@ -32,9 +32,13 @@ public final class Selector implements Serializable
 	 * @param maxHeight
 	 * @param maxWidth
 	 */
-	public Selector(final boolean force169AspectRatio,
-			final boolean forceUseAudioTrack, final boolean capResolution,
-			final int audioTrack, final int maxHeight, final int maxWidth)
+	public Selector(
+			final boolean force169AspectRatio,
+			final boolean forceUseAudioTrack,
+			final boolean capResolution,
+			final int audioTrack,
+			final int maxHeight,
+			final int maxWidth)
 	{
 
 		this.force169AspectRatio = force169AspectRatio;

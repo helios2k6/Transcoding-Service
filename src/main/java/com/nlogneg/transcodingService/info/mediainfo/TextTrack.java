@@ -27,7 +27,10 @@ public final class TextTrack extends MediaTrack
 	 * @param language
 	 *            The language of the track
 	 */
-	public TextTrack(final String format, final String codecID, final int id,
+	public TextTrack(
+			final String format,
+			final String codecID,
+			final int id,
 			final String language)
 	{
 		super(format, codecID, id);

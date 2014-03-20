@@ -53,8 +53,10 @@ public final class Estimation implements Serializable
 	 * @param subpixelMotionEstimation
 	 *            What subpixel motion estimation level to use
 	 */
-	public Estimation(final MotionEstimation motionEstimation,
-			final int trellis, final int subpixelMotionEstimation)
+	public Estimation(
+			final MotionEstimation motionEstimation,
+			final int trellis,
+			final int subpixelMotionEstimation)
 	{
 		this.motionEstimation = motionEstimation;
 		this.trellis = trellis;

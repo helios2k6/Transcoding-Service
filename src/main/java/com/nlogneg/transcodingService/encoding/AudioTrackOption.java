@@ -21,7 +21,8 @@ public final class AudioTrackOption
 	 * @param audioTrackFilePath
 	 * @param encodingAction
 	 */
-	public AudioTrackOption(final Optional<Path> audioTrackFilePath,
+	public AudioTrackOption(
+			final Optional<Path> audioTrackFilePath,
 			final EncodingAction encodingAction,
 			final Optional<AudioTrack> audioTrack)
 	{

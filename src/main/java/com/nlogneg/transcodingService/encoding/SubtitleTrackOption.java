@@ -21,7 +21,8 @@ public final class SubtitleTrackOption
 	 * @param textTrackFilePath
 	 * @param encodingActions
 	 */
-	public SubtitleTrackOption(final Optional<Path> textTrackFilePath,
+	public SubtitleTrackOption(
+			final Optional<Path> textTrackFilePath,
 			final EncodingAction encodingActions,
 			final Optional<TextTrack> subtitleTrack)
 	{

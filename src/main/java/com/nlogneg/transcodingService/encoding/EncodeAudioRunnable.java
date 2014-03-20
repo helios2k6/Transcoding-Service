@@ -31,7 +31,8 @@ public class EncodeAudioRunnable implements Runnable
 	 * @param callback
 	 * @param encoderArgumentBuilder
 	 */
-	public EncodeAudioRunnable(final EncodingJob job,
+	public EncodeAudioRunnable(
+			final EncodingJob job,
 			final CompletionHandler<Void, EncodingJob> callback,
 			final EncoderArgumentBuilder encoderArgumentBuilder)
 	{
