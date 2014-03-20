@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true">
+	<Properties>
+		<Property name="outputFile">debug.log</Property>
+	</Properties>
+	<Appenders>
+		<Appender type="File" name="FileAppender" fileName="${outputFile}">
+			<Layout type="PatternLayout">%d %p %C{1.} [%t] %m%n</Layout>
+		</Appender>
+	</Appenders>
+	<Loggers>
+		<Logger name="FileDebugLogger" level="debug">
+			<AppenderRef ref="File"></AppenderRef>
+		</Logger>
+	</Loggers>
+</Configuration>

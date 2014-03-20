@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.nlogneg.transcodingService</groupId>
+	<artifactId>Transcoding-Service</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Transcoding-Service</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.0.0.RELEASE</spring.version>
+		<junit.version>4.11</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+		<puremvc.version>1.0.7</puremvc.version>
+		<xstream.version>1.4.5</xstream.version>
+		<cli.version>1.2</cli.version>
+		<io.version>2.4</io.version>
+		<collections.version>4.0</collections.version>
+		<math.version>3.2</math.version>
+		<functional.java.version>3.0</functional.java.version>
+	</properties>
+
+	<dependencies>
+		<!-- Log4j Dependency -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- PureMVC -->
+		<dependency>
+			<groupId>org.puremvc</groupId>
+			<artifactId>PureMVC_Java_MultiCore</artifactId>
+			<version>${puremvc.version}</version>
+		</dependency>
+
+		<!-- XStream - XML Serialization -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>${xstream.version}</version>
+		</dependency>
+
+		<!-- CLI Apache Commons -->
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>${cli.version}</version>
+		</dependency>
+
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+
+		<!-- Commons IO -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${io.version}</version>
+		</dependency>
+
+		<!-- Functional Java -->
+		<dependency>
+			<groupId>org.functionaljava</groupId>
+			<artifactId>functionaljava</artifactId>
+			<version>${functional.java.version}</version>
+		</dependency>
+
+		<!-- Commons Collections -->
+		<!-- LOCAL DEPENDENCY CAUSE MAVEN DOESN'T HAVE THE SHIT YET -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${collections.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/thirdparty/commons-collections4-4.0/commons-collections4-4.0.jar</systemPath>
+		</dependency>
+	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
