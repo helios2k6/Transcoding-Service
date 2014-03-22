@@ -19,22 +19,22 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author anjohnson
  * 
  */
-public final class ScheduleMultiplexCommand extends SimpleCommand implements
-		CompletionHandler<Void, MultiplexJob>
+public final class ScheduleMultiplexCommand extends SimpleCommand implements CompletionHandler<Void, MultiplexJob>
 {
-	private static final Logger Log = LogManager
-			.getLogger(ScheduleMultiplexCommand.class);
+	private static final Logger Log = LogManager.getLogger(ScheduleMultiplexCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
 	{
 		final MultiplexJob job = (MultiplexJob) notification.getBody();
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
-				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
+				ExecutorProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 		final MP4BoxArgumentBuilder builder = new MP4BoxArgumentBuilder();
 		final MultiplexTracksRunnable runnable = new MultiplexTracksRunnable(
-				job, builder, this);
+				job,
+				builder,
+				this);
 
 		service.submit(runnable);
 	}
@@ -42,8 +42,7 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements
 	@Override
 	public void completed(final Void result, final MultiplexJob attachment)
 	{
-		Log.info("Multiplex job completed successfully : "
-				+ attachment.getDestinationFile());
+		Log.info("Multiplex job completed successfully : " + attachment.getDestinationFile());
 		this.sendNotification(Notifications.MultiplexFileSuccess, attachment);
 	}
 

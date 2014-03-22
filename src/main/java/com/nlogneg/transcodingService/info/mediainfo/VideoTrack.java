@@ -112,18 +112,11 @@ public final class VideoTrack extends MediaTrack
 	{
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result)
-				+ ((this.displayAspectRatio == null) ? 0
-						: this.displayAspectRatio.hashCode());
-		result = (prime * result)
-				+ ((this.frameRate == null) ? 0 : this.frameRate.hashCode());
-		result = (prime * result)
-				+ ((this.frameRateMode == null) ? 0 : this.frameRateMode
-						.hashCode());
-		result = (prime * result)
-				+ ((this.height == null) ? 0 : this.height.hashCode());
-		result = (prime * result)
-				+ ((this.width == null) ? 0 : this.width.hashCode());
+		result = (prime * result) + ((this.displayAspectRatio == null) ? 0 : this.displayAspectRatio.hashCode());
+		result = (prime * result) + ((this.frameRate == null) ? 0 : this.frameRate.hashCode());
+		result = (prime * result) + ((this.frameRateMode == null) ? 0 : this.frameRateMode.hashCode());
+		result = (prime * result) + ((this.height == null) ? 0 : this.height.hashCode());
+		result = (prime * result) + ((this.width == null) ? 0 : this.width.hashCode());
 		return result;
 	}
 

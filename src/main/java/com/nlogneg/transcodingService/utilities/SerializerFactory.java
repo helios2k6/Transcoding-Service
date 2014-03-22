@@ -113,7 +113,9 @@ public final class SerializerFactory
 
 		xstream.aliasField("Width", VideoTrack.class, "width");
 		xstream.aliasField("Height", VideoTrack.class, "height");
-		xstream.aliasField("Display_aspect_ratio", VideoTrack.class,
+		xstream.aliasField(
+				"Display_aspect_ratio",
+				VideoTrack.class,
 				"displayAspectRatio");
 		xstream.aliasField("Frame_rate_mode", VideoTrack.class, "frameRateMode");
 		xstream.aliasField("Frame_rate", VideoTrack.class, "frameRate");
@@ -148,7 +150,8 @@ public final class SerializerFactory
 		return new MapperWrapper(next)
 		{
 			@Override
-			public boolean shouldSerializeMember(final Class definedIn,
+			public boolean shouldSerializeMember(
+					final Class definedIn,
 					final String fieldName)
 			{
 				if (definedIn == Object.class)

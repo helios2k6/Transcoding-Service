@@ -27,36 +27,34 @@ import com.thoughtworks.xstream.XStreamException;
 public class ConfigureServerCommand extends SimpleCommand
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(ConfigureServerCommand.class);
+	private static final Logger Log = LogManager.getLogger(ConfigureServerCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
 	{
-		final CommandLineOptionsProxy proxy = (CommandLineOptionsProxy) this
-				.getFacade().retrieveProxy(CommandLineOptionsProxy.PROXY_NAME);
+		final CommandLineOptionsProxy proxy = (CommandLineOptionsProxy) this.getFacade().retrieveProxy(
+				CommandLineOptionsProxy.PROXY_NAME);
 		final Path configFile = proxy.getConfigurationFile();
 
 		if (Files.exists(configFile, LinkOption.NOFOLLOW_LINKS) == false)
 		{
-			this.fail("Config file cannot be found at: "
-					+ configFile.toAbsolutePath().toString(), null);
+			this.fail(
+					"Config file cannot be found at: " + configFile.toAbsolutePath().toString(),
+					null);
 		}
 
 		try
 		{
-			final List<String> lines = Files.readAllLines(configFile,
+			final List<String> lines = Files.readAllLines(
+					configFile,
 					Charset.defaultCharset());
 			final String flattenedFile = ListUtilities.flatten(lines);
 
-			final XStream deserializer = SerializerFactory
-					.getConfigurationFileSerializer();
-			final ConfigurationFile file = (ConfigurationFile) deserializer
-					.fromXML(flattenedFile);
+			final XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
+			final ConfigurationFile file = (ConfigurationFile) deserializer.fromXML(flattenedFile);
 
-			final ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy) this
-					.getFacade().retrieveProxy(
-							ServerConfigurationProxy.PROXY_NAME);
+			final ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
+					ServerConfigurationProxy.PROXY_NAME);
 			serverConfigProxy.setConfigurationFile(file);
 		} catch (final IOException e)
 		{

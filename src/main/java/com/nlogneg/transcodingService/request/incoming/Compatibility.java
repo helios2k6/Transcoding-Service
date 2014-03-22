@@ -61,11 +61,8 @@ public final class Compatibility implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.sampleAspectRatio == null) ? 0
-						: this.sampleAspectRatio.hashCode());
-		result = (prime * result)
-				+ (this.useAccessUnitDelimiters ? 1231 : 1237);
+		result = (prime * result) + ((this.sampleAspectRatio == null) ? 0 : this.sampleAspectRatio.hashCode());
+		result = (prime * result) + (this.useAccessUnitDelimiters ? 1231 : 1237);
 		return result;
 	}
 
@@ -116,8 +113,7 @@ public final class Compatibility implements Serializable
 	public static List<String> convertToArguments(
 			final Compatibility compatibility)
 	{
-		final List<String> arguments = SampleAspectRatio
-				.convertToArguments(compatibility.getSampleAspectRatio());
+		final List<String> arguments = SampleAspectRatio.convertToArguments(compatibility.getSampleAspectRatio());
 
 		if (compatibility.useAccessUnitDelimiters())
 		{

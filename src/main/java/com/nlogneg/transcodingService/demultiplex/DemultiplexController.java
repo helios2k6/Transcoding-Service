@@ -21,8 +21,7 @@ import com.nlogneg.transcodingService.constants.Notifications;
  */
 public class DemultiplexController extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(DemultiplexController.class);
+	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
 	private enum Reaction
@@ -41,18 +40,17 @@ public class DemultiplexController extends SimpleCommand
 		{
 			for (final JobStatus attachmentStatus : possibleStatuses)
 			{
-				final StatusTuple tuple = new StatusTuple(trackStatus,
+				final StatusTuple tuple = new StatusTuple(
+						trackStatus,
 						attachmentStatus);
 
-				if ((trackStatus == JobStatus.Failed)
-						|| (attachmentStatus == JobStatus.Failed))
+				if ((trackStatus == JobStatus.Failed) || (attachmentStatus == JobStatus.Failed))
 				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
 				} else
 				{
 					// Check in-progres conditions
-					if ((trackStatus == JobStatus.InProgress)
-							|| (attachmentStatus == JobStatus.InProgress))
+					if ((trackStatus == JobStatus.InProgress) || (attachmentStatus == JobStatus.InProgress))
 					{
 						/*
 						 * Doesn't matter what anything else is since we know
@@ -82,14 +80,14 @@ public class DemultiplexController extends SimpleCommand
 	@Override
 	public void execute(final INotification notification)
 	{
-		this.dispatchMessage(notification.getName(),
+		this.dispatchMessage(
+				notification.getName(),
 				(DemultiplexJob) notification.getBody());
 	}
 
 	private void dispatchMessage(final String message, final DemultiplexJob job)
 	{
-		Log.info("Dispatching message for demultiplexing job: "
-				+ job.getMediaFile());
+		Log.info("Dispatching message for demultiplexing job: " + job.getMediaFile());
 		switch (message)
 		{
 		case Notifications.StartDemultiplexJob:
@@ -99,18 +97,15 @@ public class DemultiplexController extends SimpleCommand
 			this.evaluateJobState(job);
 			break;
 		case Notifications.DemultiplexAttachmentFailure:
-			Log.info("Handle attachment demultiplexing failure: "
-					+ job.getMediaFile());
+			Log.info("Handle attachment demultiplexing failure: " + job.getMediaFile());
 			this.handleAttachmentFailureMessage(job);
 			break;
 		case Notifications.DemultiplexTrackFailure:
-			Log.info("Handle track demultiplexing failure: "
-					+ job.getMediaFile());
+			Log.info("Handle track demultiplexing failure: " + job.getMediaFile());
 			this.handleTrackFailureMessage(job);
 			break;
 		case Notifications.DemultiplexAttachmentSuccess:
-			Log.info("Handle attachment demultiplex success: "
-					+ job.getMediaFile());
+			Log.info("Handle attachment demultiplex success: " + job.getMediaFile());
 			this.handleAttachmentSuccessMessage(job);
 			break;
 		case Notifications.DemultiplexTrackSuccess:
@@ -118,8 +113,7 @@ public class DemultiplexController extends SimpleCommand
 			this.handleTrackSuccessMessage(job);
 			break;
 		default:
-			Log.error("Unknown message received by Demultiplex Controller: "
-					+ message);
+			Log.error("Unknown message received by Demultiplex Controller: " + message);
 			throw new RuntimeException("Unknown message.");
 		}
 	}
@@ -165,12 +159,14 @@ public class DemultiplexController extends SimpleCommand
 		switch (reaction)
 		{
 		case ScheduleTrack:
-			this.sendNotification(Notifications.ScheduleTrackDemultiplexJob,
+			this.sendNotification(
+					Notifications.ScheduleTrackDemultiplexJob,
 					job);
 			break;
 		case ScheduleAttachment:
 			this.sendNotification(
-					Notifications.ScheduleAttachmentDemultiplexJob, job);
+					Notifications.ScheduleAttachmentDemultiplexJob,
+					job);
 			break;
 		case NotifySuccess:
 			this.notifySuccess(job);

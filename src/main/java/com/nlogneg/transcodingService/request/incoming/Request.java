@@ -79,8 +79,7 @@ public final class Request
 	@Override
 	public String toString()
 	{
-		return "Request[FilePath = " + this.sourceFile + ", OutputPath = "
-				+ this.destinationFile + "]";
+		return "Request[FilePath = " + this.sourceFile + ", OutputPath = " + this.destinationFile + "]";
 	}
 
 	/*
@@ -93,16 +92,10 @@ public final class Request
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.destinationFile == null) ? 0 : this.destinationFile
-						.hashCode());
-		result = (prime * result)
-				+ ((this.encodingSettings == null) ? 0 : this.encodingSettings
-						.hashCode());
-		result = (prime * result)
-				+ ((this.selector == null) ? 0 : this.selector.hashCode());
-		result = (prime * result)
-				+ ((this.sourceFile == null) ? 0 : this.sourceFile.hashCode());
+		result = (prime * result) + ((this.destinationFile == null) ? 0 : this.destinationFile.hashCode());
+		result = (prime * result) + ((this.encodingSettings == null) ? 0 : this.encodingSettings.hashCode());
+		result = (prime * result) + ((this.selector == null) ? 0 : this.selector.hashCode());
+		result = (prime * result) + ((this.sourceFile == null) ? 0 : this.sourceFile.hashCode());
 		return result;
 	}
 

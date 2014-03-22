@@ -22,8 +22,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  */
 public final class FileSectionConverter implements Converter
 {
-	private static final Logger Log = LogManager
-			.getLogger(FileSectionConverter.class);
+	private static final Logger Log = LogManager.getLogger(FileSectionConverter.class);
 
 	@Override
 	public boolean canConvert(final Class clazz)
@@ -32,7 +31,9 @@ public final class FileSectionConverter implements Converter
 	}
 
 	@Override
-	public void marshal(final Object arg0, final HierarchicalStreamWriter arg1,
+	public void marshal(
+			final Object arg0,
+			final HierarchicalStreamWriter arg1,
 			final MarshallingContext arg2)
 	{
 
@@ -40,7 +41,8 @@ public final class FileSectionConverter implements Converter
 	}
 
 	@Override
-	public Object unmarshal(final HierarchicalStreamReader reader,
+	public Object unmarshal(
+			final HierarchicalStreamReader reader,
 			final UnmarshallingContext context)
 	{
 		final List<Track> tracks = new ArrayList<Track>();
@@ -50,8 +52,7 @@ public final class FileSectionConverter implements Converter
 			reader.moveDown();
 			final String currentNode = reader.getNodeName();
 
-			if (currentNode
-					.equalsIgnoreCase(SerializationConstants.TrackXmlName))
+			if (currentNode.equalsIgnoreCase(SerializationConstants.TrackXmlName))
 			{
 				final Track track = deserializeTrack(reader, context, tracks);
 
@@ -75,30 +76,33 @@ public final class FileSectionConverter implements Converter
 			final UnmarshallingContext context,
 			final Object contextReferencePoint)
 	{
-		final String typeOfTrack = reader
-				.getAttribute(SerializationConstants.TrackTypeAttributeName);
+		final String typeOfTrack = reader.getAttribute(SerializationConstants.TrackTypeAttributeName);
 
 		if (typeOfTrack.equals(SerializationConstants.VideoTrackAttribute))
 		{
-			return (Track) context.convertAnother(contextReferencePoint,
+			return (Track) context.convertAnother(
+					contextReferencePoint,
 					VideoTrack.class);
 		}
 
 		if (typeOfTrack.equals(SerializationConstants.AudioTrackAttribute))
 		{
-			return (Track) context.convertAnother(contextReferencePoint,
+			return (Track) context.convertAnother(
+					contextReferencePoint,
 					AudioTrack.class);
 		}
 
 		if (typeOfTrack.equals(SerializationConstants.GeneralTrackAttribute))
 		{
-			return (Track) context.convertAnother(contextReferencePoint,
+			return (Track) context.convertAnother(
+					contextReferencePoint,
 					GeneralTrack.class);
 		}
 
 		if (typeOfTrack.equals(SerializationConstants.TextTrackAttribute))
 		{
-			return (Track) context.convertAnother(contextReferencePoint,
+			return (Track) context.convertAnother(
+					contextReferencePoint,
 					TextTrack.class);
 		}
 

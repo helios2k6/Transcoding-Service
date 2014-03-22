@@ -20,8 +20,7 @@ import com.thoughtworks.xstream.XStreamException;
 public class DeserializeRequestCommand extends SimpleCommand
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(DeserializeRequestCommand.class);
+	private static final Logger Log = LogManager.getLogger(DeserializeRequestCommand.class);
 
 	private final XStream deserializer;
 
@@ -43,17 +42,14 @@ public class DeserializeRequestCommand extends SimpleCommand
 	 */
 	public DeserializeRequestCommand()
 	{
-		this.deserializer = SerializerFactory
-				.generateDefaultRequestSerializer();
+		this.deserializer = SerializerFactory.generateDefaultRequestSerializer();
 	}
 
 	public void Execute(final INotification notification)
 	{
 		final Facade facade = this.getFacade();
-		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) facade
-				.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
-		final Optional<String> request = serializedRequestProxy
-				.getNextSerializedRequest();
+		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) facade.retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+		final Optional<String> request = serializedRequestProxy.getNextSerializedRequest();
 
 		if (request.isNone())
 		{
@@ -63,10 +59,8 @@ public class DeserializeRequestCommand extends SimpleCommand
 
 		try
 		{
-			final Request deserializedRequest = (Request) this.deserializer
-					.fromXML(request.getValue());
-			final RequestProxy requestProxy = (RequestProxy) facade
-					.retrieveProxy(RequestProxy.PROXY_NAME);
+			final Request deserializedRequest = (Request) this.deserializer.fromXML(request.getValue());
+			final RequestProxy requestProxy = (RequestProxy) facade.retrieveProxy(RequestProxy.PROXY_NAME);
 			requestProxy.addRequest(deserializedRequest);
 		} catch (final XStreamException ex)
 		{

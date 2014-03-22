@@ -14,11 +14,11 @@ import org.apache.log4j.Logger;
  */
 public final class WindowsFontInstaller implements FontInstaller
 {
-	private static final Logger Log = LogManager
-			.getLogger(WindowsFontInstaller.class);
+	private static final Logger Log = LogManager.getLogger(WindowsFontInstaller.class);
 
 	@Override
-	public boolean installFonts(final Collection<Path> fonts,
+	public boolean installFonts(
+			final Collection<Path> fonts,
 			final Path fontFolder)
 	{
 		Log.info("Installing Windows fonts");

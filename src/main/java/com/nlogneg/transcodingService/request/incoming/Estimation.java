@@ -103,9 +103,7 @@ public final class Estimation implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.motionEstimation == null) ? 0 : this.motionEstimation
-						.hashCode());
+		result = (prime * result) + ((this.motionEstimation == null) ? 0 : this.motionEstimation.hashCode());
 		result = (prime * result) + this.subpixelMotionEstimation;
 		result = (prime * result) + this.trellis;
 		return result;
@@ -175,8 +173,7 @@ public final class Estimation implements Serializable
 		arguments.add(Integer.toString(estimation.getTrellis()));
 
 		arguments.add(SubpixelMotionEstimation);
-		arguments
-				.add(Integer.toString(estimation.getSubpixelMotionEstimation()));
+		arguments.add(Integer.toString(estimation.getSubpixelMotionEstimation()));
 
 		return arguments;
 	}

@@ -17,12 +17,10 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author anjohnson
  * 
  */
-public class ScheduleAudioEncodingCommand extends SimpleCommand implements
-		CompletionHandler<Void, EncodingJob>
+public class ScheduleAudioEncodingCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(ScheduleAudioEncodingCommand.class);
+	private static final Logger Log = LogManager.getLogger(ScheduleAudioEncodingCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
@@ -39,10 +37,12 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements
 
 		Log.info("Scheduling audio encode for: " + job.getSourceFilePath());
 
-		final EncodeAudioRunnable runnable = new EncodeAudioRunnable(job, this,
+		final EncodeAudioRunnable runnable = new EncodeAudioRunnable(
+				job,
+				this,
 				new NeroAacArgumentBuilder());
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
-				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
+				ExecutorProxy.PROXY_NAME);
 		proxy.getService().submit(runnable);
 	}
 
@@ -55,8 +55,7 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements
 	@Override
 	public void completed(final Void arg0, final EncodingJob job)
 	{
-		Log.info("Audio encoding successful for media job: "
-				+ job.getSourceFilePath());
+		Log.info("Audio encoding successful for media job: " + job.getSourceFilePath());
 		this.sendNotification(Notifications.EncodeAudioSuccess, job);
 	}
 
@@ -69,8 +68,7 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements
 	@Override
 	public void failed(final Throwable arg0, final EncodingJob job)
 	{
-		Log.info("Audio encoding failed for media job: "
-				+ job.getSourceFilePath());
+		Log.info("Audio encoding failed for media job: " + job.getSourceFilePath());
 		this.sendNotification(Notifications.EncodeAudioFailure, job);
 	}
 }

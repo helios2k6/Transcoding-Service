@@ -19,21 +19,20 @@ import com.nlogneg.transcodingService.request.server.ServerSocketProxy;
  */
 public class ConfigureServerSocketCommand extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(ConfigureServerSocketCommand.class);
+	private static final Logger Log = LogManager.getLogger(ConfigureServerSocketCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
 	{
-		final ServerConfigurationProxy proxy = (ServerConfigurationProxy) this
-				.getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
+		final ServerConfigurationProxy proxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
+				ServerConfigurationProxy.PROXY_NAME);
 		final int portNumber = proxy.getConfigurationFile().getPortNumber();
 
 		try
 		{
 			final ServerSocket serverSocket = new ServerSocket(portNumber);
-			final ServerSocketProxy serverSocketProxy = (ServerSocketProxy) this
-					.getFacade().retrieveProxy(ServerSocketProxy.PROXY_NAME);
+			final ServerSocketProxy serverSocketProxy = (ServerSocketProxy) this.getFacade().retrieveProxy(
+					ServerSocketProxy.PROXY_NAME);
 			serverSocketProxy.setServerSocket(serverSocket);
 		} catch (final IOException e)
 		{

@@ -32,7 +32,8 @@ public final class MediaFileRequestStatusBoard
 		final MediaFileRequestStatus rowEntry = new MediaFileRequestStatus();
 
 		this.statusBoard.put(request, rowEntry);
-		this.demultiplexJobToRequestMap.put(request.getDemultiplexJob(),
+		this.demultiplexJobToRequestMap.put(
+				request.getDemultiplexJob(),
 				request);
 		this.encodingJobToRequestMap.put(request.getEncodingJob(), request);
 		this.multiplexJobToRequestMap.put(request.getMultiplexJob(), request);
@@ -46,7 +47,8 @@ public final class MediaFileRequestStatusBoard
 	 * @return
 	 */
 	private <T> Optional<MediaFileRequestStatus> tryGetStatusRowEntry(
-			final T job, final Map<T, MediaFileRequest> map)
+			final T job,
+			final Map<T, MediaFileRequest> map)
 	{
 		final MediaFileRequest request = map.get(job);
 		if (request == null)
@@ -66,8 +68,9 @@ public final class MediaFileRequestStatusBoard
 	 */
 	public void updateJobStatus(final DemultiplexJob job, final JobStatus status)
 	{
-		final Optional<MediaFileRequestStatus> rowEntry = this
-				.tryGetStatusRowEntry(job, this.demultiplexJobToRequestMap);
+		final Optional<MediaFileRequestStatus> rowEntry = this.tryGetStatusRowEntry(
+				job,
+				this.demultiplexJobToRequestMap);
 		if (rowEntry.isNone())
 		{
 			return;
@@ -84,8 +87,9 @@ public final class MediaFileRequestStatusBoard
 	 */
 	public void updateJobStatus(final EncodingJob job, final JobStatus status)
 	{
-		final Optional<MediaFileRequestStatus> rowEntry = this
-				.tryGetStatusRowEntry(job, this.encodingJobToRequestMap);
+		final Optional<MediaFileRequestStatus> rowEntry = this.tryGetStatusRowEntry(
+				job,
+				this.encodingJobToRequestMap);
 		if (rowEntry.isNone())
 		{
 			return;
@@ -102,8 +106,9 @@ public final class MediaFileRequestStatusBoard
 	 */
 	public void updateJobStatus(final MultiplexJob job, final JobStatus status)
 	{
-		final Optional<MediaFileRequestStatus> rowEntry = this
-				.tryGetStatusRowEntry(job, this.multiplexJobToRequestMap);
+		final Optional<MediaFileRequestStatus> rowEntry = this.tryGetStatusRowEntry(
+				job,
+				this.multiplexJobToRequestMap);
 		if (rowEntry.isNone())
 		{
 			return;

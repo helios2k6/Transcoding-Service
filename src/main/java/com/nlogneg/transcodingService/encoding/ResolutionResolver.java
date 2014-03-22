@@ -22,8 +22,7 @@ import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
  */
 public final class ResolutionResolver
 {
-	private static final Logger Log = LogManager
-			.getLogger(ResolutionResolver.class);
+	private static final Logger Log = LogManager.getLogger(ResolutionResolver.class);
 
 	private ResolutionResolver()
 	{
@@ -43,8 +42,7 @@ public final class ResolutionResolver
 
 		if (oldResolution == null)
 		{
-			Log.error("Could not get the original resolution of media file: "
-					+ job.getRequest().getSourceFile());
+			Log.error("Could not get the original resolution of media file: " + job.getRequest().getSourceFile());
 			return null;
 		}
 
@@ -56,8 +54,10 @@ public final class ResolutionResolver
 		if (selector.isCapResolution())
 		{
 			final WidthHeightTuple maxResolution = new WidthHeightTuple(
-					selector.getMaxHeight(), selector.getMaxWidth());
-			resolvedResolution = enforceMaxResolution(oldResolution,
+					selector.getMaxHeight(),
+					selector.getMaxWidth());
+			resolvedResolution = enforceMaxResolution(
+					oldResolution,
 					maxResolution);
 		}
 
@@ -66,8 +66,7 @@ public final class ResolutionResolver
 
 	private static WidthHeightTuple tryGetResolution(final EncodingJob job)
 	{
-		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory
-				.getSummary(job.getMediaInfo());
+		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(job.getMediaInfo());
 		final Collection<VideoTrack> videoTracks = summary.getVideoTracks();
 		final VideoTrack chosenVideoTrack = getEarliestVideoTrack(videoTracks);
 
@@ -99,8 +98,10 @@ public final class ResolutionResolver
 			final WidthHeightTuple oldResolution)
 	{
 		final int aspectCoefficient = IntegerUtils.gcd(
-				oldResolution.getWidth(), oldResolution.getHeight());
-		return new WidthHeightTuple(aspectCoefficient * 16,
+				oldResolution.getWidth(),
+				oldResolution.getHeight());
+		return new WidthHeightTuple(
+				aspectCoefficient * 16,
 				aspectCoefficient * 9);
 	}
 
@@ -108,20 +109,21 @@ public final class ResolutionResolver
 			final WidthHeightTuple oldResolution,
 			final WidthHeightTuple maxResolution)
 	{
-		if ((oldResolution.getWidth() <= maxResolution.getWidth())
-				&& (oldResolution.getHeight() <= maxResolution.getHeight()))
+		if ((oldResolution.getWidth() <= maxResolution.getWidth()) && (oldResolution.getHeight() <= maxResolution.getHeight()))
 		{
 			return oldResolution;
 		}
 
 		final int aspectCoefficient = IntegerUtils.gcd(
-				oldResolution.getWidth(), oldResolution.getHeight());
+				oldResolution.getWidth(),
+				oldResolution.getHeight());
 		final int widthCoPrime = oldResolution.getWidth() / aspectCoefficient;
 		final int heightCoPrime = oldResolution.getHeight() / aspectCoefficient;
 
 		final int closestCoefficient = maxResolution.getWidth() / heightCoPrime;
 
-		return new WidthHeightTuple(closestCoefficient * widthCoPrime,
+		return new WidthHeightTuple(
+				closestCoefficient * widthCoPrime,
 				closestCoefficient * heightCoPrime);
 
 	}

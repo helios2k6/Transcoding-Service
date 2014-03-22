@@ -20,8 +20,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
 public class ExternalProcessMKVInfoSource implements MKVInfoSource
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(ExternalProcessMKVInfoSource.class);
+	private static final Logger Log = LogManager.getLogger(ExternalProcessMKVInfoSource.class);
 	private static final String TrackArgument = "--track-info";
 	private static final ExternalProcessMKVInfoSource Instance = new ExternalProcessMKVInfoSource();
 
@@ -47,15 +46,15 @@ public class ExternalProcessMKVInfoSource implements MKVInfoSource
 		Log.info("Requesting MKV info about: " + sourceFile);
 
 		final ProcessBuilder builder = new ProcessBuilder(
-				SystemUtilities.getMkvInfoProcessName(), TrackArgument,
+				SystemUtilities.getMkvInfoProcessName(),
+				TrackArgument,
 				sourceFile.toAbsolutePath().toString());
 		Process process;
 		try
 		{
 			process = builder.start();
 
-			final String output = InputStreamUtilities
-					.readInputStreamToEnd(process.getInputStream());
+			final String output = InputStreamUtilities.readInputStreamToEnd(process.getInputStream());
 
 			process.waitFor();
 

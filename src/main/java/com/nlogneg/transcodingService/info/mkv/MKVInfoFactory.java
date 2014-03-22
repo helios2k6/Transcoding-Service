@@ -15,8 +15,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  */
 public final class MKVInfoFactory
 {
-	private static final Logger Log = LogManager
-			.getLogger(MKVInfoFactory.class);
+	private static final Logger Log = LogManager.getLogger(MKVInfoFactory.class);
 
 	/**
 	 * Query for MKVInfo
@@ -25,7 +24,8 @@ public final class MKVInfoFactory
 	 * @param source
 	 * @return
 	 */
-	public static Optional<MKVInfo> tryGetMKVInfo(final Path mediaFilePath,
+	public static Optional<MKVInfo> tryGetMKVInfo(
+			final Path mediaFilePath,
 			final MKVInfoSource source)
 	{
 		Log.info("Querying for MKVInfo for: " + mediaFilePath);
@@ -35,7 +35,8 @@ public final class MKVInfoFactory
 		if (rawQuery.isSome())
 		{
 			Log.info("Successfully got MKVInfo for: " + mediaFilePath);
-			return MKVInfoDeserializer.deserializeRawMKVInfo(mediaFilePath,
+			return MKVInfoDeserializer.deserializeRawMKVInfo(
+					mediaFilePath,
 					rawQuery.getValue());
 		}
 
@@ -51,7 +52,8 @@ public final class MKVInfoFactory
 	 */
 	public static Optional<MKVInfo> tryGetMKVInfo(final Path mediaFilePath)
 	{
-		return tryGetMKVInfo(mediaFilePath,
+		return tryGetMKVInfo(
+				mediaFilePath,
 				ExternalProcessMKVInfoSource.getInstance());
 	}
 }

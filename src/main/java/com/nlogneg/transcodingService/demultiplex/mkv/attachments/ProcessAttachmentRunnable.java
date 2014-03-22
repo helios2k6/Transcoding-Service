@@ -23,8 +23,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  */
 public final class ProcessAttachmentRunnable implements Runnable
 {
-	private static final Logger Log = LogManager
-			.getLogger(ProcessAttachmentRunnable.class);
+	private static final Logger Log = LogManager.getLogger(ProcessAttachmentRunnable.class);
 	private static final String AttachmentArgument = "attachments";
 
 	private final DemultiplexMKVJob job;
@@ -55,7 +54,8 @@ public final class ProcessAttachmentRunnable implements Runnable
 	{
 		final boolean extractionResult = extractAttachments(this.job);
 		final boolean installationResult = this.fontInstaller.installFonts(
-				this.job.getFontAttachmentMap().values(), this.fontFolder);
+				this.job.getFontAttachmentMap().values(),
+				this.fontFolder);
 
 		if (extractionResult && installationResult)
 		{
@@ -75,7 +75,9 @@ public final class ProcessAttachmentRunnable implements Runnable
 		for (final Attachment key : keyRing)
 		{
 			final Path outputPath = attachments.get(key);
-			final boolean extractionResult = extractAttachment(job, key,
+			final boolean extractionResult = extractAttachment(
+					job,
+					key,
 					outputPath);
 			if (extractionResult)
 			{
@@ -90,20 +92,22 @@ public final class ProcessAttachmentRunnable implements Runnable
 		return successfullyExtractedAllAttachments;
 	}
 
-	private static boolean extractAttachment(final DemultiplexMKVJob job,
-			final Attachment attachment, final Path outputPath)
+	private static boolean extractAttachment(
+			final DemultiplexMKVJob job,
+			final Attachment attachment,
+			final Path outputPath)
 	{
 		final StringBuilder extractedAttachmentArgument = new StringBuilder();
-		extractedAttachmentArgument.append(attachment.getId()).append(":")
-				.append(attachment.getFileName());
+		extractedAttachmentArgument.append(attachment.getId()).append(":").append(
+				attachment.getFileName());
 
 		final ProcessBuilder builder = new ProcessBuilder(
-				SystemUtilities.getMkvExtractProcessName(), AttachmentArgument,
+				SystemUtilities.getMkvExtractProcessName(),
+				AttachmentArgument,
 				job.getMediaFile().toAbsolutePath().toString(),
 				extractedAttachmentArgument.toString());
 
-		final Optional<Process> processOptional = ProcessUtils
-				.tryStartProcess(builder);
+		final Optional<Process> processOptional = ProcessUtils.tryStartProcess(builder);
 		if (processOptional.isNone())
 		{
 			Log.error("Could not start process for attachment extraction");

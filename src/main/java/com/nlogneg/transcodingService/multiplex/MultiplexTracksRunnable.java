@@ -11,8 +11,7 @@ import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 
 public class MultiplexTracksRunnable implements Runnable
 {
-	private static final Logger Log = LogManager
-			.getLogger(MultiplexTracksRunnable.class);
+	private static final Logger Log = LogManager.getLogger(MultiplexTracksRunnable.class);
 	private final MultiplexJob job;
 	private final MultiplexArgumentBuilder builder;
 	private final CompletionHandler<Void, MultiplexJob> callback;
@@ -42,8 +41,7 @@ public class MultiplexTracksRunnable implements Runnable
 	{
 		Log.info("Multiplexing files for job: " + this.job.getDestinationFile());
 
-		final List<String> args = this.builder
-				.getMultiplexingArguments(this.job);
+		final List<String> args = this.builder.getMultiplexingArguments(this.job);
 		final ProcessBuilder builder = new ProcessBuilder(args);
 
 		final Optional<Process> process = ProcessUtils.tryStartProcess(builder);
@@ -53,12 +51,10 @@ public class MultiplexTracksRunnable implements Runnable
 			return;
 		}
 
-		final boolean result = ProcessUtils.tryWaitForProcess(process
-				.getValue());
+		final boolean result = ProcessUtils.tryWaitForProcess(process.getValue());
 		if (result)
 		{
-			Log.info("Successfully multiplexed job for: "
-					+ this.job.getDestinationFile());
+			Log.info("Successfully multiplexed job for: " + this.job.getDestinationFile());
 			this.callback.completed(null, this.job);
 		} else
 		{
@@ -68,8 +64,7 @@ public class MultiplexTracksRunnable implements Runnable
 
 	private void fail()
 	{
-		Log.error("Could not start multiplexing job for: "
-				+ this.job.getDestinationFile());
+		Log.error("Could not start multiplexing job for: " + this.job.getDestinationFile());
 		this.callback.failed(null, this.job);
 	}
 }

@@ -34,8 +34,9 @@ public class MP4BoxArgumentBuilder implements MultiplexArgumentBuilder
 		// Add audio bit stream if possible
 		if (job.getAudioTrackOption().hasAudioTrackPath())
 		{
-			addFile(args, job.getAudioTrackOption().getAudioTrackFilePath()
-					.getValue());
+			addFile(
+					args,
+					job.getAudioTrackOption().getAudioTrackFilePath().getValue());
 		}
 
 		// Add the output file

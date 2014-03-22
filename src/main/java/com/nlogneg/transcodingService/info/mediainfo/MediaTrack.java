@@ -60,8 +60,7 @@ public abstract class MediaTrack extends Track
 	{
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result)
-				+ ((this.codecID == null) ? 0 : this.codecID.hashCode());
+		result = (prime * result) + ((this.codecID == null) ? 0 : this.codecID.hashCode());
 		return result;
 	}
 

@@ -22,8 +22,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public final class MKVInfoDeserializer
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(MKVInfoDeserializer.class);
+	private static final Logger Log = LogManager.getLogger(MKVInfoDeserializer.class);
 
 	private static final String AttachedHeader = "+ ATTACHED";
 	private static final String FileNameLabel = "+ FILE NAME:";
@@ -34,7 +33,8 @@ public final class MKVInfoDeserializer
 	 * Deserializes an MKVInfo from the given string, which is expected to be
 	 * the actual raw input, not the name of a file
 	 */
-	public static Optional<MKVInfo> deserializeRawMKVInfo(final Path inputFile,
+	public static Optional<MKVInfo> deserializeRawMKVInfo(
+			final Path inputFile,
 			final String rawMkvInfo)
 	{
 		final String[] splitString = rawMkvInfo.split("\\|");
@@ -81,8 +81,10 @@ public final class MKVInfoDeserializer
 			// Check to see if we can make a new Attachment
 			if (fileName.isSome() && mimeType.isSome() && fileUID.isSome())
 			{
-				final Attachment attachment = new Attachment(attachmentId,
-						fileName.getValue(), mimeType.getValue(),
+				final Attachment attachment = new Attachment(
+						attachmentId,
+						fileName.getValue(),
+						mimeType.getValue(),
 						fileUID.getValue());
 				attachments.add(attachment);
 

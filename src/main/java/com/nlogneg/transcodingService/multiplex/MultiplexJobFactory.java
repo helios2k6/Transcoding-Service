@@ -21,8 +21,10 @@ public final class MultiplexJobFactory
 	 * @param destinationFile
 	 * @return
 	 */
-	public static MultiplexJob createMultiplexJob(final Path encodedVideoFile,
-			final AudioTrackOption audioTrack, final Path destinationFile)
+	public static MultiplexJob createMultiplexJob(
+			final Path encodedVideoFile,
+			final AudioTrackOption audioTrack,
+			final Path destinationFile)
 	{
 		return new MultiplexJob(encodedVideoFile, audioTrack, destinationFile);
 	}

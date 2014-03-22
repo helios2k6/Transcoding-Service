@@ -19,8 +19,7 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
  */
 public class ReadClientRequestFromSocketCommand extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(ReadClientRequestFromSocketCommand.class);
+	private static final Logger Log = LogManager.getLogger(ReadClientRequestFromSocketCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
@@ -43,8 +42,8 @@ public class ReadClientRequestFromSocketCommand extends SimpleCommand
 			return;
 		}
 
-		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) this
-				.getFacade().retrieveProxy(SerializedRequestProxy.PROXY_NAME);
+		final SerializedRequestProxy serializedRequestProxy = (SerializedRequestProxy) this.getFacade().retrieveProxy(
+				SerializedRequestProxy.PROXY_NAME);
 		serializedRequestProxy.addSerializedRequest(requestPayload);
 	}
 
@@ -59,8 +58,7 @@ public class ReadClientRequestFromSocketCommand extends SimpleCommand
 	{
 		try
 		{
-			return InputStreamUtilities.readInputStreamToEnd(socket
-					.getInputStream());
+			return InputStreamUtilities.readInputStreamToEnd(socket.getInputStream());
 		} catch (final IOException exception)
 		{
 			Log.error("Could not read from socket", exception);

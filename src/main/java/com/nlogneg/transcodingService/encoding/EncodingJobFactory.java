@@ -18,7 +18,8 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public final class EncodingJobFactory
 {
 
-	public EncodingJob createEncodingJob(final Request request,
+	public EncodingJob createEncodingJob(
+			final Request request,
 			final MediaInfo mediaInfo,
 			final Optional<AudioTrack> demultiplexAudioTrack,
 			final Optional<TextTrack> demultiplexSubtitleTrack,
@@ -27,25 +28,31 @@ public final class EncodingJobFactory
 	{
 
 		final AudioTrackOption audio = deduceAudioTrackOption(
-				demultiplexAudioTrack, demultiplexedAudioTrackFile);
+				demultiplexAudioTrack,
+				demultiplexedAudioTrackFile);
 		final SubtitleTrackOption subs = deduceSubtitleTrackOption(
-				demultiplexSubtitleTrack, demultiplexedSubtitlePath);
+				demultiplexSubtitleTrack,
+				demultiplexedSubtitlePath);
 
 		final Path videoTrack = generateVideoFileName(request);
 		Path audioTrack = null;
 
-		if (audio.hasAudioTrackPath()
-				&& (audio.getEncodingAction() == EncodingAction.Encode))
+		if (audio.hasAudioTrackPath() && (audio.getEncodingAction() == EncodingAction.Encode))
 		{
-			audioTrack = generateAudioFileName(request, audio.getAudioTrack()
-					.getValue());
-		} else if (demultiplexAudioTrack.isSome()
-				&& (audio.getEncodingAction() == EncodingAction.Multiplex))
+			audioTrack = generateAudioFileName(
+					request,
+					audio.getAudioTrack().getValue());
+		} else if (demultiplexAudioTrack.isSome() && (audio.getEncodingAction() == EncodingAction.Multiplex))
 		{
 			audioTrack = demultiplexedAudioTrackFile.getValue();
 		}
 
-		return new EncodingJob(request, mediaInfo, audio, subs, videoTrack,
+		return new EncodingJob(
+				request,
+				mediaInfo,
+				audio,
+				subs,
+				videoTrack,
 				audioTrack);
 	}
 
@@ -56,8 +63,10 @@ public final class EncodingJobFactory
 
 		if (audioTrack.isNone() && demultiplexAudioTrack.isNone())
 		{
-			return new AudioTrackOption(Optional.<Path> none(),
-					EncodingAction.Ignore, Optional.<AudioTrack> none());
+			return new AudioTrackOption(
+					Optional.<Path> none(),
+					EncodingAction.Ignore,
+					Optional.<AudioTrack> none());
 		}
 
 		final AudioTrack track = audioTrack.getValue();
@@ -81,22 +90,23 @@ public final class EncodingJobFactory
 			action = EncodingAction.Encode;
 		}
 
-		return new SubtitleTrackOption(demultiplexedSubtitlePath, action,
+		return new SubtitleTrackOption(
+				demultiplexedSubtitlePath,
+				action,
 				demultiplexSubtitleTrack);
 	}
 
 	private static Path generateVideoFileName(final Request request)
 	{
-		final String fileName = Paths.get(request.getSourceFile())
-				.toAbsolutePath().toString();
+		final String fileName = Paths.get(request.getSourceFile()).toAbsolutePath().toString();
 		return Paths.get(fileName + "_temp_encoded.264");
 	}
 
-	private static Path generateAudioFileName(final Request request,
+	private static Path generateAudioFileName(
+			final Request request,
 			final AudioTrack track)
 	{
-		final String fileName = Paths.get(request.getSourceFile())
-				.toAbsolutePath().toString();
+		final String fileName = Paths.get(request.getSourceFile()).toAbsolutePath().toString();
 		return Paths.get(fileName + "_temp_encoded.m4a");
 	}
 }

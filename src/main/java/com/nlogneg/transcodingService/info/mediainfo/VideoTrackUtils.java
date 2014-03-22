@@ -13,8 +13,7 @@ import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
  */
 public final class VideoTrackUtils
 {
-	private static final Logger Log = LogManager
-			.getLogger(VideoTrackUtils.class);
+	private static final Logger Log = LogManager.getLogger(VideoTrackUtils.class);
 
 	/**
 	 * Attempts to parse the pixel length given the video track

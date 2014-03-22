@@ -11,8 +11,7 @@ import org.apache.log4j.Logger;
  */
 public final class SystemUtilities
 {
-	private static final Logger Log = LogManager
-			.getLogger(SystemUtilities.class);
+	private static final Logger Log = LogManager.getLogger(SystemUtilities.class);
 
 	/**
 	 * Denotes the Operating System

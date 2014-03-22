@@ -22,8 +22,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  */
 public final class MKVDemultiplexingUtilities
 {
-	private static final Logger Log = LogManager
-			.getLogger(MKVDemultiplexingUtilities.class);
+	private static final Logger Log = LogManager.getLogger(MKVDemultiplexingUtilities.class);
 	private static final MimeType FontMimeType = getFontMimeType();
 
 	/**
@@ -105,9 +104,7 @@ public final class MKVDemultiplexingUtilities
 					 * has a lower ID number
 					 */
 
-					if (isTrackJapanese(track)
-							|| (track.getId() < selectedTrack.getValue()
-									.getId()))
+					if (isTrackJapanese(track) || (track.getId() < selectedTrack.getValue().getId()))
 					{
 						selectedTrack = Optional.make(track);
 					}

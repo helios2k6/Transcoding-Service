@@ -17,8 +17,7 @@ import org.apache.log4j.Logger;
  */
 public final class InterProcessPipe
 {
-	private static final Logger Log = LogManager
-			.getLogger(InterProcessPipe.class);
+	private static final Logger Log = LogManager.getLogger(InterProcessPipe.class);
 
 	private final BlockingQueue<byte[]> queue = new LinkedBlockingQueue<>();
 	private final ProcessReader reader;
@@ -44,9 +43,15 @@ public final class InterProcessPipe
 			final Process sink,
 			final ExecutorService service)
 	{
-		this.reader = new ProcessReader(source, source.getInputStream(),
-				service, this.queue);
-		this.writer = new ProcessWriter(sink, sink.getOutputStream(), service,
+		this.reader = new ProcessReader(
+				source,
+				source.getInputStream(),
+				service,
+				this.queue);
+		this.writer = new ProcessWriter(
+				sink,
+				sink.getOutputStream(),
+				service,
 				this.queue);
 		this.service = service;
 	}

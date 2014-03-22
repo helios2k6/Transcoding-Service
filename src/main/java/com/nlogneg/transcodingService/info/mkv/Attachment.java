@@ -83,8 +83,7 @@ public final class Attachment
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.fileName == null) ? 0 : this.fileName.hashCode());
+		result = (prime * result) + ((this.fileName == null) ? 0 : this.fileName.hashCode());
 		result = (prime * result) + new Long(this.id).hashCode();
 		result = (prime * result) + (int) (this.uid ^ (this.uid >>> 32));
 		result = (prime * result) + this.mimeType.getBaseType().hashCode();

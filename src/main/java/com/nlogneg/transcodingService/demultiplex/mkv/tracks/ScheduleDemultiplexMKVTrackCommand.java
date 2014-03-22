@@ -18,11 +18,9 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author Andrew
  * 
  */
-public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand
-		implements CompletionHandler<Void, DemultiplexMKVJob>
+public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>
 {
-	private static final Logger Log = LogManager
-			.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
+	private static final Logger Log = LogManager.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
 
 	/*
 	 * (non-Javadoc)
@@ -34,12 +32,12 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand
 	@Override
 	public void execute(final INotification notification)
 	{
-		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification
-				.getBody();
+		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification.getBody();
 		final DemultiplexTrackRunnable multiplexer = new DemultiplexTrackRunnable(
-				job, this);
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
-				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+				job,
+				this);
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
+				ExecutorProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 		service.submit(multiplexer);
 	}

@@ -13,8 +13,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author Andrew
  * 
  */
-public final class X264EncodingArgumentBuilder implements
-		EncoderArgumentBuilder
+public final class X264EncodingArgumentBuilder implements EncoderArgumentBuilder
 {
 	private static final String DemuxerArgument = "--demuxer";
 	private static final String OutputFileArgument = "--output";
@@ -23,7 +22,8 @@ public final class X264EncodingArgumentBuilder implements
 	private static final String StandardInput = "-";
 
 	@Override
-	public List<String> getEncoderArguments(final EncodingJob job,
+	public List<String> getEncoderArguments(
+			final EncodingJob job,
 			final Path outputFile)
 	{
 		final List<String> arguments = new LinkedList<String>();
@@ -53,7 +53,6 @@ public final class X264EncodingArgumentBuilder implements
 
 	private static List<String> getEncodingOptions(final EncodingJob job)
 	{
-		return EncodingSettings.convertToArguments(job.getRequest()
-				.getEncodingSettings());
+		return EncodingSettings.convertToArguments(job.getRequest().getEncodingSettings());
 	}
 }

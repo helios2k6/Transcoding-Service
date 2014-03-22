@@ -79,7 +79,8 @@ public final class ProcessReader implements Runnable
 				} catch (final IOException e)
 				{
 					this.isCancelled = true;
-					Log.error("IO Error occurred while reading from process.",
+					Log.error(
+							"IO Error occurred while reading from process.",
 							e);
 				} catch (final InterruptedException e)
 				{

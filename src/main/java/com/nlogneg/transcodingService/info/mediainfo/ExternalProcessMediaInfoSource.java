@@ -18,8 +18,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  */
 public final class ExternalProcessMediaInfoSource implements MediaInfoSource
 {
-	private static final Logger Log = LogManager
-			.getLogger(ExternalProcessMediaInfoSource.class);
+	private static final Logger Log = LogManager.getLogger(ExternalProcessMediaInfoSource.class);
 	private static final String OutputArgument = "--output=XML";
 	private static final ExternalProcessMediaInfoSource Instance = new ExternalProcessMediaInfoSource();
 
@@ -37,7 +36,8 @@ public final class ExternalProcessMediaInfoSource implements MediaInfoSource
 	public Optional<String> tryGetMediaInfo(final Path sourcePath)
 	{
 		final ProcessBuilder builder = new ProcessBuilder(
-				SystemUtilities.getMediaInfoProcessName(), OutputArgument,
+				SystemUtilities.getMediaInfoProcessName(),
+				OutputArgument,
 				sourcePath.toAbsolutePath().toString());
 		Log.info("Requesting media info about: " + sourcePath);
 		Process process;
@@ -45,8 +45,7 @@ public final class ExternalProcessMediaInfoSource implements MediaInfoSource
 		{
 			process = builder.start();
 
-			final String output = InputStreamUtilities
-					.readInputStreamToEnd(process.getInputStream());
+			final String output = InputStreamUtilities.readInputStreamToEnd(process.getInputStream());
 			process.waitFor(); // Shouldn't take long.
 
 			return Optional.make(output);

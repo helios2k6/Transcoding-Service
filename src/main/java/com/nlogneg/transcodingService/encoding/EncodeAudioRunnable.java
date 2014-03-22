@@ -19,8 +19,7 @@ import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 public class EncodeAudioRunnable implements Runnable
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(EncodeAudioRunnable.class);
+	private static final Logger Log = LogManager.getLogger(EncodeAudioRunnable.class);
 
 	private final EncodingJob job;
 	private final CompletionHandler<Void, EncodingJob> callback;
@@ -63,8 +62,7 @@ public class EncodeAudioRunnable implements Runnable
 
 	private boolean encodeAudioTrack()
 	{
-		final Optional<Path> audioTrackPathOptional = this.job
-				.getAudioTrackOption().getAudioTrackFilePath();
+		final Optional<Path> audioTrackPathOptional = this.job.getAudioTrackOption().getAudioTrackFilePath();
 
 		if (audioTrackPathOptional.isNone())
 		{
@@ -72,10 +70,11 @@ public class EncodeAudioRunnable implements Runnable
 			return false;
 		}
 
-		final List<String> arguments = this.encoderArgumentBuilder
-				.getEncoderArguments(this.job, this.job.getOutputAudioFile());
-		final Optional<Process> process = ProcessUtils
-				.tryStartProcess(new ProcessBuilder(arguments));
+		final List<String> arguments = this.encoderArgumentBuilder.getEncoderArguments(
+				this.job,
+				this.job.getOutputAudioFile());
+		final Optional<Process> process = ProcessUtils.tryStartProcess(new ProcessBuilder(
+				arguments));
 
 		if (process.isNone())
 		{

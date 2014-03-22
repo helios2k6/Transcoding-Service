@@ -83,8 +83,7 @@ public class RateControl implements Serializable
 		long temp;
 		temp = Double.doubleToLongBits(this.setting);
 		result = (prime * result) + (int) (temp ^ (temp >>> 32));
-		result = (prime * result)
-				+ ((this.type == null) ? 0 : this.type.hashCode());
+		result = (prime * result) + ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
 
@@ -109,8 +108,7 @@ public class RateControl implements Serializable
 			return false;
 		}
 		final RateControl other = (RateControl) obj;
-		if (Double.doubleToLongBits(this.setting) != Double
-				.doubleToLongBits(other.setting))
+		if (Double.doubleToLongBits(this.setting) != Double.doubleToLongBits(other.setting))
 		{
 			return false;
 		}

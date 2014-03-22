@@ -33,8 +33,7 @@ import fj.F;
 public class DemultiplexJobFactory
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(DemultiplexJobFactory.class);
+	private static final Logger Log = LogManager.getLogger(DemultiplexJobFactory.class);
 	private static final AtomicInteger IdSeed = new AtomicInteger();
 
 	private enum MediaFileType
@@ -49,21 +48,22 @@ public class DemultiplexJobFactory
 	 * @return
 	 */
 	public static Optional<? extends DemultiplexJob> tryCreateDemultiplexJob(
-			final Request request, final MediaInfo mediaInfo)
+			final Request request,
+			final MediaInfo mediaInfo)
 	{
 		// Get tracks and summary
-		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory
-				.getSummary(mediaInfo);
+		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(mediaInfo);
 
 		// Figure out what type of media file this is
-		final Collection<GeneralTrack> generalTracks = summary
-				.getGeneralTracks();
+		final Collection<GeneralTrack> generalTracks = summary.getGeneralTracks();
 		final MediaFileType type = detectMediaFileType(generalTracks);
 
 		switch (type)
 		{
 		case MKV:
-			return Optional.make(createDemultiplexMKVJob(request, mediaInfo,
+			return Optional.make(createDemultiplexMKVJob(
+					request,
+					mediaInfo,
 					summary));
 		case Other:
 			return Optional.make(new NoOpDemultiplexJob());
@@ -92,27 +92,25 @@ public class DemultiplexJobFactory
 	}
 
 	private static DemultiplexMKVJob createDemultiplexMKVJob(
-			final Request request, final MediaInfo mediaInfo,
+			final Request request,
+			final MediaInfo mediaInfo,
 			final MediaInfoTrackSummary summary)
 	{
 
 		final Path sourceFile = Paths.get(request.getSourceFile());
-		final Optional<MKVInfo> infoOptional = MKVInfoFactory
-				.tryGetMKVInfo(sourceFile);
+		final Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(sourceFile);
 
 		// We can't get the info for some reason
 		if (infoOptional.isNone())
 		{
-			Log.error("Could not create DemultiplexMKVJob for: "
-					+ request.getSourceFile());
+			Log.error("Could not create DemultiplexMKVJob for: " + request.getSourceFile());
 			return null;
 		}
 
 		final MKVInfo info = infoOptional.getValue();
 
 		final Collection<Attachment> allAttachments = info.getAttachments();
-		final Collection<Attachment> fontAttachments = MKVDemultiplexingUtilities
-				.getFontAttachments(allAttachments);
+		final Collection<Attachment> fontAttachments = MKVDemultiplexingUtilities.getFontAttachments(allAttachments);
 
 		final F<Attachment, Attachment> id = Projections.identity();
 		final F<Attachment, Path> valueProj = new F<Attachment, Path>()
@@ -125,37 +123,49 @@ public class DemultiplexJobFactory
 		};
 
 		final Map<Attachment, Path> attachmentMap = CollectionUtilities.toMap(
-				allAttachments, id, valueProj);
-		final Map<Attachment, Path> fontAttachmentMap = CollectionUtilities
-				.toMap(fontAttachments, id, valueProj);
+				allAttachments,
+				id,
+				valueProj);
+		final Map<Attachment, Path> fontAttachmentMap = CollectionUtilities.toMap(
+				fontAttachments,
+				id,
+				valueProj);
 		final Optional<Tuple<AudioTrack, Path>> audioTrackMap = deduceAudioTrack(
-				request, summary);
+				request,
+				summary);
 		final Optional<Tuple<TextTrack, Path>> subtitleTrackMap = deduceSubtitleTrack(
-				request, summary);
+				request,
+				summary);
 
-		return new DemultiplexMKVJob(sourceFile, mediaInfo, audioTrackMap,
-				subtitleTrackMap, attachmentMap, fontAttachmentMap);
+		return new DemultiplexMKVJob(
+				sourceFile,
+				mediaInfo,
+				audioTrackMap,
+				subtitleTrackMap,
+				attachmentMap,
+				fontAttachmentMap);
 	}
 
 	private static <T extends MediaTrack> Optional<Tuple<T, Path>> createTuple(
-			final Request request, final T t)
+			final Request request,
+			final T t)
 	{
 		final Path sourceFile = Paths.get(request.getSourceFile());
 		final StringBuilder builder = new StringBuilder();
 
-		builder.append(sourceFile.toAbsolutePath().toString()).append("_temp_")
-				.append(IdSeed.incrementAndGet()).append("_.")
-				.append(t.getFormat());
+		builder.append(sourceFile.toAbsolutePath().toString()).append("_temp_").append(
+				IdSeed.incrementAndGet()).append("_.").append(t.getFormat());
 
-		return Optional.make(new Tuple<T, Path>(t,
+		return Optional.make(new Tuple<T, Path>(
+				t,
 				Paths.get(builder.toString())));
 	}
 
 	private static <T extends MediaTrack> Optional<Tuple<T, Path>> deduceTrack(
-			final Request request, final Collection<T> tracks)
+			final Request request,
+			final Collection<T> tracks)
 	{
-		final Optional<T> chosenTrack = MKVDemultiplexingUtilities
-				.tryDeduceMostLikelyTrack(tracks);
+		final Optional<T> chosenTrack = MKVDemultiplexingUtilities.tryDeduceMostLikelyTrack(tracks);
 		if (chosenTrack.isNone())
 		{
 			return Optional.none();
@@ -165,14 +175,16 @@ public class DemultiplexJobFactory
 	}
 
 	private static Optional<Tuple<AudioTrack, Path>> deduceAudioTrack(
-			final Request request, final MediaInfoTrackSummary summary)
+			final Request request,
+			final MediaInfoTrackSummary summary)
 	{
 		final Selector selector = request.getSelector();
 		if (selector.isForceUseAudioTrack())
 		{
 			final int audioTrack = selector.getAudioTrack();
-			final Optional<AudioTrack> track = MediaTrackUtils
-					.tryGetMediaTrackById(summary.getAudioTracks(), audioTrack);
+			final Optional<AudioTrack> track = MediaTrackUtils.tryGetMediaTrackById(
+					summary.getAudioTracks(),
+					audioTrack);
 
 			if (track.isSome())
 			{
@@ -183,7 +195,8 @@ public class DemultiplexJobFactory
 	}
 
 	private static Optional<Tuple<TextTrack, Path>> deduceSubtitleTrack(
-			final Request request, final MediaInfoTrackSummary summary)
+			final Request request,
+			final MediaInfoTrackSummary summary)
 	{
 		return deduceTrack(request, summary.getSubtitleTracks());
 	}

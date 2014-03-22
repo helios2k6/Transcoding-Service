@@ -19,15 +19,15 @@ import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
  */
 public final class UnixFontInstaller implements FontInstaller
 {
-	private static final Logger Log = LogManager
-			.getLogger(UnixFontInstaller.class);
+	private static final Logger Log = LogManager.getLogger(UnixFontInstaller.class);
 
 	private static final String FontCacheProcessName = "fc-cache";
 	private static final String ForceRefreshArgument = "-f";
 	private static final String VerboseArgument = "-v";
 
 	@Override
-	public boolean installFonts(final Collection<Path> fonts,
+	public boolean installFonts(
+			final Collection<Path> fonts,
 			final Path fontFolder)
 	{
 		Log.info("Installing fonts on Linux");
@@ -39,17 +39,15 @@ public final class UnixFontInstaller implements FontInstaller
 		return moveResult && refreshResult;
 	}
 
-	private static boolean moveAllFonts(final Collection<Path> fontFiles,
+	private static boolean moveAllFonts(
+			final Collection<Path> fontFiles,
 			final Path fontFolder)
 	{
 		boolean result = true;
 		for (final Path fontFile : fontFiles)
 		{
-			final Path destFontFile = fontFolder
-					.resolve(fontFile.getFileName());
-			Log.info("Installing font file: "
-					+ fontFile.toAbsolutePath().toString() + " to: "
-					+ destFontFile.toAbsolutePath().toString());
+			final Path destFontFile = fontFolder.resolve(fontFile.getFileName());
+			Log.info("Installing font file: " + fontFile.toAbsolutePath().toString() + " to: " + destFontFile.toAbsolutePath().toString());
 			try
 			{
 				Files.copy(fontFile, destFontFile);
@@ -65,8 +63,10 @@ public final class UnixFontInstaller implements FontInstaller
 
 	private static boolean refreshFontCache()
 	{
-		final ProcessBuilder builder = new ProcessBuilder(FontCacheProcessName,
-				ForceRefreshArgument, VerboseArgument);
+		final ProcessBuilder builder = new ProcessBuilder(
+				FontCacheProcessName,
+				ForceRefreshArgument,
+				VerboseArgument);
 		Log.info("Refreshing font cache");
 
 		try
@@ -76,16 +76,13 @@ public final class UnixFontInstaller implements FontInstaller
 			final InputStream standardOut = process.getInputStream();
 			final InputStream standardError = process.getErrorStream();
 
-			final String standardOutResult = InputStreamUtilities
-					.readInputStreamToEnd(standardOut);
-			final String standardErrorResult = InputStreamUtilities
-					.readInputStreamToEnd(standardError);
+			final String standardOutResult = InputStreamUtilities.readInputStreamToEnd(standardOut);
+			final String standardErrorResult = InputStreamUtilities.readInputStreamToEnd(standardError);
 
 			process.waitFor();
 
 			Log.debug("Font cache standard out result:\n" + standardOutResult);
-			Log.debug("Font cache standard error result:\n"
-					+ standardErrorResult);
+			Log.debug("Font cache standard error result:\n" + standardErrorResult);
 
 			return true;
 		} catch (final IOException e)

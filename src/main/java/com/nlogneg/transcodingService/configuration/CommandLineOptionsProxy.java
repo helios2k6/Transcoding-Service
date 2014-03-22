@@ -22,8 +22,7 @@ import com.nlogneg.transcodingService.utilities.exceptions.InvalidOperationExcep
 public class CommandLineOptionsProxy extends Proxy
 {
 	public static final String PROXY_NAME = "CommandLineOptionsProxy";
-	private static final Logger Log = LogManager
-			.getLogger(CommandLineOptionsProxy.class);
+	private static final Logger Log = LogManager.getLogger(CommandLineOptionsProxy.class);
 
 	private final CommandLine commandLine;
 	private boolean legalParse = true;
@@ -36,8 +35,7 @@ public class CommandLineOptionsProxy extends Proxy
 		try
 		{
 			final CommandLineParser parser = new BasicParser();
-			temp = parser
-					.parse(CommandLineOptionsFactory.createOptions(), args);
+			temp = parser.parse(CommandLineOptionsFactory.createOptions(), args);
 		} catch (final ParseException ex)
 		{
 			Log.error("Could not parse command line options.", ex);
@@ -86,8 +84,7 @@ public class CommandLineOptionsProxy extends Proxy
 					"Cannot get port number for illegal command line options");
 		}
 
-		final String result = this.commandLine
-				.getOptionValue(CommandLineOptionsFactory.ConfigurationFileArgument);
+		final String result = this.commandLine.getOptionValue(CommandLineOptionsFactory.ConfigurationFileArgument);
 		return Paths.get(result);
 	}
 }

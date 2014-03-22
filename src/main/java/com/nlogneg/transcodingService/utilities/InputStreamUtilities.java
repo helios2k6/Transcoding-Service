@@ -41,8 +41,7 @@ public final class InputStreamUtilities
 	 * @return A byte array
 	 * @throws IOException
 	 */
-	public static final byte[] readRawInputStreamToEnd(final InputStream stream)
-			throws IOException
+	public static final byte[] readRawInputStreamToEnd(final InputStream stream) throws IOException
 	{
 		if (stream == null)
 		{

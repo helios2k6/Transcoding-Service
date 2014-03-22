@@ -14,8 +14,7 @@ import com.nlogneg.transcodingService.utilities.threads.InterProcessPipe;
 public final class EncodeVideoRunnable implements Runnable
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(EncodeVideoRunnable.class);
+	private static final Logger Log = LogManager.getLogger(EncodeVideoRunnable.class);
 
 	private final EncodingJob job;
 	private final DecoderArgumentBuilder decoderBuilder;
@@ -60,17 +59,18 @@ public final class EncodeVideoRunnable implements Runnable
 		this.runningThread = Thread.currentThread();
 
 		// Start decoder
-		final Optional<Process> decoder = startDecoder(this.job,
+		final Optional<Process> decoder = startDecoder(
+				this.job,
 				this.decoderBuilder);
 		if (decoder.isNone())
 		{
-			Log.error("Could not begin ffmpeg decoder process for: "
-					+ this.job.getRequest().getSourceFile());
+			Log.error("Could not begin ffmpeg decoder process for: " + this.job.getRequest().getSourceFile());
 			return;
 		}
 
 		// Start encoder
-		final Optional<Process> encoder = startEncoder(this.job,
+		final Optional<Process> encoder = startEncoder(
+				this.job,
 				this.encoderBuilder);
 		if (encoder.isNone())
 		{
@@ -81,7 +81,9 @@ public final class EncodeVideoRunnable implements Runnable
 
 		// Get pipe
 		final Optional<InterProcessPipe> pipeOptional = startPipe(
-				decoder.getValue(), encoder.getValue(), this.service);
+				decoder.getValue(),
+				encoder.getValue(),
+				this.service);
 		if (pipeOptional.isNone())
 		{
 			Log.error("Could not create interprocess pipe");
@@ -127,27 +129,31 @@ public final class EncodeVideoRunnable implements Runnable
 		}
 	}
 
-	private static Optional<InterProcessPipe> startPipe(final Process decoder,
-			final Process encoder, final ExecutorService service)
+	private static Optional<InterProcessPipe> startPipe(
+			final Process decoder,
+			final Process encoder,
+			final ExecutorService service)
 	{
 		return Optional.make(new InterProcessPipe(decoder, encoder, service));
 	}
 
-	private static Optional<Process> startEncoder(final EncodingJob job,
+	private static Optional<Process> startEncoder(
+			final EncodingJob job,
 			final EncoderArgumentBuilder encoderBuilder)
 	{
-		final List<String> encodingOptions = encoderBuilder
-				.getEncoderArguments(job, job.getDestinationFilePath());
+		final List<String> encodingOptions = encoderBuilder.getEncoderArguments(
+				job,
+				job.getDestinationFilePath());
 		final ProcessBuilder processBuilder = new ProcessBuilder(
 				encodingOptions);
 		return ProcessUtils.tryStartProcess(processBuilder);
 	}
 
-	private static Optional<Process> startDecoder(final EncodingJob job,
+	private static Optional<Process> startDecoder(
+			final EncodingJob job,
 			final DecoderArgumentBuilder decoderBuilder)
 	{
-		final List<String> decodingOptions = decoderBuilder
-				.getDecoderArguments(job);
+		final List<String> decodingOptions = decoderBuilder.getDecoderArguments(job);
 		final ProcessBuilder processBuilder = new ProcessBuilder(
 				decodingOptions);
 		return ProcessUtils.tryStartProcess(processBuilder);

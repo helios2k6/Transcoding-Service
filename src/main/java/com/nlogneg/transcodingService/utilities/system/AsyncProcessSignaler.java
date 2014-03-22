@@ -14,8 +14,7 @@ import org.apache.log4j.Logger;
  */
 public final class AsyncProcessSignaler<T> implements Runnable
 {
-	private static final Logger Log = LogManager
-			.getLogger(AsyncProcessSignaler.class);
+	private static final Logger Log = LogManager.getLogger(AsyncProcessSignaler.class);
 
 	private final Process process;
 	private final CompletionHandler<Void, T> completionHandler;
@@ -43,8 +42,7 @@ public final class AsyncProcessSignaler<T> implements Runnable
 	public void run()
 	{
 		this.currentThread = Thread.currentThread();
-		while ((this.didFinishSuccessfully == false)
-				&& (this.isCancelled == false))
+		while ((this.didFinishSuccessfully == false) && (this.isCancelled == false))
 		{
 			try
 			{

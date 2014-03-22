@@ -107,8 +107,7 @@ public final class Selector implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ (this.audioTrack ^ (this.audioTrack >>> 32));
+		result = (prime * result) + (this.audioTrack ^ (this.audioTrack >>> 32));
 		result = (prime * result) + (this.force169AspectRatio ? 1231 : 1237);
 		result = (prime * result) + (this.maxHeight ^ (this.maxHeight >>> 32));
 		result = (prime * result) + (this.capResolution ? 1231 : 1237);

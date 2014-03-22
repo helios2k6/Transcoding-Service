@@ -55,8 +55,7 @@ public final class TextTrack extends MediaTrack
 	{
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result)
-				+ ((this.language == null) ? 0 : this.language.hashCode());
+		result = (prime * result) + ((this.language == null) ? 0 : this.language.hashCode());
 		return result;
 	}
 

@@ -8,8 +8,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 public final class ConfigureLoggingCommand extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(ConfigureLoggingCommand.class);
+	private static final Logger Log = LogManager.getLogger(ConfigureLoggingCommand.class);
 
 	@Override
 	public void execute(final INotification notification)

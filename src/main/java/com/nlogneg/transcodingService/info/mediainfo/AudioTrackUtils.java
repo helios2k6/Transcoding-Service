@@ -11,8 +11,7 @@ import org.apache.log4j.Logger;
  */
 public final class AudioTrackUtils
 {
-	private static final Logger Log = LogManager
-			.getLogger(AudioTrackUtils.class);
+	private static final Logger Log = LogManager.getLogger(AudioTrackUtils.class);
 
 	/**
 	 * Attempts to get the number of channels for a given

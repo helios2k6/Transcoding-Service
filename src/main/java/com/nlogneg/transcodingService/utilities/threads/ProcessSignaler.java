@@ -14,8 +14,7 @@ import org.apache.log4j.Logger;
  */
 public final class ProcessSignaler implements Runnable
 {
-	private static final Logger Log = LogManager
-			.getLogger(ProcessSignaler.class);
+	private static final Logger Log = LogManager.getLogger(ProcessSignaler.class);
 
 	private final Lock lock = new ReentrantLock();
 	private volatile boolean isProcessFinished = false;

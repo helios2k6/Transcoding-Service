@@ -117,20 +117,12 @@ public final class EncodingSettings implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.compatibility == null) ? 0 : this.compatibility
-						.hashCode());
-		result = (prime * result)
-				+ ((this.estimation == null) ? 0 : this.estimation.hashCode());
-		result = (prime * result)
-				+ ((this.level == null) ? 0 : this.level.hashCode());
-		result = (prime * result)
-				+ ((this.profile == null) ? 0 : this.profile.hashCode());
-		result = (prime * result)
-				+ ((this.psychoVisualSettings == null) ? 0
-						: this.psychoVisualSettings.hashCode());
-		result = (prime * result)
-				+ ((this.rateControl == null) ? 0 : this.rateControl.hashCode());
+		result = (prime * result) + ((this.compatibility == null) ? 0 : this.compatibility.hashCode());
+		result = (prime * result) + ((this.estimation == null) ? 0 : this.estimation.hashCode());
+		result = (prime * result) + ((this.level == null) ? 0 : this.level.hashCode());
+		result = (prime * result) + ((this.profile == null) ? 0 : this.profile.hashCode());
+		result = (prime * result) + ((this.psychoVisualSettings == null) ? 0 : this.psychoVisualSettings.hashCode());
+		result = (prime * result) + ((this.rateControl == null) ? 0 : this.rateControl.hashCode());
 		return result;
 	}
 
@@ -195,8 +187,7 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.psychoVisualSettings
-				.equals(other.psychoVisualSettings))
+		} else if (!this.psychoVisualSettings.equals(other.psychoVisualSettings))
 		{
 			return false;
 		}
@@ -222,18 +213,12 @@ public final class EncodingSettings implements Serializable
 	public static List<String> convertToArguments(
 			final EncodingSettings settings)
 	{
-		final List<String> rateControlArguments = RateControl
-				.convertToArguments(settings.getRateControl());
-		final List<String> estimationArguments = Estimation
-				.convertToArguments(settings.getEstimation());
-		final List<String> profileArguments = Profile
-				.convertToArguments(settings.getProfile());
-		final List<String> levelArguments = Level.convertToArguments(settings
-				.getLevel());
-		final List<String> compatibilityArguments = Compatibility
-				.convertToArguments(settings.getCompatibility());
-		final List<String> psychoArguments = PsychoVisualSettings
-				.convertToArguments(settings.getPsychoVisualSettings());
+		final List<String> rateControlArguments = RateControl.convertToArguments(settings.getRateControl());
+		final List<String> estimationArguments = Estimation.convertToArguments(settings.getEstimation());
+		final List<String> profileArguments = Profile.convertToArguments(settings.getProfile());
+		final List<String> levelArguments = Level.convertToArguments(settings.getLevel());
+		final List<String> compatibilityArguments = Compatibility.convertToArguments(settings.getCompatibility());
+		final List<String> psychoArguments = PsychoVisualSettings.convertToArguments(settings.getPsychoVisualSettings());
 
 		List<String> arguments = new LinkedList<String>();
 

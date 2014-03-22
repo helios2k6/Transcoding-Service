@@ -54,10 +54,8 @@ public final class MKVInfo
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.attachments == null) ? 0 : this.attachments.hashCode());
-		result = (prime * result)
-				+ ((this.filePath == null) ? 0 : this.filePath.hashCode());
+		result = (prime * result) + ((this.attachments == null) ? 0 : this.attachments.hashCode());
+		result = (prime * result) + ((this.filePath == null) ? 0 : this.filePath.hashCode());
 		return result;
 	}
 

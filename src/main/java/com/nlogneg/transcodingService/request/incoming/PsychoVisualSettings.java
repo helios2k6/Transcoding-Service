@@ -88,13 +88,11 @@ public final class PsychoVisualSettings implements Serializable
 			return false;
 		}
 		final PsychoVisualSettings other = (PsychoVisualSettings) obj;
-		if (Double.doubleToLongBits(this.alpha) != Double
-				.doubleToLongBits(other.alpha))
+		if (Double.doubleToLongBits(this.alpha) != Double.doubleToLongBits(other.alpha))
 		{
 			return false;
 		}
-		if (Double.doubleToLongBits(this.beta) != Double
-				.doubleToLongBits(other.beta))
+		if (Double.doubleToLongBits(this.beta) != Double.doubleToLongBits(other.beta))
 		{
 			return false;
 		}
@@ -111,8 +109,8 @@ public final class PsychoVisualSettings implements Serializable
 			final PsychoVisualSettings settings)
 	{
 		final StringBuilder builder = new StringBuilder();
-		builder.append(settings.getAlpha()).append(":")
-				.append(settings.getBeta());
+		builder.append(settings.getAlpha()).append(":").append(
+				settings.getBeta());
 
 		final List<String> arguments = new ArrayList<String>();
 

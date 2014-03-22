@@ -16,10 +16,8 @@ import com.thoughtworks.xstream.XStream;
 public final class MediaInfoXmlDeserializer
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(MediaInfoXmlDeserializer.class);
-	private static final XStream XStream = SerializerFactory
-			.generateDefaultMediaInfoSerializer();
+	private static final Logger Log = LogManager.getLogger(MediaInfoXmlDeserializer.class);
+	private static final XStream XStream = SerializerFactory.generateDefaultMediaInfoSerializer();
 
 	/**
 	 * Deserialize the XML coming from mediainfo

@@ -43,8 +43,7 @@ public class File
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.tracks == null) ? 0 : this.tracks.hashCode());
+		result = (prime * result) + ((this.tracks == null) ? 0 : this.tracks.hashCode());
 		return result;
 	}
 

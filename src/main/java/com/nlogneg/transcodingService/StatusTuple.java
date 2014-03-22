@@ -45,10 +45,8 @@ public class StatusTuple
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.statusTwo == null) ? 0 : this.statusTwo.hashCode());
-		result = (prime * result)
-				+ ((this.statusOne == null) ? 0 : this.statusOne.hashCode());
+		result = (prime * result) + ((this.statusTwo == null) ? 0 : this.statusTwo.hashCode());
+		result = (prime * result) + ((this.statusOne == null) ? 0 : this.statusOne.hashCode());
 		return result;
 	}
 

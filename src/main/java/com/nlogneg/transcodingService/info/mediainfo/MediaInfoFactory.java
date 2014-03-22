@@ -21,7 +21,8 @@ public final class MediaInfoFactory
 	 * @param source
 	 * @return
 	 */
-	public static Optional<MediaInfo> tryGetMediaInfo(final Path mediaFilePath,
+	public static Optional<MediaInfo> tryGetMediaInfo(
+			final Path mediaFilePath,
 			final MediaInfoSource source)
 	{
 		final Optional<String> info = source.tryGetMediaInfo(mediaFilePath);
@@ -43,7 +44,8 @@ public final class MediaInfoFactory
 	 */
 	public static Optional<MediaInfo> tryGetMediaInfo(final Path mediaFilePath)
 	{
-		return tryGetMediaInfo(mediaFilePath,
+		return tryGetMediaInfo(
+				mediaFilePath,
 				ExternalProcessMediaInfoSource.getInstance());
 	}
 }

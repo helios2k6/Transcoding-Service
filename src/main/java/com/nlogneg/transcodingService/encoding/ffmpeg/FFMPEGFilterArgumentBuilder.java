@@ -19,8 +19,7 @@ import com.nlogneg.transcodingService.utilities.media.WidthHeightTuple;
  */
 public final class FFMPEGFilterArgumentBuilder
 {
-	private static final Logger Log = LogManager
-			.getLogger(FFMPEGFilterArgumentBuilder.class);
+	private static final Logger Log = LogManager.getLogger(FFMPEGFilterArgumentBuilder.class);
 
 	private final Optional<WidthHeightTuple> resizeResolution;
 	private final SubtitleTrackOption subtitleOverlay;
@@ -39,8 +38,7 @@ public final class FFMPEGFilterArgumentBuilder
 
 	public void addVideoFilterArguments(final List<String> arguments)
 	{
-		if ((this.shouldResize() == false)
-				&& (this.subtitleOverlay.getEncodingActions() != EncodingAction.Encode))
+		if ((this.shouldResize() == false) && (this.subtitleOverlay.getEncodingActions() != EncodingAction.Encode))
 		{
 			return;
 		}
@@ -73,19 +71,15 @@ public final class FFMPEGFilterArgumentBuilder
 	{
 		if (this.subtitleOverlay.getEncodingActions() == EncodingAction.Encode)
 		{
-			final Optional<Path> extractedOptionalSubtitleFile = this.subtitleOverlay
-					.getTextTrackFilePath();
+			final Optional<Path> extractedOptionalSubtitleFile = this.subtitleOverlay.getTextTrackFilePath();
 			if (extractedOptionalSubtitleFile.isSome())
 			{
-				final Path extractedSubtitleFile = extractedOptionalSubtitleFile
-						.getValue();
+				final Path extractedSubtitleFile = extractedOptionalSubtitleFile.getValue();
 
 				final StringBuilder argBuilder = new StringBuilder();
-				argBuilder
-						.append("\"")
-						.append("ass=")
-						.append(extractedSubtitleFile.toAbsolutePath()
-								.toString()).append("\"");
+				argBuilder.append("\"").append("ass=").append(
+						extractedSubtitleFile.toAbsolutePath().toString()).append(
+						"\"");
 
 				return argBuilder.toString();
 			} else
@@ -104,9 +98,8 @@ public final class FFMPEGFilterArgumentBuilder
 			final StringBuilder argumentBuilder = new StringBuilder();
 			argumentBuilder.append("scale=").append(
 					this.resizeResolution.getValue().getWidth());
-			argumentBuilder.append(":")
-					.append(this.resizeResolution.getValue().getHeight())
-					.append(";");
+			argumentBuilder.append(":").append(
+					this.resizeResolution.getValue().getHeight()).append(";");
 			return argumentBuilder.toString();
 		}
 

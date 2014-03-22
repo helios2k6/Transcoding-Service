@@ -21,32 +21,29 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author anjohnson
  * 
  */
-public final class ScheduleAttachmentExtractionCommand extends SimpleCommand
-		implements CompletionHandler<Void, DemultiplexMKVJob>
+public final class ScheduleAttachmentExtractionCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>
 {
-	private static final Logger Log = LogManager
-			.getLogger(ScheduleAttachmentExtractionCommand.class);
+	private static final Logger Log = LogManager.getLogger(ScheduleAttachmentExtractionCommand.class);
 
 	@Override
 	public final void execute(final INotification notification)
 	{
-		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification
-				.getBody();
+		final DemultiplexMKVJob job = (DemultiplexMKVJob) notification.getBody();
 
-		Log.info("Scheduling MKV attachment extraction for: "
-				+ job.getMediaFile());
+		Log.info("Scheduling MKV attachment extraction for: " + job.getMediaFile());
 
-		final ExecutorProxy executorProxy = (ExecutorProxy) this.getFacade()
-				.retrieveProxy(ExecutorProxy.PROXY_NAME);
-		final ServerConfigurationProxy serverConfigurationProxy = (ServerConfigurationProxy) this
-				.getFacade().retrieveProxy(ServerConfigurationProxy.PROXY_NAME);
-		final Path fontFolder = serverConfigurationProxy.getConfigurationFile()
-				.getFontFolder();
-		final FontInstaller fontInstaller = FontInstallerFactory
-				.createFontInstaller();
+		final ExecutorProxy executorProxy = (ExecutorProxy) this.getFacade().retrieveProxy(
+				ExecutorProxy.PROXY_NAME);
+		final ServerConfigurationProxy serverConfigurationProxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
+				ServerConfigurationProxy.PROXY_NAME);
+		final Path fontFolder = serverConfigurationProxy.getConfigurationFile().getFontFolder();
+		final FontInstaller fontInstaller = FontInstallerFactory.createFontInstaller();
 
 		final ProcessAttachmentRunnable runnable = new ProcessAttachmentRunnable(
-				job, this, fontInstaller, fontFolder);
+				job,
+				this,
+				fontInstaller,
+				fontFolder);
 		executorProxy.getService().submit(runnable);
 	}
 

@@ -19,8 +19,7 @@ public final class FontInstallerFactory
 	 */
 	public static FontInstaller createFontInstaller()
 	{
-		final OperatingSystem operatingSystem = SystemUtilities
-				.getOperatingSystem();
+		final OperatingSystem operatingSystem = SystemUtilities.getOperatingSystem();
 		switch (operatingSystem)
 		{
 		case UnixLike:

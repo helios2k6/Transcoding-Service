@@ -17,8 +17,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author Andrew
  * 
  */
-public final class FFMPEGVideoDecodingArgumentBuilder implements
-		DecoderArgumentBuilder
+public final class FFMPEGVideoDecodingArgumentBuilder implements DecoderArgumentBuilder
 {
 	private static final String StandardOutArgument = "-";
 	private static final String VideoCodecArgument = "-codec:v";
@@ -59,16 +58,17 @@ public final class FFMPEGVideoDecodingArgumentBuilder implements
 
 	private void addFilters(final List<String> arguments, final EncodingJob job)
 	{
-		final WidthHeightTuple resolvedResolution = ResolutionResolver
-				.resolveResolution(job);
+		final WidthHeightTuple resolvedResolution = ResolutionResolver.resolveResolution(job);
 		final SubtitleTrackOption option = job.getSubtitleTrackOption();
 		final FFMPEGFilterArgumentBuilder builder = new FFMPEGFilterArgumentBuilder(
-				Optional.make(resolvedResolution), option);
+				Optional.make(resolvedResolution),
+				option);
 
 		builder.addVideoFilterArguments(arguments);
 	}
 
-	private void addInputFile(final List<String> arguments,
+	private void addInputFile(
+			final List<String> arguments,
 			final EncodingJob job)
 	{
 		arguments.add(InputFileArgument);

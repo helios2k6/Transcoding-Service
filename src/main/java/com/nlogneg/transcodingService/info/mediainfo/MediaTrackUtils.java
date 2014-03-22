@@ -20,7 +20,8 @@ public final class MediaTrackUtils
 	 * @return
 	 */
 	public static <T extends MediaTrack> Optional<T> tryGetMediaTrackById(
-			final Collection<T> tracks, final int id)
+			final Collection<T> tracks,
+			final int id)
 	{
 		for (final T t : tracks)
 		{

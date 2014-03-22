@@ -21,7 +21,9 @@ public class PathConverter implements Converter
 	}
 
 	@Override
-	public void marshal(final Object arg0, final HierarchicalStreamWriter arg1,
+	public void marshal(
+			final Object arg0,
+			final HierarchicalStreamWriter arg1,
 			final MarshallingContext arg2)
 	{
 
@@ -29,7 +31,8 @@ public class PathConverter implements Converter
 	}
 
 	@Override
-	public Object unmarshal(final HierarchicalStreamReader reader,
+	public Object unmarshal(
+			final HierarchicalStreamReader reader,
 			final UnmarshallingContext context)
 	{
 		final String filePath = reader.getValue();

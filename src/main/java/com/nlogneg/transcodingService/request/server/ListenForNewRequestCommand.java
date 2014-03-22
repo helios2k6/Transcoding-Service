@@ -23,23 +23,20 @@ import com.nlogneg.transcodingService.constants.Notifications;
 public class ListenForNewRequestCommand extends SimpleCommand
 {
 
-	private static final Logger Log = LogManager
-			.getLogger(ListenForNewRequestCommand.class);
+	private static final Logger Log = LogManager.getLogger(ListenForNewRequestCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
 	{
 		final Facade facade = this.getFacade();
-		final ServerSocketProxy serverSocketProxy = (ServerSocketProxy) facade
-				.retrieveProxy(ServerSocketProxy.PROXY_NAME);
+		final ServerSocketProxy serverSocketProxy = (ServerSocketProxy) facade.retrieveProxy(ServerSocketProxy.PROXY_NAME);
 
 		final ServerSocket serverSocket = serverSocketProxy.getServerSocket();
 
 		try
 		{
 			final Socket clientSocket = serverSocket.accept();
-			final SocketProxy socketProxy = (SocketProxy) facade
-					.retrieveProxy(SocketProxy.PROXY_NAME);
+			final SocketProxy socketProxy = (SocketProxy) facade.retrieveProxy(SocketProxy.PROXY_NAME);
 			socketProxy.addSocketToQueue(clientSocket);
 		} catch (final ClosedChannelException ex)
 		{

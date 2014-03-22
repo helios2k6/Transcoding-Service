@@ -61,7 +61,8 @@ public class DemultiplexJobStatusProxy extends Proxy
 	 * @param job
 	 * @param status
 	 */
-	public void setAttachmentStatus(final DemultiplexJob job,
+	public void setAttachmentStatus(
+			final DemultiplexJob job,
 			final JobStatus status)
 	{
 		this.lock.lock();
@@ -78,7 +79,8 @@ public class DemultiplexJobStatusProxy extends Proxy
 	public StatusTuple getStatus(final DemultiplexJob job)
 	{
 		this.lock.lock();
-		final StatusTuple tuple = new StatusTuple(this.trackStatus.get(job),
+		final StatusTuple tuple = new StatusTuple(
+				this.trackStatus.get(job),
 				this.attachmentStatus.get(job));
 		this.lock.unlock();
 

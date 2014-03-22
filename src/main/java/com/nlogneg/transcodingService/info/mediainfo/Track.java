@@ -47,8 +47,7 @@ public abstract class Track implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.format == null) ? 0 : this.format.hashCode());
+		result = (prime * result) + ((this.format == null) ? 0 : this.format.hashCode());
 		return result;
 	}
 

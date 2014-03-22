@@ -39,8 +39,10 @@ public final class CollectionUtilities
 	 * @param collection
 	 * @return
 	 */
-	public static <T, K, V> Map<K, V> toMap(final Collection<T> collection,
-			final F<T, K> keyProjection, final F<T, V> valueProjection)
+	public static <T, K, V> Map<K, V> toMap(
+			final Collection<T> collection,
+			final F<T, K> keyProjection,
+			final F<T, V> valueProjection)
 	{
 
 		final Map<K, V> result = new HashMap<>();

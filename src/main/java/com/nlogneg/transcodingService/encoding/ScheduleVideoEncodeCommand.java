@@ -18,11 +18,9 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author anjohnson
  * 
  */
-public final class ScheduleVideoEncodeCommand extends SimpleCommand implements
-		CompletionHandler<Void, EncodingJob>
+public final class ScheduleVideoEncodeCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>
 {
-	private static final Logger Log = LogManager
-			.getLogger(ScheduleVideoEncodeCommand.class);
+	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
 
 	@Override
 	public final void execute(final INotification notification)
@@ -32,12 +30,16 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements
 		final EncodingJob job = (EncodingJob) notification.getBody();
 		final DecoderArgumentBuilder decoderBuilder = new FFMPEGVideoDecodingArgumentBuilder();
 		final EncoderArgumentBuilder encoderBuilder = new X264EncodingArgumentBuilder();
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade()
-				.retrieveProxy(ExecutorProxy.PROXY_NAME);
+		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
+				ExecutorProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 
-		final EncodeVideoRunnable encoder = new EncodeVideoRunnable(job,
-				decoderBuilder, encoderBuilder, this, service);
+		final EncodeVideoRunnable encoder = new EncodeVideoRunnable(
+				job,
+				decoderBuilder,
+				encoderBuilder,
+				this,
+				service);
 		service.submit(encoder);
 	}
 

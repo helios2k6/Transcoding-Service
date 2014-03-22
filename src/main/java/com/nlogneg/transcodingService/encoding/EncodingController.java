@@ -14,8 +14,7 @@ import com.nlogneg.transcodingService.constants.Notifications;
 
 public class EncodingController extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(EncodingController.class);
+	private static final Logger Log = LogManager.getLogger(EncodingController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
 	private enum Reaction
@@ -34,18 +33,17 @@ public class EncodingController extends SimpleCommand
 		{
 			for (final JobStatus audioStatus : possibleStatuses)
 			{
-				final StatusTuple tuple = new StatusTuple(videoStatus,
+				final StatusTuple tuple = new StatusTuple(
+						videoStatus,
 						audioStatus);
 
-				if ((videoStatus == JobStatus.Failed)
-						|| (audioStatus == JobStatus.Failed))
+				if ((videoStatus == JobStatus.Failed) || (audioStatus == JobStatus.Failed))
 				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
 				} else
 				{
 					// Check in-progres conditions
-					if ((videoStatus == JobStatus.InProgress)
-							|| (audioStatus == JobStatus.InProgress))
+					if ((videoStatus == JobStatus.InProgress) || (audioStatus == JobStatus.InProgress))
 					{
 						/*
 						 * Doesn't matter what anything else is since we know
@@ -75,7 +73,8 @@ public class EncodingController extends SimpleCommand
 	@Override
 	public void execute(final INotification notification)
 	{
-		this.dispatchMessage(notification.getName(),
+		this.dispatchMessage(
+				notification.getName(),
 				(EncodingJob) notification.getBody());
 	}
 
@@ -101,8 +100,7 @@ public class EncodingController extends SimpleCommand
 			this.handleAudioSuccess(job);
 			break;
 		default:
-			Log.error("Unknown message received by EncodingController: "
-					+ message);
+			Log.error("Unknown message received by EncodingController: " + message);
 			throw new RuntimeException("Unknown message: " + message);
 		}
 	}
@@ -132,8 +130,8 @@ public class EncodingController extends SimpleCommand
 			break;
 		default:
 			Log.error("Unknown state for EncodingController.");
-			throw new RuntimeException("Unknown state of EncodingController: "
-					+ reaction);
+			throw new RuntimeException(
+					"Unknown state of EncodingController: " + reaction);
 		}
 	}
 

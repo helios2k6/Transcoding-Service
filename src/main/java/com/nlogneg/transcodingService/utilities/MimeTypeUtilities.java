@@ -65,7 +65,8 @@ public final class MimeTypeUtilities
 		return aSubType.equalsIgnoreCase(bSubType);
 	}
 
-	private static boolean compareParameterLists(final MimeType a,
+	private static boolean compareParameterLists(
+			final MimeType a,
 			final MimeType b)
 	{
 		final MimeTypeParameterList aList = a.getParameters();
@@ -73,16 +74,14 @@ public final class MimeTypeUtilities
 
 		// Make set for A's parameters
 		final Set<String> aNamesSet = new HashSet<String>();
-		for (final Enumeration<String> aNames = aList.getNames(); aNames
-				.hasMoreElements();)
+		for (final Enumeration<String> aNames = aList.getNames(); aNames.hasMoreElements();)
 		{
 			aNamesSet.add(aNames.nextElement());
 		}
 
 		int bLength = 0;
 		// Cycle through B's parameters and see if we can match everything up
-		for (final Enumeration<String> bNames = bList.getNames(); bNames
-				.hasMoreElements();)
+		for (final Enumeration<String> bNames = bList.getNames(); bNames.hasMoreElements();)
 		{
 			final String nextBParameterName = bNames.nextElement();
 
@@ -93,8 +92,7 @@ public final class MimeTypeUtilities
 
 			final String nextBParamValue = bList.get(nextBParameterName);
 
-			final String correspondingAParamValue = aList
-					.get(nextBParameterName);
+			final String correspondingAParamValue = aList.get(nextBParameterName);
 
 			if (correspondingAParamValue == null)
 			{

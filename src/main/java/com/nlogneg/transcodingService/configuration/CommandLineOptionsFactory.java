@@ -30,14 +30,18 @@ public class CommandLineOptionsFactory
 
 	private static Option getHelpOption()
 	{
-		final Option option = new Option(HelpArgument, false,
+		final Option option = new Option(
+				HelpArgument,
+				false,
 				"Print this message");
 		return option;
 	}
 
 	private static Option getConfigurationFileOption()
 	{
-		final Option option = new Option(ConfigurationFileArgument, true,
+		final Option option = new Option(
+				ConfigurationFileArgument,
+				true,
 				"The path to the configuration file");
 		option.setRequired(true);
 		return option;

@@ -41,8 +41,7 @@ public final class MediaInfo
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result)
-				+ ((this.file == null) ? 0 : this.file.hashCode());
+		result = (prime * result) + ((this.file == null) ? 0 : this.file.hashCode());
 		return result;
 	}
 

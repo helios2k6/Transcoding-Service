@@ -77,7 +77,8 @@ public class EncodingJobStatusProxy extends Proxy
 	public StatusTuple getStatus(final EncodingJob job)
 	{
 		this.lock.lock();
-		final StatusTuple tuple = new StatusTuple(this.videoStatus.get(job),
+		final StatusTuple tuple = new StatusTuple(
+				this.videoStatus.get(job),
 				this.audioStatus.get(job));
 		this.lock.unlock();
 		return tuple;

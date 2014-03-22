@@ -20,8 +20,7 @@ import com.thoughtworks.xstream.XStream;
  */
 public final class RespondToClientCommand extends SimpleCommand
 {
-	private static final Logger Log = LogManager
-			.getLogger(RespondToClientCommand.ResponseTuple.class);
+	private static final Logger Log = LogManager.getLogger(RespondToClientCommand.ResponseTuple.class);
 
 	public final class ResponseTuple
 	{
@@ -44,19 +43,19 @@ public final class RespondToClientCommand extends SimpleCommand
 	@Override
 	public void execute(final INotification notification)
 	{
-		final ResponseTuple responseTuple = (ResponseTuple) notification
-				.getBody();
+		final ResponseTuple responseTuple = (ResponseTuple) notification.getBody();
 
 		final Socket socket = responseTuple.socket;
 		final Acknowledgement ack = responseTuple.acknowledgement;
 
-		final XStream serializer = SerializerFactory
-				.getAcknowledgementSerializer();
+		final XStream serializer = SerializerFactory.getAcknowledgementSerializer();
 
 		final String serializedResponse = serializer.toXML(ack);
 
-		try (PrintWriter writer = new PrintWriter(socket.getOutputStream(),
-				true);)
+		try (
+				PrintWriter writer = new PrintWriter(
+						socket.getOutputStream(),
+						true);)
 		{
 			writer.print(serializedResponse);
 		} catch (final IOException e)

@@ -27,7 +27,8 @@ public final class NeroAacArgumentBuilder implements EncoderArgumentBuilder
 	private static final String TwoPassArgument = "-2pass";
 
 	@Override
-	public List<String> getEncoderArguments(final EncodingJob job,
+	public List<String> getEncoderArguments(
+			final EncodingJob job,
 			final Path outputFile)
 	{
 		final List<String> arguments = new LinkedList<>();
@@ -46,14 +47,16 @@ public final class NeroAacArgumentBuilder implements EncoderArgumentBuilder
 		arguments.add(0, SystemUtilities.getNeroAacEncProcessName());
 	}
 
-	private static void addInputFile(final List<String> arguments,
+	private static void addInputFile(
+			final List<String> arguments,
 			final EncodingJob job)
 	{
 		arguments.add(InputFileArgument);
 		arguments.add(job.getSourceFilePath().toAbsolutePath().toString());
 	}
 
-	private static void addBitRateArgument(final List<String> arguments,
+	private static void addBitRateArgument(
+			final List<String> arguments,
 			final EncodingJob job)
 	{
 		arguments.add(BitRateArgument);
@@ -68,8 +71,7 @@ public final class NeroAacArgumentBuilder implements EncoderArgumentBuilder
 
 	private static boolean shouldUseHighBitRate(final EncodingJob job)
 	{
-		final Optional<AudioTrack> audioTrack = job.getAudioTrackOption()
-				.getAudioTrack();
+		final Optional<AudioTrack> audioTrack = job.getAudioTrackOption().getAudioTrack();
 		if (audioTrack.isNone())
 		{
 			return false;
@@ -90,7 +92,8 @@ public final class NeroAacArgumentBuilder implements EncoderArgumentBuilder
 		arguments.add(TwoPassArgument);
 	}
 
-	private static void addOutputArgument(final List<String> arguments,
+	private static void addOutputArgument(
+			final List<String> arguments,
 			final Path outputFile)
 	{
 		arguments.add(OutputFileArgument);
