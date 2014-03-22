@@ -3,8 +3,8 @@ package com.nlogneg.transcodingService.info.mediainfo;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;

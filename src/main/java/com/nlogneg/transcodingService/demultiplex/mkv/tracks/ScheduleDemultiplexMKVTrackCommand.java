@@ -3,8 +3,8 @@ package com.nlogneg.transcodingService.demultiplex.mkv.tracks;
 import java.nio.channels.CompletionHandler;
 import java.util.concurrent.ExecutorService;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 

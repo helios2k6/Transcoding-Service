@@ -23,54 +23,64 @@ import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
-public class TestMediaInfoDeserialization{
-	
-	private class TestVerificationTrackVisitor implements TrackVisitor{
+public class TestMediaInfoDeserialization
+{
 
-		private void verifyBase(Track track){
+	private class TestVerificationTrackVisitor implements TrackVisitor
+	{
+
+		private void verifyBase(final Track track)
+		{
 			assertNotNull(track.getFormat());
 		}
-		
-		private void verifyMediaBase(MediaTrack track){
+
+		private void verifyMediaBase(final MediaTrack track)
+		{
 			assertNotNull(track.getCodecID());
-		}
-		
-		@Override
-		public void visit(Track track){
-			verifyBase(track);
 		}
 
 		@Override
-		public void visit(GeneralTrack track){
-			verifyBase(track);
+		public void visit(final Track track)
+		{
+			this.verifyBase(track);
+		}
+
+		@Override
+		public void visit(final GeneralTrack track)
+		{
+			this.verifyBase(track);
 			assertNotNull(track.getCompleteName());
 		}
 
 		@Override
-		public void visit(MediaTrack track){
-			verifyBase(track);
-			verifyMediaBase(track);
+		public void visit(final MediaTrack track)
+		{
+			this.verifyBase(track);
+			this.verifyMediaBase(track);
 		}
 
 		@Override
-		public void visit(AudioTrack track){
-			verifyBase(track);
-			verifyMediaBase(track);
+		public void visit(final AudioTrack track)
+		{
+			this.verifyBase(track);
+			this.verifyMediaBase(track);
 			assertNotNull(track.getChannels());
 			assertNotNull(track.getLanguage());
 		}
 
 		@Override
-		public void visit(TextTrack track){
-			verifyBase(track);
-			verifyMediaBase(track);
+		public void visit(final TextTrack track)
+		{
+			this.verifyBase(track);
+			this.verifyMediaBase(track);
 			assertNotNull(track.getLanguage());
 		}
 
 		@Override
-		public void visit(VideoTrack track){
-			verifyBase(track);
-			verifyMediaBase(track);
+		public void visit(final VideoTrack track)
+		{
+			this.verifyBase(track);
+			this.verifyMediaBase(track);
 			assertNotNull(track.getDisplayAspectRatio());
 			assertNotNull(track.getFrameRate());
 			assertNotNull(track.getFrameRateMode());
@@ -78,26 +88,31 @@ public class TestMediaInfoDeserialization{
 			assertNotNull(track.getWidth());
 		}
 	}
-	
+
 	@Test
-	public void deserializationOfVideoAudioTextTrack() throws IOException{
-		assertNotNull("Test file missing. Cannot perform test.", getClass().getResource("/media_info_v_0_7_67.xml"));
-		
-		InputStream resourceStream = getClass().getResourceAsStream("/media_info_v_0_7_67.xml");
-		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
+	public void deserializationOfVideoAudioTextTrack() throws IOException
+	{
+		assertNotNull(
+				"Test file missing. Cannot perform test.",
+				this.getClass().getResource("/media_info_v_0_7_67.xml"));
+
+		final InputStream resourceStream = this.getClass().getResourceAsStream(
+				"/media_info_v_0_7_67.xml");
+		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
-		
-		XStream deserializer = SerializerFactory.generateDefaultMediaInfoSerializer();
-		MediaInfo info = (MediaInfo)deserializer.fromXML(resourceAsString);
-		
+
+		final XStream deserializer = SerializerFactory.generateDefaultMediaInfoSerializer();
+		final MediaInfo info = (MediaInfo) deserializer.fromXML(resourceAsString);
+
 		assertNotNull(info);
-		
-		File file = info.getFile();
+
+		final File file = info.getFile();
 		assertNotNull(file);
 		assertNotNull(file.getTracks());
-		
-		TestVerificationTrackVisitor visitor = new TestVerificationTrackVisitor();
-		for(Track track : file.getTracks()){
+
+		final TestVerificationTrackVisitor visitor = new TestVerificationTrackVisitor();
+		for (final Track track : file.getTracks())
+		{
 			track.accept(visitor);
 		}
 	}

@@ -7,8 +7,8 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
@@ -26,7 +26,6 @@ import com.thoughtworks.xstream.XStreamException;
  */
 public class ConfigureServerCommand extends SimpleCommand
 {
-
 	private static final Logger Log = LogManager.getLogger(ConfigureServerCommand.class);
 
 	@Override

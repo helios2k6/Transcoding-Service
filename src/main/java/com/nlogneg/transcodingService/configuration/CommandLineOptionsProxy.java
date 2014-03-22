@@ -7,8 +7,8 @@ import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
 import com.nlogneg.transcodingService.utilities.exceptions.InvalidOperationException;

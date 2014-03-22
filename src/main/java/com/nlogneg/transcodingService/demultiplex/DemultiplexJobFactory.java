@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;

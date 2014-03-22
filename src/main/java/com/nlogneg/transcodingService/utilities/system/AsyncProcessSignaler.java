@@ -2,8 +2,8 @@ package com.nlogneg.transcodingService.utilities.system;
 
 import java.nio.channels.CompletionHandler;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Represents an asynchronous external Process that will notify when the process

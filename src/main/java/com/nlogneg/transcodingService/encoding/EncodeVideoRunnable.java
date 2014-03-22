@@ -4,8 +4,8 @@ import java.nio.channels.CompletionHandler;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.system.ProcessUtils;

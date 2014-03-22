@@ -18,22 +18,27 @@ import com.nlogneg.transcodingService.utilities.SerializerFactory;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
-public class TestDeserializationConfigFile {
-	
+public class TestDeserializationConfigFile
+{
+
 	@Test
-	public void deserializeConfigFile() throws IOException{
-		assertNotNull("Test file missing. Cannot perform test.", getClass().getResource("/configuration_file.xml"));
-		
-		InputStream resourceStream = getClass().getResourceAsStream("/configuration_file.xml");
-		String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
+	public void deserializeConfigFile() throws IOException
+	{
+		assertNotNull(
+				"Test file missing. Cannot perform test.",
+				this.getClass().getResource("/configuration_file.xml"));
+
+		final InputStream resourceStream = this.getClass().getResourceAsStream(
+				"/configuration_file.xml");
+		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
 		resourceStream.close();
-		
-		XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
-		ConfigurationFile file = (ConfigurationFile)deserializer.fromXML(resourceAsString);
-		
-		Path expectedPath = Paths.get("C:\\Windows\\Fonts");
+
+		final XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
+		final ConfigurationFile file = (ConfigurationFile) deserializer.fromXML(resourceAsString);
+
+		final Path expectedPath = Paths.get("C:\\Windows\\Fonts");
 		assertEquals(expectedPath, file.getFontFolder());
-		
+
 		assertEquals(6787, file.getPortNumber());
 	}
 }

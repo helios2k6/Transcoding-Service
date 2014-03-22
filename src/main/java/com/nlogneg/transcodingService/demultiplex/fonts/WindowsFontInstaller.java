@@ -3,8 +3,8 @@ package com.nlogneg.transcodingService.demultiplex.fonts;
 import java.nio.file.Path;
 import java.util.Collection;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This installs fonts on Windows OS
