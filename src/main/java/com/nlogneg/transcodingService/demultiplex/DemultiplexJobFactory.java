@@ -21,6 +21,7 @@ import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.info.mkv.MKVInfo;
 import com.nlogneg.transcodingService.info.mkv.MKVInfoFactory;
+import com.nlogneg.transcodingService.info.mkv.MKVInfoSource;
 import com.nlogneg.transcodingService.request.incoming.Request;
 import com.nlogneg.transcodingService.request.incoming.Selector;
 import com.nlogneg.transcodingService.utilities.CollectionUtilities;
@@ -49,7 +50,8 @@ public class DemultiplexJobFactory
 	 */
 	public static Optional<? extends DemultiplexJob> tryCreateDemultiplexJob(
 			final Request request,
-			final MediaInfo mediaInfo)
+			final MediaInfo mediaInfo,
+			final MKVInfoSource source)
 	{
 		// Get tracks and summary
 		final MediaInfoTrackSummary summary = MediaInfoTrackSummaryFactory.getSummary(mediaInfo);
@@ -64,7 +66,8 @@ public class DemultiplexJobFactory
 			return Optional.make(createDemultiplexMKVJob(
 					request,
 					mediaInfo,
-					summary));
+					summary,
+					source));
 		case Other:
 			return Optional.make(new NoOpDemultiplexJob());
 		default:
@@ -94,11 +97,12 @@ public class DemultiplexJobFactory
 	private static DemultiplexMKVJob createDemultiplexMKVJob(
 			final Request request,
 			final MediaInfo mediaInfo,
-			final MediaInfoTrackSummary summary)
+			final MediaInfoTrackSummary summary,
+			final MKVInfoSource source)
 	{
 
 		final Path sourceFile = Paths.get(request.getSourceFile());
-		final Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(sourceFile);
+		final Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(sourceFile, source);
 
 		// We can't get the info for some reason
 		if (infoOptional.isNone())

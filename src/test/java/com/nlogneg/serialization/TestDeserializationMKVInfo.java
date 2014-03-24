@@ -2,10 +2,8 @@ package com.nlogneg.serialization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +19,8 @@ import org.junit.runners.JUnit4;
 import com.nlogneg.transcodingService.info.mkv.Attachment;
 import com.nlogneg.transcodingService.info.mkv.MKVInfo;
 import com.nlogneg.transcodingService.info.mkv.MKVInfoDeserializer;
-import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
+import com.nlogneg.utilities.TestUtilities;
 
 @RunWith(JUnit4.class)
 public class TestDeserializationMKVInfo
@@ -31,10 +29,8 @@ public class TestDeserializationMKVInfo
 	@Test
 	public void deserializeMkvInfoFlatFile() throws IOException, MimeTypeParseException
 	{
-		assertNotNull(
-				"Test file missing. Cannot perform test.",
-				this.getClass().getResource("/mkvinfo_output.txt"));
-
+		Optional<String> mkvInfoString = TestUtilities.tryGetTestResource("/mkvinfo_output.txt");
+		
 		final Map<Integer, Attachment> expectedAttachmentMap = new HashMap<Integer, Attachment>();
 		final MimeType fontMime = new MimeType("application/x-truetype-font");
 
@@ -97,14 +93,9 @@ public class TestDeserializationMKVInfo
 					2121344399L));
 		}
 
-		final InputStream resourceStream = this.getClass().getResourceAsStream(
-				"/mkvinfo_output.txt");
-		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
-		resourceStream.close();
-
 		final Optional<MKVInfo> info = MKVInfoDeserializer.deserializeRawMKVInfo(
 				null,
-				resourceAsString);
+				mkvInfoString.getValue());
 
 		assertNotEquals(Optional.none(), info);
 		assertEquals(11, info.getValue().getAttachments().size());
