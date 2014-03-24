@@ -7,9 +7,15 @@
 		<Appender type="File" name="FileAppender" fileName="${outputFile}">
 			<Layout type="PatternLayout">%d %p %C{1.} [%t] %m%n</Layout>
 		</Appender>
+		<Appender type="Console" name="ConsoleAppender">
+			<Layout type="PatternLayout">%d %p %C{1.} [%t] %m%n</Layout>
+		</Appender>
 	</Appenders>
 	<Loggers>
-		<Logger name="FileDebugLogger" level="debug">
+		<Logger name="ConsoleAppender" level="debug">
+			<AppenderRef ref="FileAppender"></AppenderRef>
+		</Logger>
+				<Logger name="FileAppender" level="debug">
 			<AppenderRef ref="FileAppender"></AppenderRef>
 		</Logger>
 	</Loggers>

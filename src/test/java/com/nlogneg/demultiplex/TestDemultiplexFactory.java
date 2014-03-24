@@ -33,7 +33,7 @@ public class TestDemultiplexFactory
 				request,
 				info);
 		
-		//assertTrue(job.isSome());
+		assertTrue(job.isSome());
 	}
 
 	private MediaInfo createMediaInfo() throws IOException
