@@ -1,10 +1,13 @@
 package com.nlogneg.demultiplex;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,17 +15,18 @@ import org.junit.runners.JUnit4;
 
 import com.nlogneg.transcodingService.demultiplex.DemultiplexJob;
 import com.nlogneg.transcodingService.demultiplex.DemultiplexJobFactory;
+import com.nlogneg.transcodingService.info.mediainfo.AudioTrack;
 import com.nlogneg.transcodingService.info.mediainfo.MediaInfo;
 import com.nlogneg.transcodingService.request.incoming.Request;
 import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
+import com.nlogneg.transcodingService.utilities.Tuple;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
 public class TestDemultiplexFactory
 {
-
 	@Test
 	public void createDemultiplexJob() throws IOException
 	{
@@ -31,11 +35,32 @@ public class TestDemultiplexFactory
 		
 		final Optional<? extends DemultiplexJob> job = DemultiplexJobFactory.tryCreateDemultiplexJob(
 				request,
-				info);
+				info,
+				new MockMKVInfoSource());
 		
-		//assertTrue(job.isSome());
+		assertTrue(job.isSome());
+		
+		DemultiplexJob demultiplexJob = job.getValue();
+		
+		assertAudioTrack(demultiplexJob, info);
 	}
 
+	private void assertAudioTrack(DemultiplexJob job, MediaInfo info)
+	{
+		assertEquals(Paths.get("/test/file.mkv"), job.getMediaFile());
+		assertEquals(info, job.getMediaInfo());
+		
+		//Assert the audio track
+		Optional<Tuple<AudioTrack, Path>> audioTrackOptional = job.getAudioTrack();
+		assertTrue(audioTrackOptional.isSome());
+		Tuple<AudioTrack, Path> audioTrackTuple = audioTrackOptional.getValue();
+		
+		AudioTrack track = audioTrackTuple.item1();
+		
+		assertEquals("Vorbis", track.getFormat());
+		assertEquals("Japanese", track.getLanguage());
+	}
+	
 	private MediaInfo createMediaInfo() throws IOException
 	{
 		assertNotNull(
