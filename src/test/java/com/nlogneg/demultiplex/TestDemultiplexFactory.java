@@ -28,10 +28,10 @@ import com.thoughtworks.xstream.XStream;
 public class TestDemultiplexFactory
 {
 	@Test
-	public void createDemultiplexJob() throws IOException
+	public void testStandardDemultiplexJob() throws IOException
 	{
-		final Request request = this.createRequest();
-		final MediaInfo info = this.createMediaInfo();
+		final Request request = this.createStandardRequest();
+		final MediaInfo info = this.createStandardMediaInfo();
 		
 		final Optional<? extends DemultiplexJob> job = DemultiplexJobFactory.tryCreateDemultiplexJob(
 				request,
@@ -42,10 +42,10 @@ public class TestDemultiplexFactory
 		
 		DemultiplexJob demultiplexJob = job.getValue();
 		
-		assertAudioTrack(demultiplexJob, info);
+		assertStandardAudioTrack(demultiplexJob, info);
 	}
 
-	private void assertAudioTrack(DemultiplexJob job, MediaInfo info)
+	private void assertStandardAudioTrack(DemultiplexJob job, MediaInfo info)
 	{
 		assertEquals(Paths.get("/test/file.mkv"), job.getMediaFile());
 		assertEquals(info, job.getMediaInfo());
@@ -61,7 +61,7 @@ public class TestDemultiplexFactory
 		assertEquals("Japanese", track.getLanguage());
 	}
 	
-	private MediaInfo createMediaInfo() throws IOException
+	private MediaInfo createStandardMediaInfo() throws IOException
 	{
 		assertNotNull(
 				"Test file missing. Cannot perform test.",
@@ -79,7 +79,7 @@ public class TestDemultiplexFactory
 	}
 	
 	
-	private Request createRequest() throws IOException
+	private Request createStandardRequest() throws IOException
 	{
 		assertNotNull(
 				"Test file missing. Cannot perform test.",
@@ -94,5 +94,11 @@ public class TestDemultiplexFactory
 		final Request request = (Request) xstream.fromXML(resourceAsString);
 		assertNotNull(request);
 		return request;
+	}
+	
+	@Test
+	public void testTwoAudioTracksNoForcedAudioTracks()
+	{
+		
 	}
 }

@@ -1,10 +1,9 @@
 package com.nlogneg.serialization;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -13,8 +12,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.nlogneg.transcodingService.configuration.ConfigurationFile;
-import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
+import com.nlogneg.utilities.TestUtilities;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
@@ -24,17 +24,12 @@ public class TestDeserializationConfigFile
 	@Test
 	public void deserializeConfigFile() throws IOException
 	{
-		assertNotNull(
-				"Test file missing. Cannot perform test.",
-				this.getClass().getResource("/configuration_file.xml"));
-
-		final InputStream resourceStream = this.getClass().getResourceAsStream(
-				"/configuration_file.xml");
-		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
-		resourceStream.close();
-
+		Optional<String> config = TestUtilities.tryGetTestResource("/configuration_file.xml");
+		
+		assertTrue(config.isSome());
+		
 		final XStream deserializer = SerializerFactory.getConfigurationFileSerializer();
-		final ConfigurationFile file = (ConfigurationFile) deserializer.fromXML(resourceAsString);
+		final ConfigurationFile file = (ConfigurationFile) deserializer.fromXML(config.getValue());
 
 		final Path expectedPath = Paths.get("C:\\Windows\\Fonts");
 		assertEquals(expectedPath, file.getFontFolder());
