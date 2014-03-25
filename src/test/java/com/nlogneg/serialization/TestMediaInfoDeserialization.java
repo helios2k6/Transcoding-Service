@@ -1,9 +1,9 @@
 package com.nlogneg.serialization;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +18,9 @@ import com.nlogneg.transcodingService.info.mediainfo.TextTrack;
 import com.nlogneg.transcodingService.info.mediainfo.Track;
 import com.nlogneg.transcodingService.info.mediainfo.TrackVisitor;
 import com.nlogneg.transcodingService.info.mediainfo.VideoTrack;
-import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
+import com.nlogneg.utilities.TestUtilities;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
@@ -92,17 +93,12 @@ public class TestMediaInfoDeserialization
 	@Test
 	public void deserializationOfVideoAudioTextTrack() throws IOException
 	{
-		assertNotNull(
-				"Test file missing. Cannot perform test.",
-				this.getClass().getResource("/media_info_v_0_7_67.xml"));
-
-		final InputStream resourceStream = this.getClass().getResourceAsStream(
-				"/media_info_v_0_7_67.xml");
-		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
-		resourceStream.close();
-
+		Optional<String> mediaInfo = TestUtilities.tryGetTestResource("");
+		
+		assertTrue(mediaInfo.isSome());
+		
 		final XStream deserializer = SerializerFactory.generateDefaultMediaInfoSerializer();
-		final MediaInfo info = (MediaInfo) deserializer.fromXML(resourceAsString);
+		final MediaInfo info = (MediaInfo) deserializer.fromXML(mediaInfo.getValue());
 
 		assertNotNull(info);
 
