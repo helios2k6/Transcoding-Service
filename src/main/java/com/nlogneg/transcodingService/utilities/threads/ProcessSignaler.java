@@ -75,7 +75,8 @@ public final class ProcessSignaler implements Runnable
 			{
 				this.process.waitFor();
 				this.isProcessFinished = true;
-			} catch (final InterruptedException e)
+			}
+			catch (final InterruptedException e)
 			{
 				Log.error("Process Signaller interrupted", e);
 			}

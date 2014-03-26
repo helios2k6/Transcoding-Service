@@ -59,7 +59,8 @@ public class ReadClientRequestFromSocketCommand extends SimpleCommand
 		try
 		{
 			return InputStreamUtilities.readInputStreamToEnd(socket.getInputStream());
-		} catch (final IOException exception)
+		}
+		catch (final IOException exception)
 		{
 			Log.error("Could not read from socket", exception);
 		}

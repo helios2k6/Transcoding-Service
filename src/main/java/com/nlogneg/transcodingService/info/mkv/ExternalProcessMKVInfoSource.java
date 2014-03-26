@@ -59,7 +59,8 @@ public class ExternalProcessMKVInfoSource implements MKVInfoSource
 			process.waitFor();
 
 			return Optional.make(output);
-		} catch (IOException | InterruptedException e)
+		}
+		catch (IOException | InterruptedException e)
 		{
 			Log.error(
 					"An exception occured while getting the MKVInfo from an external process",

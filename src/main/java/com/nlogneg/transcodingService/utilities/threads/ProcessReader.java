@@ -65,24 +65,28 @@ public final class ProcessReader implements Runnable
 			if (signaler.isProcessFinished())
 			{
 				this.isFinished = true;
-			} else
+			}
+			else
 			{
 				try
 				{
 					if (this.stream.available() > 0)
 					{
 						this.tryReadBytes();
-					} else
+					}
+					else
 					{
 						Thread.sleep(50);
 					}
-				} catch (final IOException e)
+				}
+				catch (final IOException e)
 				{
 					this.isCancelled = true;
 					Log.error(
 							"IO Error occurred while reading from process.",
 							e);
-				} catch (final InterruptedException e)
+				}
+				catch (final InterruptedException e)
 				{
 					Log.error("This thread was interrupted.", e);
 				}

@@ -42,7 +42,8 @@ public final class EncodingJobFactory
 			audioTrack = generateAudioFileName(
 					request,
 					audio.getAudioTrack().getValue());
-		} else if (demultiplexAudioTrack.isSome() && (audio.getEncodingAction() == EncodingAction.Multiplex))
+		}
+		else if (demultiplexAudioTrack.isSome() && (audio.getEncodingAction() == EncodingAction.Multiplex))
 		{
 			audioTrack = demultiplexedAudioTrackFile.getValue();
 		}

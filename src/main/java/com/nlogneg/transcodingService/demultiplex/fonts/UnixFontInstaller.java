@@ -51,7 +51,8 @@ public final class UnixFontInstaller implements FontInstaller
 			try
 			{
 				Files.copy(fontFile, destFontFile);
-			} catch (final IOException e)
+			}
+			catch (final IOException e)
 			{
 				Log.error("Could not move font.", e);
 				result = false;
@@ -85,10 +86,12 @@ public final class UnixFontInstaller implements FontInstaller
 			Log.debug("Font cache standard error result:\n" + standardErrorResult);
 
 			return true;
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			Log.error("Could not refresh font cache.", e);
-		} catch (final InterruptedException e)
+		}
+		catch (final InterruptedException e)
 		{
 			Log.error("Thread interrupted on process.waitFor().", e);
 		}

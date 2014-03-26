@@ -49,10 +49,12 @@ public final class ExternalProcessMediaInfoSource implements MediaInfoSource
 			process.waitFor(); // Shouldn't take long.
 
 			return Optional.make(output);
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			Log.error("An error occured while gathering media info.", e);
-		} catch (final InterruptedException e)
+		}
+		catch (final InterruptedException e)
 		{
 			Log.error(
 					"This thread was interrupted while gathering media info.",

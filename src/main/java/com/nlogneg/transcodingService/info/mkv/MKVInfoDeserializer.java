@@ -115,7 +115,8 @@ public final class MKVInfoDeserializer
 		{
 			final Long fileUID = Long.parseLong(rawParsedString.getValue());
 			return Optional.make(fileUID);
-		} catch (final NumberFormatException e)
+		}
+		catch (final NumberFormatException e)
 		{
 			Log.error("Could not parse File UID.", e);
 			return Optional.none();
@@ -134,7 +135,8 @@ public final class MKVInfoDeserializer
 		{
 			final MimeType mimeType = new MimeType(rawParsedString.getValue());
 			return Optional.make(mimeType);
-		} catch (final MimeTypeParseException e)
+		}
+		catch (final MimeTypeParseException e)
 		{
 			Log.error("Could not parse MIME type", e);
 			return Optional.none();

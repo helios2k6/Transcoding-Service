@@ -52,7 +52,8 @@ public final class ProcessWriter implements Runnable
 			if (signaler.isProcessFinished())
 			{
 				this.isFinished = true;
-			} else
+			}
+			else
 			{
 				try
 				{
@@ -61,15 +62,18 @@ public final class ProcessWriter implements Runnable
 					{
 						// Sleep for some time
 						Thread.sleep(50);
-					} else
+					}
+					else
 					{
 						this.stream.write(chunk);
 					}
-				} catch (final IOException e)
+				}
+				catch (final IOException e)
 				{
 					Log.error("Could not write to process stream.", e);
 					this.isCancelled = true;
-				} catch (final InterruptedException e)
+				}
+				catch (final InterruptedException e)
 				{
 					Log.error("Process writer interrupted.", e);
 				}

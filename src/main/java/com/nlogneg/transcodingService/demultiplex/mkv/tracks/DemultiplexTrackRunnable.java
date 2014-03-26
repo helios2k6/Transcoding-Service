@@ -51,7 +51,8 @@ public final class DemultiplexTrackRunnable implements Runnable
 		if (finalResult)
 		{
 			this.asyncCallback.completed(null, this.job);
-		} else
+		}
+		else
 		{
 			this.asyncCallback.failed(null, this.job);
 		}

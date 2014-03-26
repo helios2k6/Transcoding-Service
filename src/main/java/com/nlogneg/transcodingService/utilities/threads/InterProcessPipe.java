@@ -79,7 +79,8 @@ public final class InterProcessPipe
 			try
 			{
 				Thread.sleep(150);
-			} catch (final InterruptedException e)
+			}
+			catch (final InterruptedException e)
 			{
 				Log.error("Interprocess Pipe interrupted.", e);
 			}

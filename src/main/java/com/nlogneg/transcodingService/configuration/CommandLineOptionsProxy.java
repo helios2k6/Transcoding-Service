@@ -36,12 +36,14 @@ public class CommandLineOptionsProxy extends Proxy
 		{
 			final CommandLineParser parser = new BasicParser();
 			temp = parser.parse(CommandLineOptionsFactory.createOptions(), args);
-		} catch (final ParseException ex)
+		}
+		catch (final ParseException ex)
 		{
 			Log.error("Could not parse command line options.", ex);
 			this.legalParse = false;
 			temp = null;
-		} finally
+		}
+		finally
 		{
 			this.commandLine = temp;
 		}

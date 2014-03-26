@@ -55,10 +55,12 @@ public class ConfigureServerCommand extends SimpleCommand
 			final ServerConfigurationProxy serverConfigProxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
 					ServerConfigurationProxy.PROXY_NAME);
 			serverConfigProxy.setConfigurationFile(file);
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			this.fail("Could not read config file.", e);
-		} catch (final XStreamException ex)
+		}
+		catch (final XStreamException ex)
 		{
 			this.fail("Could not deserialize configuration file.", ex);
 		}
@@ -69,7 +71,8 @@ public class ConfigureServerCommand extends SimpleCommand
 		if (ex != null)
 		{
 			Log.fatal(message, ex);
-		} else
+		}
+		else
 		{
 			Log.fatal(message);
 		}

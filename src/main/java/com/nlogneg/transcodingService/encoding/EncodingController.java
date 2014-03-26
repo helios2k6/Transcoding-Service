@@ -40,7 +40,8 @@ public class EncodingController extends SimpleCommand
 				if ((videoStatus == JobStatus.Failed) || (audioStatus == JobStatus.Failed))
 				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
-				} else
+				}
+				else
 				{
 					// Check in-progres conditions
 					if ((videoStatus == JobStatus.InProgress) || (audioStatus == JobStatus.InProgress))
@@ -50,15 +51,18 @@ public class EncodingController extends SimpleCommand
 						 * it's not in a failed state
 						 */
 						stateMap.put(tuple, Reaction.NoOp);
-					} else if (videoStatus == JobStatus.Pending)
+					}
+					else if (videoStatus == JobStatus.Pending)
 					{
 						// Need to extract tracks
 						stateMap.put(tuple, Reaction.ScheduleVideo);
-					} else if (audioStatus == JobStatus.Pending)
+					}
+					else if (audioStatus == JobStatus.Pending)
 					{
 						// Need to extract attachments
 						stateMap.put(tuple, Reaction.ScheduleAudio);
-					} else
+					}
+					else
 					{
 						// Looks like we've successfully done everything
 						stateMap.put(tuple, Reaction.NotifySuccess);

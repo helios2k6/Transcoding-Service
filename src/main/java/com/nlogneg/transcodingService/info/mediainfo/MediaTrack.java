@@ -91,7 +91,8 @@ public abstract class MediaTrack extends Track
 			{
 				return false;
 			}
-		} else if (!this.codecID.equals(other.codecID))
+		}
+		else if (!this.codecID.equals(other.codecID))
 		{
 			return false;
 		}

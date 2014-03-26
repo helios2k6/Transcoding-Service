@@ -59,7 +59,8 @@ public final class FileSectionConverter implements Converter
 				if (track != null)
 				{
 					tracks.add(track);
-				} else
+				}
+				else
 				{
 					Log.error("Could not deserialize track");
 				}

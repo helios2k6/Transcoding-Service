@@ -74,7 +74,8 @@ public class File
 			{
 				return false;
 			}
-		} else if (!this.tracks.equals(other.tracks))
+		}
+		else if (!this.tracks.equals(other.tracks))
 		{
 			return false;
 		}
