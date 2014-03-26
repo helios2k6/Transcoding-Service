@@ -59,4 +59,5 @@ public final class Notifications
 	public static final String ScheduleVideoEncode = "ScheduleVideoEncode";
 
 	public static final String ScheduleAudioEncode = "ScheduleAudioEncode";
+	
 }
