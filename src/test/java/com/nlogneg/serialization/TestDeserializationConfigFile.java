@@ -24,7 +24,7 @@ public class TestDeserializationConfigFile
 	@Test
 	public void deserializeConfigFile() throws IOException
 	{
-		Optional<String> config = TestUtilities.tryGetTestResource("/configuration_file.xml");
+		Optional<String> config = TestUtilities.tryGetTestResource("/deserializationTestResources/configuration_file.xml");
 		
 		assertTrue(config.isSome());
 		

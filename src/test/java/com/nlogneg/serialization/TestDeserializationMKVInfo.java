@@ -29,7 +29,7 @@ public class TestDeserializationMKVInfo
 	@Test
 	public void deserializeMkvInfoFlatFile() throws IOException, MimeTypeParseException
 	{
-		Optional<String> mkvInfoString = TestUtilities.tryGetTestResource("/mkvinfo_output.txt");
+		Optional<String> mkvInfoString = TestUtilities.tryGetTestResource("/deserializationTestResources/mkvinfo_output.txt");
 		
 		final Map<Integer, Attachment> expectedAttachmentMap = new HashMap<Integer, Attachment>();
 		final MimeType fontMime = new MimeType("application/x-truetype-font");

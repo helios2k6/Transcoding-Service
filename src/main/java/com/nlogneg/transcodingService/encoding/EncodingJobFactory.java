@@ -18,7 +18,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
 public final class EncodingJobFactory
 {
 
-	public EncodingJob createEncodingJob(
+	public static EncodingJob createEncodingJob(
 			final Request request,
 			final MediaInfo mediaInfo,
 			final Optional<AudioTrack> demultiplexAudioTrack,

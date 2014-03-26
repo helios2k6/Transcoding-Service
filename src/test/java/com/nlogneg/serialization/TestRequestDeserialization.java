@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +22,9 @@ import com.nlogneg.transcodingService.request.incoming.RateControl.Type;
 import com.nlogneg.transcodingService.request.incoming.Request;
 import com.nlogneg.transcodingService.request.incoming.SampleAspectRatio;
 import com.nlogneg.transcodingService.request.incoming.Selector;
-import com.nlogneg.transcodingService.utilities.InputStreamUtilities;
+import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.SerializerFactory;
+import com.nlogneg.utilities.TestUtilities;
 import com.thoughtworks.xstream.XStream;
 
 @RunWith(JUnit4.class)
@@ -34,17 +34,10 @@ public class TestRequestDeserialization
 	@Test
 	public void deserializeRequest() throws IOException
 	{
-		assertNotNull(
-				"Test file missing. Cannot perform test.",
-				this.getClass().getResource("/video_request.xml"));
-
-		final InputStream resourceStream = this.getClass().getResourceAsStream(
-				"/video_request.xml");
-		final String resourceAsString = InputStreamUtilities.readInputStreamToEnd(resourceStream);
-		resourceStream.close();
-
+		Optional<String> requestString = TestUtilities.tryGetTestResource("/deserializationTestResources/video_request.xml");
+		
 		final XStream xstream = SerializerFactory.generateDefaultRequestSerializer();
-		final Request request = (Request) xstream.fromXML(resourceAsString);
+		final Request request = (Request) xstream.fromXML(requestString.getValue());
 
 		final RateControl rateControl = new RateControl(
 				Type.ConstantRateFactor,
