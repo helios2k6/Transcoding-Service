@@ -47,7 +47,8 @@ public class DemultiplexController extends SimpleCommand
 				if ((trackStatus == JobStatus.Failed) || (attachmentStatus == JobStatus.Failed))
 				{
 					stateMap.put(tuple, Reaction.NotifyFailure);
-				} else
+				}
+				else
 				{
 					// Check in-progres conditions
 					if ((trackStatus == JobStatus.InProgress) || (attachmentStatus == JobStatus.InProgress))
@@ -57,15 +58,18 @@ public class DemultiplexController extends SimpleCommand
 						 * it's not in a failed state
 						 */
 						stateMap.put(tuple, Reaction.NoOp);
-					} else if (trackStatus == JobStatus.Pending)
+					}
+					else if (trackStatus == JobStatus.Pending)
 					{
 						// Need to extract tracks
 						stateMap.put(tuple, Reaction.ScheduleTrack);
-					} else if (attachmentStatus == JobStatus.Pending)
+					}
+					else if (attachmentStatus == JobStatus.Pending)
 					{
 						// Need to extract attachments
 						stateMap.put(tuple, Reaction.ScheduleAttachment);
-					} else
+					}
+					else
 					{
 						// Looks like we've successfully done everything
 						stateMap.put(tuple, Reaction.NotifySuccess);

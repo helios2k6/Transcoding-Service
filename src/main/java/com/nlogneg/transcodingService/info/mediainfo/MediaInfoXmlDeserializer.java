@@ -30,7 +30,8 @@ public final class MediaInfoXmlDeserializer
 
 			final MediaInfo info = (MediaInfo) XStream.fromXML(xmlInput);
 			return Optional.make(info);
-		} catch (final Exception ex)
+		}
+		catch (final Exception ex)
 		{
 			Log.error(
 					"An error occurred while deserializing a MediaInfo object from XML.",

@@ -28,7 +28,8 @@ public final class AudioTrackUtils
 			try
 			{
 				return Integer.parseInt(split[0]);
-			} catch (final NumberFormatException e)
+			}
+			catch (final NumberFormatException e)
 			{
 				Log.error(
 						"Could not parse number of channels for audio track.",

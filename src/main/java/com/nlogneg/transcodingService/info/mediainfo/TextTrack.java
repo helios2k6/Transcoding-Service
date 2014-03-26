@@ -86,7 +86,8 @@ public final class TextTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.language.equals(other.language))
+		}
+		else if (!this.language.equals(other.language))
 		{
 			return false;
 		}

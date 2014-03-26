@@ -38,13 +38,15 @@ public class ListenForNewRequestCommand extends SimpleCommand
 			final Socket clientSocket = serverSocket.accept();
 			final SocketProxy socketProxy = (SocketProxy) facade.retrieveProxy(SocketProxy.PROXY_NAME);
 			socketProxy.addSocketToQueue(clientSocket);
-		} catch (final ClosedChannelException ex)
+		}
+		catch (final ClosedChannelException ex)
 		{
 			Log.info(
 					"The server socket has been closed, possibly by another thread.",
 					ex);
 			return;
-		} catch (final IOException ex)
+		}
+		catch (final IOException ex)
 		{
 			Log.error(
 					"An unknown IO Exception has occurred while listening to the socket.",

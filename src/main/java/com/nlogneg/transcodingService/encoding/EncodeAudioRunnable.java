@@ -54,7 +54,8 @@ public class EncodeAudioRunnable implements Runnable
 		if (result)
 		{
 			this.callback.completed(null, this.job);
-		} else
+		}
+		else
 		{
 			this.callback.failed(null, this.job);
 		}

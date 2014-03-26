@@ -86,7 +86,8 @@ public final class MKVInfo
 			{
 				return false;
 			}
-		} else if (!this.attachments.equals(other.attachments))
+		}
+		else if (!this.attachments.equals(other.attachments))
 		{
 			return false;
 		}
@@ -96,7 +97,8 @@ public final class MKVInfo
 			{
 				return false;
 			}
-		} else if (!this.filePath.equals(other.filePath))
+		}
+		else if (!this.filePath.equals(other.filePath))
 		{
 			return false;
 		}

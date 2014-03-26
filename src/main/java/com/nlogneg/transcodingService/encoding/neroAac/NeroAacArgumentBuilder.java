@@ -63,7 +63,8 @@ public final class NeroAacArgumentBuilder implements EncoderArgumentBuilder
 		if (shouldUseHighBitRate(job))
 		{
 			arguments.add("256000");
-		} else
+		}
+		else
 		{
 			arguments.add("96000");
 		}

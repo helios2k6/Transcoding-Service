@@ -72,7 +72,8 @@ public final class MediaInfo
 			{
 				return false;
 			}
-		} else if (!this.file.equals(other.file))
+		}
+		else if (!this.file.equals(other.file))
 		{
 			return false;
 		}

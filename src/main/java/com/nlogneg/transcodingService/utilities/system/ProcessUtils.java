@@ -33,7 +33,8 @@ public final class ProcessUtils
 			final Process process = builder.start();
 			Log.info("Process start successful.");
 			return Optional.make(process);
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			Log.error("Could not start process.", e);
 			;
@@ -66,7 +67,8 @@ public final class ProcessUtils
 		try
 		{
 			process.waitFor();
-		} catch (final InterruptedException e)
+		}
+		catch (final InterruptedException e)
 		{
 			Log.error("Process waiting interrupted.", e);
 			return false;

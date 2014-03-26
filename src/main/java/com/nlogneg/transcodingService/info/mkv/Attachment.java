@@ -118,7 +118,8 @@ public final class Attachment
 			{
 				return false;
 			}
-		} else if (!this.fileName.equals(other.fileName))
+		}
+		else if (!this.fileName.equals(other.fileName))
 		{
 			return false;
 		}

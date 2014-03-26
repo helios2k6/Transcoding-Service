@@ -78,7 +78,8 @@ public abstract class Track implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.format.equals(other.format))
+		}
+		else if (!this.format.equals(other.format))
 		{
 			return false;
 		}

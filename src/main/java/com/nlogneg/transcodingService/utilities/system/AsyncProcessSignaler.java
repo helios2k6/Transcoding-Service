@@ -48,7 +48,8 @@ public final class AsyncProcessSignaler<T> implements Runnable
 			{
 				this.process.waitFor();
 				this.didFinishSuccessfully = true;
-			} catch (final InterruptedException e)
+			}
+			catch (final InterruptedException e)
 			{
 				Log.error("Interrupted async process signaler.", e);
 			}
@@ -57,7 +58,8 @@ public final class AsyncProcessSignaler<T> implements Runnable
 		if (this.didFinishSuccessfully)
 		{
 			this.completionHandler.completed(null, this.token);
-		} else
+		}
+		else
 		{
 			this.completionHandler.failed(null, this.token);
 		}

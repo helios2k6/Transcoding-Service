@@ -126,7 +126,8 @@ public final class Request
 			{
 				return false;
 			}
-		} else if (!this.destinationFile.equals(other.destinationFile))
+		}
+		else if (!this.destinationFile.equals(other.destinationFile))
 		{
 			return false;
 		}
@@ -136,7 +137,8 @@ public final class Request
 			{
 				return false;
 			}
-		} else if (!this.encodingSettings.equals(other.encodingSettings))
+		}
+		else if (!this.encodingSettings.equals(other.encodingSettings))
 		{
 			return false;
 		}
@@ -146,7 +148,8 @@ public final class Request
 			{
 				return false;
 			}
-		} else if (!this.selector.equals(other.selector))
+		}
+		else if (!this.selector.equals(other.selector))
 		{
 			return false;
 		}
@@ -156,7 +159,8 @@ public final class Request
 			{
 				return false;
 			}
-		} else if (!this.sourceFile.equals(other.sourceFile))
+		}
+		else if (!this.sourceFile.equals(other.sourceFile))
 		{
 			return false;
 		}

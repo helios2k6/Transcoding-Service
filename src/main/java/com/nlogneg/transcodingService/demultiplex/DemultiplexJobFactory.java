@@ -102,7 +102,9 @@ public class DemultiplexJobFactory
 	{
 
 		final Path sourceFile = Paths.get(request.getSourceFile());
-		final Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(sourceFile, source);
+		final Optional<MKVInfo> infoOptional = MKVInfoFactory.tryGetMKVInfo(
+				sourceFile,
+				source);
 
 		// We can't get the info for some reason
 		if (infoOptional.isNone())

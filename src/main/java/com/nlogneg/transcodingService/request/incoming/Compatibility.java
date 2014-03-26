@@ -93,7 +93,8 @@ public final class Compatibility implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.sampleAspectRatio.equals(other.sampleAspectRatio))
+		}
+		else if (!this.sampleAspectRatio.equals(other.sampleAspectRatio))
 		{
 			return false;
 		}

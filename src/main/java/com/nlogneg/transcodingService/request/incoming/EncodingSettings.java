@@ -153,7 +153,8 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.compatibility.equals(other.compatibility))
+		}
+		else if (!this.compatibility.equals(other.compatibility))
 		{
 			return false;
 		}
@@ -163,7 +164,8 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.estimation.equals(other.estimation))
+		}
+		else if (!this.estimation.equals(other.estimation))
 		{
 			return false;
 		}
@@ -173,7 +175,8 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.level.equals(other.level))
+		}
+		else if (!this.level.equals(other.level))
 		{
 			return false;
 		}
@@ -187,7 +190,8 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.psychoVisualSettings.equals(other.psychoVisualSettings))
+		}
+		else if (!this.psychoVisualSettings.equals(other.psychoVisualSettings))
 		{
 			return false;
 		}
@@ -197,7 +201,8 @@ public final class EncodingSettings implements Serializable
 			{
 				return false;
 			}
-		} else if (!this.rateControl.equals(other.rateControl))
+		}
+		else if (!this.rateControl.equals(other.rateControl))
 		{
 			return false;
 		}

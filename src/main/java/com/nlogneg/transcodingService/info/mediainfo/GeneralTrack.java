@@ -81,7 +81,8 @@ public final class GeneralTrack extends Track
 			{
 				return false;
 			}
-		} else if (!this.completeName.equals(other.completeName))
+		}
+		else if (!this.completeName.equals(other.completeName))
 		{
 			return false;
 		}

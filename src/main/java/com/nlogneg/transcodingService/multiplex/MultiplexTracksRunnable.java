@@ -56,7 +56,8 @@ public class MultiplexTracksRunnable implements Runnable
 		{
 			Log.info("Successfully multiplexed job for: " + this.job.getDestinationFile());
 			this.callback.completed(null, this.job);
-		} else
+		}
+		else
 		{
 			this.fail();
 		}

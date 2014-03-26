@@ -147,7 +147,8 @@ public final class VideoTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.displayAspectRatio.equals(other.displayAspectRatio))
+		}
+		else if (!this.displayAspectRatio.equals(other.displayAspectRatio))
 		{
 			return false;
 		}
@@ -157,7 +158,8 @@ public final class VideoTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.frameRate.equals(other.frameRate))
+		}
+		else if (!this.frameRate.equals(other.frameRate))
 		{
 			return false;
 		}
@@ -167,7 +169,8 @@ public final class VideoTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.frameRateMode.equals(other.frameRateMode))
+		}
+		else if (!this.frameRateMode.equals(other.frameRateMode))
 		{
 			return false;
 		}
@@ -177,7 +180,8 @@ public final class VideoTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.height.equals(other.height))
+		}
+		else if (!this.height.equals(other.height))
 		{
 			return false;
 		}
@@ -187,7 +191,8 @@ public final class VideoTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.width.equals(other.width))
+		}
+		else if (!this.width.equals(other.width))
 		{
 			return false;
 		}

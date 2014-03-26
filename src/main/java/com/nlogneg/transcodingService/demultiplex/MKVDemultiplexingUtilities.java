@@ -52,7 +52,8 @@ public final class MKVDemultiplexingUtilities
 		try
 		{
 			return new MimeType("application/x-truetype-font");
-		} catch (final Exception e)
+		}
+		catch (final Exception e)
 		{
 			// Can't get here, because we know that this works
 			Log.error("We made the impossible, possible.", e);
@@ -81,7 +82,8 @@ public final class MKVDemultiplexingUtilities
 			if (selectedTrack.isNone())
 			{
 				selectedTrack = Optional.make(track);
-			} else
+			}
+			else
 			{
 				// See if the selected track is Japanese
 				if (isTrackJapanese(selectedTrack.getValue()))
@@ -94,7 +96,8 @@ public final class MKVDemultiplexingUtilities
 					{
 						selectedTrack = Optional.make(track);
 					}
-				} else
+				}
+				else
 				{
 					/*
 					 * OK well now there's two ways to unseat the previous

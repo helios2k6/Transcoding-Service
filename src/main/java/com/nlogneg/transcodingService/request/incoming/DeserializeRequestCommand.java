@@ -62,7 +62,8 @@ public class DeserializeRequestCommand extends SimpleCommand
 			final Request deserializedRequest = (Request) this.deserializer.fromXML(request.getValue());
 			final RequestProxy requestProxy = (RequestProxy) facade.retrieveProxy(RequestProxy.PROXY_NAME);
 			requestProxy.addRequest(deserializedRequest);
-		} catch (final XStreamException ex)
+		}
+		catch (final XStreamException ex)
 		{
 			Log.error("Unable to deserialize request", ex);
 			return;

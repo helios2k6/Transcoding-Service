@@ -58,15 +58,18 @@ public final class RespondToClientCommand extends SimpleCommand
 						true);)
 		{
 			writer.print(serializedResponse);
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			Log.error("Could not send response back to client.", e);
-		} finally
+		}
+		finally
 		{
 			try
 			{
 				socket.close();
-			} catch (final IOException e)
+			}
+			catch (final IOException e)
 			{
 				Log.error("Could not close socket.", e);
 			}

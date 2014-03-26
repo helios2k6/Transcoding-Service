@@ -82,7 +82,8 @@ public final class FFMPEGFilterArgumentBuilder
 						"\"");
 
 				return argBuilder.toString();
-			} else
+			}
+			else
 			{
 				Log.error("Subtitle track option was ENCODE but no extracted subtitle track could be found");
 			}

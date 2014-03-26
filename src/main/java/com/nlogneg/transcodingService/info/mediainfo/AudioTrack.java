@@ -105,7 +105,8 @@ public final class AudioTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.channels.equals(other.channels))
+		}
+		else if (!this.channels.equals(other.channels))
 		{
 			return false;
 		}
@@ -115,7 +116,8 @@ public final class AudioTrack extends MediaTrack
 			{
 				return false;
 			}
-		} else if (!this.language.equals(other.language))
+		}
+		else if (!this.language.equals(other.language))
 		{
 			return false;
 		}

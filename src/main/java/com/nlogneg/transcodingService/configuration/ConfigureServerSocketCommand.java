@@ -34,7 +34,8 @@ public class ConfigureServerSocketCommand extends SimpleCommand
 			final ServerSocketProxy serverSocketProxy = (ServerSocketProxy) this.getFacade().retrieveProxy(
 					ServerSocketProxy.PROXY_NAME);
 			serverSocketProxy.setServerSocket(serverSocket);
-		} catch (final IOException e)
+		}
+		catch (final IOException e)
 		{
 			Log.fatal("Could not bind to socket: " + portNumber);
 			this.sendNotification(Notifications.ExitSystem);

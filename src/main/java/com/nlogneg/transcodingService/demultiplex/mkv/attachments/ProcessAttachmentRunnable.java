@@ -60,7 +60,8 @@ public final class ProcessAttachmentRunnable implements Runnable
 		if (extractionResult && installationResult)
 		{
 			this.asyncCallback.completed(null, this.job);
-		} else
+		}
+		else
 		{
 			this.asyncCallback.failed(null, this.job);
 		}
@@ -82,7 +83,8 @@ public final class ProcessAttachmentRunnable implements Runnable
 			if (extractionResult)
 			{
 				Log.info("Successfully extracted font: " + outputPath);
-			} else
+			}
+			else
 			{
 				Log.info("Failed to extract font: " + outputPath);
 				successfullyExtractedAllAttachments = false;

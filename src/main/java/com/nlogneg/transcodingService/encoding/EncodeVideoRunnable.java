@@ -102,7 +102,8 @@ public final class EncodeVideoRunnable implements Runnable
 		if (this.pipe.isFinished() && (this.isCancelled == false))
 		{
 			this.callback.completed(null, this.job);
-		} else
+		}
+		else
 		{
 			this.callback.failed(null, this.job);
 		}
