@@ -93,7 +93,7 @@ public class TestMediaInfoDeserialization
 	@Test
 	public void deserializationOfVideoAudioTextTrack() throws IOException
 	{
-		Optional<String> mediaInfo = TestUtilities.tryGetTestResource("");
+		Optional<String> mediaInfo = TestUtilities.tryGetTestResource("/deserializationTestResources/media_info_v_0_7_67.xml");
 		
 		assertTrue(mediaInfo.isSome());
 		
