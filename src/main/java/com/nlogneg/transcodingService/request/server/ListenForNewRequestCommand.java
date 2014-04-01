@@ -11,8 +11,6 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import org.puremvc.java.multicore.patterns.facade.Facade;
 
-import com.nlogneg.transcodingService.constants.Notifications;
-
 /**
  * Listens for a new client request and then saves the socket to the socket
  * proxy
@@ -46,14 +44,12 @@ public class ListenForNewRequestCommand extends SimpleCommand
 			Log.info(
 					"The server socket has been closed, possibly by another thread.",
 					ex);
-			return;
 		}
 		catch (final IOException ex)
 		{
 			Log.error(
 					"An unknown IO Exception has occurred while listening to the socket.",
 					ex);
-			this.sendNotification(Notifications.ExitSystem, new Integer(-1));
 		}
 	}
 }
