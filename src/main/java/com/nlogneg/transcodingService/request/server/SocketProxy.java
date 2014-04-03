@@ -6,13 +6,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import org.puremvc.java.multicore.patterns.proxy.Proxy;
 
+import com.nlogneg.transcodingService.utilities.Optional;
+
 /**
  * Represents the queue of sockets that must be serviced
  * 
  * @author anjohnson
  * 
  */
-public class SocketProxy extends Proxy
+public final class SocketProxy extends Proxy
 {
 	public static final String PROXY_NAME = "SocketProxy";
 
@@ -43,9 +45,9 @@ public class SocketProxy extends Proxy
 	 * @return The next socket to service. Null if there aren't any other
 	 *         sockets to service
 	 */
-	public Socket getNextSocket()
+	public Optional<Socket> getNextSocket()
 	{
-		return this.sockets.poll();
+		return Optional.make(this.sockets.poll());
 	}
 
 	/**

@@ -16,7 +16,7 @@ import com.nlogneg.transcodingService.StatusTuple;
  * @author Andrew
  * 
  */
-public class EncodingJobStatusProxy extends Proxy
+public final class EncodingJobStatusProxy extends Proxy
 {
 	public static final String PROXY_NAME = "EncodingJobStatusProxy";
 

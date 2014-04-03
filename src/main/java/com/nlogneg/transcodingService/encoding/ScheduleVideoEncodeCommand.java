@@ -9,7 +9,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.encoding.ffmpeg.FFMPEGVideoDecodingArgumentBuilder;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * Encodes a media file
@@ -34,8 +34,8 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 		final EncodingJob job = (EncodingJob) notification.getBody();
 		final DecoderArgumentBuilder decoderBuilder = new FFMPEGVideoDecodingArgumentBuilder();
 		final EncoderArgumentBuilder encoderBuilder = new X264EncodingArgumentBuilder();
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
-				ExecutorProxy.PROXY_NAME);
+		final ExecutorServiceProxy proxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 
 		final EncodeVideoRunnable encoder = new EncodeVideoRunnable(

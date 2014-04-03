@@ -8,7 +8,7 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.encoding.neroAac.NeroAacArgumentBuilder;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * Encodes or processes the audio track of a given Encoding Job
@@ -44,8 +44,8 @@ public final class ScheduleAudioEncodingCommand extends SimpleCommand implements
 				job,
 				this,
 				new NeroAacArgumentBuilder());
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
-				ExecutorProxy.PROXY_NAME);
+		final ExecutorServiceProxy proxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
 		proxy.getService().submit(runnable);
 	}
 

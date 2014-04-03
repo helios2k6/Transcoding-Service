@@ -14,7 +14,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  * 
  */
-public class MediaFileRequestProxy extends Proxy
+public final class MediaFileRequestProxy extends Proxy
 {
 	public static final String PROXY_NAME = "MediaFileRequestProxy";
 

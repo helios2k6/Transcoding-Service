@@ -10,13 +10,13 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
  * @author anjohnson
  * 
  */
-public final class ExecutorProxy extends Proxy
+public final class ExecutorServiceProxy extends Proxy
 {
-	public static final String PROXY_NAME = "";
+	public static final String PROXY_NAME = "ExecutorServiceProxy";
 
 	private ExecutorService service;
 
-	public ExecutorProxy()
+	public ExecutorServiceProxy()
 	{
 		super(PROXY_NAME);
 	}

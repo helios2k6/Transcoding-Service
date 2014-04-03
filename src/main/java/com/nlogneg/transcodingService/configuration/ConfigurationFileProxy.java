@@ -10,7 +10,7 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
  */
 public final class ConfigurationFileProxy extends Proxy
 {
-	public static final String PROXY_NAME = "";
+	public static final String PROXY_NAME = "ConfigurationFileProxy";
 
 	private ConfigurationFile configurationFile;
 

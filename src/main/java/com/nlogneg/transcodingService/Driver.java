@@ -22,7 +22,7 @@ import com.nlogneg.transcodingService.request.server.ServerSocketProxy;
 import com.nlogneg.transcodingService.request.server.ServerStatusProxy;
 import com.nlogneg.transcodingService.request.server.SocketProxy;
 import com.nlogneg.transcodingService.utilities.system.ExitSystemCommand;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * The entry point of this program
@@ -58,7 +58,7 @@ public final class Driver
 		facade.registerProxy(new CommandLineOptionsProxy());
 		facade.registerProxy(new DemultiplexJobStatusProxy());
 		facade.registerProxy(new EncodingJobStatusProxy());
-		facade.registerProxy(new ExecutorProxy());
+		facade.registerProxy(new ExecutorServiceProxy());
 		facade.registerProxy(new MediaFileRequestProxy());
 		facade.registerProxy(new RequestProxy());
 		facade.registerProxy(new SerializedRequestProxy());

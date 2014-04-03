@@ -16,7 +16,7 @@ import com.nlogneg.transcodingService.StatusTuple;
  * @author anjohnson
  * 
  */
-public class DemultiplexJobStatusProxy extends Proxy
+public final class DemultiplexJobStatusProxy extends Proxy
 {
 	public static final String PROXY_NAME = "DemultiplexJobStatusProxy";
 

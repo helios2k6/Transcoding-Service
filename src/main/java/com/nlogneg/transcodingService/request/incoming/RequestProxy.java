@@ -13,7 +13,7 @@ import com.nlogneg.transcodingService.utilities.Optional;
  * @author anjohnson
  * 
  */
-public class RequestProxy extends Proxy
+public final class RequestProxy extends Proxy
 {
 
 	public static final String PROXY_NAME = "Request Proxy";

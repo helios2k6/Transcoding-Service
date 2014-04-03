@@ -11,7 +11,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 import com.nlogneg.transcodingService.MasterJobController;
 import com.nlogneg.transcodingService.multiplex.MultiplexJob;
 import com.nlogneg.transcodingService.multiplex.MultiplexTracksRunnable;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * Schedules a multiplexing job
@@ -32,8 +32,8 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements Com
 	public void execute(final INotification notification)
 	{
 		final MultiplexJob job = (MultiplexJob) notification.getBody();
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
-				ExecutorProxy.PROXY_NAME);
+		final ExecutorServiceProxy proxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 		final MP4BoxArgumentBuilder builder = new MP4BoxArgumentBuilder();
 		final MultiplexTracksRunnable runnable = new MultiplexTracksRunnable(

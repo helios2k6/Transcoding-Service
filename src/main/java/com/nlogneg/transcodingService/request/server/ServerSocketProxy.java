@@ -10,7 +10,7 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
  * @author anjohnson
  * 
  */
-public class ServerSocketProxy extends Proxy
+public final class ServerSocketProxy extends Proxy
 {
 	public static final String PROXY_NAME = "ServerSocketProxy";
 

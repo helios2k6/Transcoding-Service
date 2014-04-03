@@ -13,7 +13,7 @@ import com.nlogneg.transcodingService.demultiplex.DemultiplexController;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstaller;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstallerFactory;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * Represents the base class for extracting MKV attachments
@@ -37,8 +37,8 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 
 		Log.info("Scheduling MKV attachment extraction for: " + job.getMediaFile());
 
-		final ExecutorProxy executorProxy = (ExecutorProxy) this.getFacade().retrieveProxy(
-				ExecutorProxy.PROXY_NAME);
+		final ExecutorServiceProxy executorProxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
 		final ConfigurationFileProxy serverConfigurationProxy = (ConfigurationFileProxy) this.getFacade().retrieveProxy(
 				ConfigurationFileProxy.PROXY_NAME);
 		final Path fontFolder = serverConfigurationProxy.getConfigurationFile().getFontFolder();

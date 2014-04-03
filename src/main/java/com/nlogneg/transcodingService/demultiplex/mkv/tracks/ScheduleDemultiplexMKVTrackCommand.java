@@ -10,7 +10,7 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.demultiplex.DemultiplexController;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
-import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
+import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 
 /**
  * Schedules MKV track demultiplexion
@@ -41,8 +41,8 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 		final DemultiplexTrackRunnable multiplexer = new DemultiplexTrackRunnable(
 				job,
 				this);
-		final ExecutorProxy proxy = (ExecutorProxy) this.getFacade().retrieveProxy(
-				ExecutorProxy.PROXY_NAME);
+		final ExecutorServiceProxy proxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
 		final ExecutorService service = proxy.getService();
 		service.submit(multiplexer);
 	}

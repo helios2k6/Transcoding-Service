@@ -8,7 +8,7 @@ import org.puremvc.java.multicore.patterns.proxy.Proxy;
  * @author anjohnson
  * 
  */
-public class CommandLineOptionsProxy extends Proxy
+public final class CommandLineOptionsProxy extends Proxy
 {
 	public static final String PROXY_NAME = "CommandLineOptionsProxy";
 
