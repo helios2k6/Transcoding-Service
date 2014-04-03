@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.configuration.ServerConfigurationProxy;
-import com.nlogneg.transcodingService.constants.Notifications;
+import com.nlogneg.transcodingService.configuration.ConfigurationFileProxy;
+import com.nlogneg.transcodingService.demultiplex.DemultiplexController;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstaller;
 import com.nlogneg.transcodingService.demultiplex.fonts.FontInstallerFactory;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
@@ -23,6 +23,11 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  */
 public final class ScheduleAttachmentExtractionCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>
 {
+	/**
+	 * Schedule attachment demultiplex job
+	 */
+	public static final String ScheduleAttachmentDemultiplexJob = "ScheduleAttachmentDemultiplexJob";
+	
 	private static final Logger Log = LogManager.getLogger(ScheduleAttachmentExtractionCommand.class);
 
 	@Override
@@ -34,8 +39,8 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 
 		final ExecutorProxy executorProxy = (ExecutorProxy) this.getFacade().retrieveProxy(
 				ExecutorProxy.PROXY_NAME);
-		final ServerConfigurationProxy serverConfigurationProxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
-				ServerConfigurationProxy.PROXY_NAME);
+		final ConfigurationFileProxy serverConfigurationProxy = (ConfigurationFileProxy) this.getFacade().retrieveProxy(
+				ConfigurationFileProxy.PROXY_NAME);
 		final Path fontFolder = serverConfigurationProxy.getConfigurationFile().getFontFolder();
 		final FontInstaller fontInstaller = FontInstallerFactory.createFontInstaller();
 
@@ -57,7 +62,7 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	public void completed(final Void result, final DemultiplexMKVJob job)
 	{
 		Log.info("Attachment processing successful for: " + job.getMediaFile());
-		this.sendNotification(Notifications.DemultiplexAttachmentSuccess, job);
+		this.sendNotification(DemultiplexController.DemultiplexAttachmentSuccess, job);
 	}
 
 	/*
@@ -70,6 +75,6 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	public void failed(final Throwable exc, final DemultiplexMKVJob job)
 	{
 		Log.info("Attachment processing failed for: " + job.getMediaFile());
-		this.sendNotification(Notifications.DemultiplexAttachmentFailure, job);
+		this.sendNotification(DemultiplexController.DemultiplexAttachmentFailure, job);
 	}
 }

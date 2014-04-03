@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.encoding.ffmpeg.FFMPEGVideoDecodingArgumentBuilder;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
@@ -20,6 +19,11 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  */
 public final class ScheduleVideoEncodeCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>
 {
+	/**
+	 * Schedule video encode
+	 */
+	public static final String ScheduleVideoEncode = "ScheduleVideoEncode";
+	
 	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
 
 	@Override
@@ -52,7 +56,7 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 	@Override
 	public void completed(final Void arg0, final EncodingJob job)
 	{
-		this.sendNotification(Notifications.EncodeVideoSuccess, job);
+		this.sendNotification(EncodingController.EncodeVideoSuccess, job);
 	}
 
 	/*
@@ -64,7 +68,7 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 	@Override
 	public void failed(final Throwable arg0, final EncodingJob job)
 	{
-		this.sendNotification(Notifications.EncodeVideoFailure, job);
+		this.sendNotification(EncodingController.EncodeVideoFailure, job);
 		;
 	}
 }

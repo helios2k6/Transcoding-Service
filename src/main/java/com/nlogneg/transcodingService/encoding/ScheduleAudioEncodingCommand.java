@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.encoding.neroAac.NeroAacArgumentBuilder;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
@@ -17,8 +16,12 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  * @author anjohnson
  * 
  */
-public class ScheduleAudioEncodingCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>
+public final class ScheduleAudioEncodingCommand extends SimpleCommand implements CompletionHandler<Void, EncodingJob>
 {
+	/**
+	 * Schedule audio encode
+	 */
+	public static final String ScheduleAudioEncode = "ScheduleAudioEncode";
 
 	private static final Logger Log = LogManager.getLogger(ScheduleAudioEncodingCommand.class);
 
@@ -56,7 +59,7 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements Compl
 	public void completed(final Void arg0, final EncodingJob job)
 	{
 		Log.info("Audio encoding successful for media job: " + job.getSourceFilePath());
-		this.sendNotification(Notifications.EncodeAudioSuccess, job);
+		this.sendNotification(EncodingController.EncodeAudioSuccess, job);
 	}
 
 	/*
@@ -69,6 +72,6 @@ public class ScheduleAudioEncodingCommand extends SimpleCommand implements Compl
 	public void failed(final Throwable arg0, final EncodingJob job)
 	{
 		Log.info("Audio encoding failed for media job: " + job.getSourceFilePath());
-		this.sendNotification(Notifications.EncodeAudioFailure, job);
+		this.sendNotification(EncodingController.EncodeAudioFailure, job);
 	}
 }

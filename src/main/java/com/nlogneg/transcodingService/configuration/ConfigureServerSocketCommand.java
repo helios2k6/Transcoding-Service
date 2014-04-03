@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.constants.Notifications;
 import com.nlogneg.transcodingService.request.server.ServerSocketProxy;
+import com.nlogneg.transcodingService.utilities.system.ExitSystemCommand;
 
 /**
  * Configures the Server Socket to use for this application
@@ -19,13 +19,18 @@ import com.nlogneg.transcodingService.request.server.ServerSocketProxy;
  */
 public class ConfigureServerSocketCommand extends SimpleCommand
 {
+	/**
+	 * The notification to send in order to execute this command
+	 */
+	public static final String ConfigureServerSocket = "ConfigureServerSocket";
+	
 	private static final Logger Log = LogManager.getLogger(ConfigureServerSocketCommand.class);
 
 	@Override
 	public void execute(final INotification notification)
 	{
-		final ServerConfigurationProxy proxy = (ServerConfigurationProxy) this.getFacade().retrieveProxy(
-				ServerConfigurationProxy.PROXY_NAME);
+		final ConfigurationFileProxy proxy = (ConfigurationFileProxy) this.getFacade().retrieveProxy(
+				ConfigurationFileProxy.PROXY_NAME);
 		final int portNumber = proxy.getConfigurationFile().getPortNumber();
 
 		try
@@ -38,7 +43,7 @@ public class ConfigureServerSocketCommand extends SimpleCommand
 		catch (final IOException e)
 		{
 			Log.fatal("Could not bind to socket: " + portNumber);
-			this.sendNotification(Notifications.ExitSystem);
+			sendNotification(ExitSystemCommand.ExitSystem);
 		}
 	}
 }

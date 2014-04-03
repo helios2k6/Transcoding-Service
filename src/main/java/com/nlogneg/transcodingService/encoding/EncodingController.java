@@ -9,11 +9,36 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.JobStatus;
+import com.nlogneg.transcodingService.MasterJobController;
 import com.nlogneg.transcodingService.StatusTuple;
-import com.nlogneg.transcodingService.constants.Notifications;
 
-public class EncodingController extends SimpleCommand
+public final class EncodingController extends SimpleCommand
 {
+	/**
+	 * The notification that starts an encoding job
+	 */
+	public static final String StartEncodingJob = "StartEncodingJob";
+	
+	/**
+	 * The success signal for video encoding
+	 */
+	public static final String EncodeVideoSuccess = "EncodeVideoSuccess";
+	
+	/**
+	 * The failure signal for video encoding
+	 */
+	public static final String EncodeVideoFailure = "EncodeVideoFailure";
+	
+	/**
+	 * The success signal for the audio encoding
+	 */
+	public static final String EncodeAudioSuccess = "EncodeAudioSuccess";
+	
+	/**
+	 * The failure signal for audio encoding
+	 */
+	public static final String EncodeAudioFailure = "EncodeAudioFailure";
+	
 	private static final Logger Log = LogManager.getLogger(EncodingController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
@@ -86,21 +111,21 @@ public class EncodingController extends SimpleCommand
 	{
 		switch (message)
 		{
-		case Notifications.StartEncodingJob:
+		case StartEncodingJob:
 			final EncodingJobStatusProxy proxy = this.getStatusProxy();
 			proxy.addJob(job);
 			this.evaluateJobStatus(job);
 			break;
-		case Notifications.EncodeVideoFailure:
+		case EncodeVideoFailure:
 			this.handleVideoFailure(job);
 			break;
-		case Notifications.EncodeAudioFailure:
+		case EncodeAudioFailure:
 			this.handleAudioFailure(job);
 			break;
-		case Notifications.EncodeVideoSuccess:
+		case EncodeVideoSuccess:
 			this.handleVideoSuccess(job);
 			break;
-		case Notifications.EncodeAudioSuccess:
+		case EncodeAudioSuccess:
 			this.handleAudioSuccess(job);
 			break;
 		default:
@@ -118,10 +143,10 @@ public class EncodingController extends SimpleCommand
 		switch (reaction)
 		{
 		case ScheduleVideo:
-			this.sendNotification(Notifications.ScheduleVideoEncode, job);
+			this.sendNotification(ScheduleVideoEncodeCommand.ScheduleVideoEncode, job);
 			break;
 		case ScheduleAudio:
-			this.sendNotification(Notifications.ScheduleAudioEncode, job);
+			this.sendNotification(ScheduleAudioEncodingCommand.ScheduleAudioEncode, job);
 			break;
 		case NotifySuccess:
 			this.notifySuccess(job);
@@ -180,13 +205,13 @@ public class EncodingController extends SimpleCommand
 	private void notifyFailure(final EncodingJob job)
 	{
 		this.cleanup(job);
-		this.sendNotification(Notifications.EncodingJobFailure, job);
+		this.sendNotification(MasterJobController.EncodingJobFailure, job);
 	}
 
 	private void notifySuccess(final EncodingJob job)
 	{
 		this.cleanup(job);
-		this.sendNotification(Notifications.EncodingJobSuccess, job);
+		this.sendNotification(MasterJobController.EncodingJobSuccess, job);
 	}
 
 	private EncodingJobStatusProxy getStatusProxy()

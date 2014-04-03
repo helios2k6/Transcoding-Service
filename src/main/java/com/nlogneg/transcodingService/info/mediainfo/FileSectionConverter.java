@@ -24,6 +24,7 @@ public final class FileSectionConverter implements Converter
 {
 	private static final Logger Log = LogManager.getLogger(FileSectionConverter.class);
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean canConvert(final Class clazz)
 	{

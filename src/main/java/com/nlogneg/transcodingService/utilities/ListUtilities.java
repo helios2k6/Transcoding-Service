@@ -24,7 +24,7 @@ public final class ListUtilities
 
 		for (final String line : strings)
 		{
-			builder.append(line);
+			builder.append(line).append("\n");
 		}
 
 		return builder.toString();

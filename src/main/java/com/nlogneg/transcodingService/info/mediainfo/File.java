@@ -8,7 +8,7 @@ import java.util.List;
  * @author anjohnson
  * 
  */
-public class File
+public final class File
 {
 	private final List<Track> tracks;
 

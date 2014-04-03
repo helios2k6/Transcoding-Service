@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.constants.Notifications;
+import com.nlogneg.transcodingService.MasterJobController;
 import com.nlogneg.transcodingService.multiplex.MultiplexJob;
 import com.nlogneg.transcodingService.multiplex.MultiplexTracksRunnable;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
@@ -21,6 +21,11 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  */
 public final class ScheduleMultiplexCommand extends SimpleCommand implements CompletionHandler<Void, MultiplexJob>
 {
+	/**
+	 * Notification to start schedule a multiplex command
+	 */
+	public static final String ScheduleMultiplex = "ScheduleMultiplex";
+	
 	private static final Logger Log = LogManager.getLogger(ScheduleMultiplexCommand.class);
 
 	@Override
@@ -43,13 +48,13 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements Com
 	public void completed(final Void result, final MultiplexJob attachment)
 	{
 		Log.info("Multiplex job completed successfully : " + attachment.getDestinationFile());
-		this.sendNotification(Notifications.MultiplexFileSuccess, attachment);
+		this.sendNotification(MasterJobController.MultiplexFileSuccess, attachment);
 	}
 
 	@Override
 	public void failed(final Throwable exc, final MultiplexJob attachment)
 	{
 		Log.error("Multiplexing job failed: " + attachment.getDestinationFile());
-		this.sendNotification(Notifications.MultiplexFileFailure, attachment);
+		this.sendNotification(MasterJobController.MultiplexFileFailure, attachment);
 	}
 }

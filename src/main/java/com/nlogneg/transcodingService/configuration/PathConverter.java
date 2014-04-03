@@ -14,6 +14,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class PathConverter implements Converter
 {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean canConvert(final Class arg0)
 	{

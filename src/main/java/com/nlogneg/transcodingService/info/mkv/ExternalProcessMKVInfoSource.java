@@ -17,7 +17,7 @@ import com.nlogneg.transcodingService.utilities.system.SystemUtilities;
  * @author anjohnson
  * 
  */
-public class ExternalProcessMKVInfoSource implements MKVInfoSource
+public final class ExternalProcessMKVInfoSource implements MKVInfoSource
 {
 
 	private static final Logger Log = LogManager.getLogger(ExternalProcessMKVInfoSource.class);

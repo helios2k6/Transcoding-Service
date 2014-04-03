@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
-import com.nlogneg.transcodingService.constants.Notifications;
+import com.nlogneg.transcodingService.demultiplex.DemultiplexController;
 import com.nlogneg.transcodingService.demultiplex.mkv.DemultiplexMKVJob;
 import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
 
@@ -20,6 +20,11 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorProxy;
  */
 public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand implements CompletionHandler<Void, DemultiplexMKVJob>
 {
+	/**
+	 * Schedule track demultiplex job
+	 */
+	public static final String ScheduleTrackDemultiplexJob = "ScheduleTrackDemultiplexJob";
+	
 	private static final Logger Log = LogManager.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
 
 	/*
@@ -46,13 +51,13 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 	public void completed(final Void result, final DemultiplexMKVJob job)
 	{
 		Log.info("Track demultiplex job succeeded for: " + job.getMediaFile());
-		this.sendNotification(Notifications.DemultiplexTrackSuccess, job);
+		this.sendNotification(DemultiplexController.DemultiplexTrackSuccess, job);
 	}
 
 	@Override
 	public void failed(final Throwable exc, final DemultiplexMKVJob job)
 	{
 		Log.info("Track demultiplex job failed for: " + job.getMediaFile());
-		this.sendNotification(Notifications.DemultiplexTrackFailure, job);
+		this.sendNotification(DemultiplexController.DemultiplexTrackFailure, job);
 	}
 }

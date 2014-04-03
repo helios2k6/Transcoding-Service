@@ -11,7 +11,12 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
  */
 public class ExitSystemCommand extends SimpleCommand
 {
-
+	
+	/**
+	 * The notification to send to execute this command
+	 */
+	public static final String ExitSystem = "ExitSystem";
+	
 	@Override
 	public void execute(final INotification notification)
 	{

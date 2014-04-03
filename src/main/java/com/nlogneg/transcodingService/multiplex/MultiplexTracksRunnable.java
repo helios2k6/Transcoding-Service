@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.nlogneg.transcodingService.utilities.Optional;
 import com.nlogneg.transcodingService.utilities.system.ProcessUtils;
 
-public class MultiplexTracksRunnable implements Runnable
+public final class MultiplexTracksRunnable implements Runnable
 {
 	private static final Logger Log = LogManager.getLogger(MultiplexTracksRunnable.class);
 	private final MultiplexJob job;

@@ -9,8 +9,10 @@ import org.puremvc.java.multicore.interfaces.INotification;
 import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 import com.nlogneg.transcodingService.JobStatus;
+import com.nlogneg.transcodingService.MasterJobController;
 import com.nlogneg.transcodingService.StatusTuple;
-import com.nlogneg.transcodingService.constants.Notifications;
+import com.nlogneg.transcodingService.demultiplex.mkv.attachments.ScheduleAttachmentExtractionCommand;
+import com.nlogneg.transcodingService.demultiplex.mkv.tracks.ScheduleDemultiplexMKVTrackCommand;
 
 /**
  * The main demultiplexing controller that reports directly to the Super
@@ -21,6 +23,31 @@ import com.nlogneg.transcodingService.constants.Notifications;
  */
 public class DemultiplexController extends SimpleCommand
 {
+	/**
+	 * The notification that starts this command
+	 */
+	public static final String StartDemultiplexJob = "StartDemultiplexJob";
+	
+	/**
+	 * The success signal for track extraction
+	 */
+	public static final String DemultiplexTrackSuccess = "DemultiplexTrackSuccess";
+
+	/**
+	 * The failure signal for track extraction
+	 */
+	public static final String DemultiplexTrackFailure = "DemultiplexTrackFailure";
+
+	/**
+	 * The success signal for attachment success
+	 */
+	public static final String DemultiplexAttachmentSuccess = "DemultiplexAttachmentSuccess";
+
+	/**
+	 * The failure signal for attachment failure
+	 */
+	public static final String DemultiplexAttachmentFailure = "DemultiplexAttachmentFailure";
+
 	private static final Logger Log = LogManager.getLogger(DemultiplexController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
@@ -94,25 +121,25 @@ public class DemultiplexController extends SimpleCommand
 		Log.info("Dispatching message for demultiplexing job: " + job.getMediaFile());
 		switch (message)
 		{
-		case Notifications.StartDemultiplexJob:
+		case StartDemultiplexJob:
 			Log.info("Start demultplexing.");
 			final DemultiplexJobStatusProxy proxy = this.getStatusProxy();
 			proxy.addJob(job);
 			this.evaluateJobState(job);
 			break;
-		case Notifications.DemultiplexAttachmentFailure:
+		case DemultiplexAttachmentFailure:
 			Log.info("Handle attachment demultiplexing failure: " + job.getMediaFile());
 			this.handleAttachmentFailureMessage(job);
 			break;
-		case Notifications.DemultiplexTrackFailure:
+		case DemultiplexTrackFailure:
 			Log.info("Handle track demultiplexing failure: " + job.getMediaFile());
 			this.handleTrackFailureMessage(job);
 			break;
-		case Notifications.DemultiplexAttachmentSuccess:
+		case DemultiplexAttachmentSuccess:
 			Log.info("Handle attachment demultiplex success: " + job.getMediaFile());
 			this.handleAttachmentSuccessMessage(job);
 			break;
-		case Notifications.DemultiplexTrackSuccess:
+		case DemultiplexTrackSuccess:
 			Log.info("Handle track demultiplex success: " + job.getMediaFile());
 			this.handleTrackSuccessMessage(job);
 			break;
@@ -164,12 +191,12 @@ public class DemultiplexController extends SimpleCommand
 		{
 		case ScheduleTrack:
 			this.sendNotification(
-					Notifications.ScheduleTrackDemultiplexJob,
+					ScheduleDemultiplexMKVTrackCommand.ScheduleTrackDemultiplexJob,
 					job);
 			break;
 		case ScheduleAttachment:
 			this.sendNotification(
-					Notifications.ScheduleAttachmentDemultiplexJob,
+					ScheduleAttachmentExtractionCommand.ScheduleAttachmentDemultiplexJob,
 					job);
 			break;
 		case NotifySuccess:
@@ -196,13 +223,13 @@ public class DemultiplexController extends SimpleCommand
 	private void notifyFailure(final DemultiplexJob job)
 	{
 		this.cleanup(job);
-		this.sendNotification(Notifications.DemultiplexJobFailure, job);
+		this.sendNotification(MasterJobController.DemultiplexJobFailure, job);
 	}
 
 	private void notifySuccess(final DemultiplexJob job)
 	{
 		this.cleanup(job);
-		this.sendNotification(Notifications.DemultiplexJobSuccess, job);
+		this.sendNotification(MasterJobController.DemultiplexJobSuccess, job);
 	}
 
 	private DemultiplexJobStatusProxy getStatusProxy()
