@@ -21,7 +21,8 @@ import com.nlogneg.transcodingService.request.incoming.RateControl;
 import com.nlogneg.transcodingService.request.incoming.Request;
 import com.nlogneg.transcodingService.request.incoming.SampleAspectRatio;
 import com.nlogneg.transcodingService.request.incoming.Selector;
-import com.nlogneg.transcodingService.request.outgoing.Acknowledgement;
+import com.nlogneg.transcodingService.request.server.mediaRequestProtocol.Header;
+import com.nlogneg.transcodingService.request.server.mediaRequestProtocol.Message;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
@@ -174,11 +175,13 @@ public final class SerializerFactory
 		return xstream;
 	}
 
-	public static final XStream getAcknowledgementSerializer()
+	public static final XStream getMediaRequestProtocolMessageSerializer()
 	{
 		final XStream xstream = new XStream(new DomDriver());
-		xstream.alias("acknowledgement", Acknowledgement.class);
-
+		
+		xstream.alias("message", Message.class);
+		xstream.alias("header", Header.class);
+		
 		return xstream;
 	}
 }

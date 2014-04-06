@@ -22,6 +22,7 @@
 		<collections.version>4.0</collections.version>
 		<math.version>3.2</math.version>
 		<functional.java.version>3.0</functional.java.version>
+		<codec.version>1.9</codec.version>
 	</properties>
 
 	<dependencies>
@@ -78,6 +79,14 @@
 			<artifactId>functionaljava</artifactId>
 			<version>${functional.java.version}</version>
 		</dependency>
+
+		<!-- Commons Codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${codec.version}</version>
+		</dependency>
+
 
 		<!-- Commons Collections -->
 		<!-- LOCAL DEPENDENCY CAUSE MAVEN DOESN'T HAVE THE SHIT YET -->

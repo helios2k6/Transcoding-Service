@@ -13,35 +13,43 @@ import com.nlogneg.transcodingService.utilities.Optional;
 
 /**
  * Services a client request
+ * 
  * @author anjohnson
- *
+ * 
  */
-public final class ServiceClientRequestCommand extends SimpleCommand{
+public final class ServiceClientRequestCommand extends SimpleCommand
+{
 	private static final Logger Log = LogManager.getLogger(ServiceClientRequestCommand.class);
-	
-	/* (non-Javadoc)
-	 * @see org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org.puremvc.java.multicore.interfaces.INotification)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org
+	 * .puremvc.java.multicore.interfaces.INotification)
 	 */
 	@Override
-	public void execute(INotification notification) {
-		SocketProxy proxy = (SocketProxy)getFacade().retrieveProxy(SocketProxy.PROXY_NAME);
-		Optional<Socket> socketOptional = proxy.getNextSocket();
-		
-		if(socketOptional.isNone())
+	public void execute(final INotification notification)
+	{
+		final SocketProxy proxy = (SocketProxy) this.getFacade().retrieveProxy(
+				SocketProxy.PROXY_NAME);
+		final Optional<Socket> socketOptional = proxy.getNextSocket();
+
+		if (socketOptional.isNone())
 		{
 			return;
 		}
-		
-		Socket socket = socketOptional.getValue();
-		Optional<String> socketRequestContents = readFromSocket(socket);
-		
-		if(socketRequestContents.isNone())
+
+		final Socket socket = socketOptional.getValue();
+		final Optional<String> socketRequestContents = readFromSocket(socket);
+
+		if (socketRequestContents.isNone())
 		{
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Reads in all the input from a Socket
 	 * 

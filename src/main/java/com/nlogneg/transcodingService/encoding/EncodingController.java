@@ -18,27 +18,27 @@ public final class EncodingController extends SimpleCommand
 	 * The notification that starts an encoding job
 	 */
 	public static final String StartEncodingJob = "StartEncodingJob";
-	
+
 	/**
 	 * The success signal for video encoding
 	 */
 	public static final String EncodeVideoSuccess = "EncodeVideoSuccess";
-	
+
 	/**
 	 * The failure signal for video encoding
 	 */
 	public static final String EncodeVideoFailure = "EncodeVideoFailure";
-	
+
 	/**
 	 * The success signal for the audio encoding
 	 */
 	public static final String EncodeAudioSuccess = "EncodeAudioSuccess";
-	
+
 	/**
 	 * The failure signal for audio encoding
 	 */
 	public static final String EncodeAudioFailure = "EncodeAudioFailure";
-	
+
 	private static final Logger Log = LogManager.getLogger(EncodingController.class);
 	private static final Map<StatusTuple, Reaction> StateMap = generateStateMap();
 
@@ -143,10 +143,14 @@ public final class EncodingController extends SimpleCommand
 		switch (reaction)
 		{
 		case ScheduleVideo:
-			this.sendNotification(ScheduleVideoEncodeCommand.ScheduleVideoEncode, job);
+			this.sendNotification(
+					ScheduleVideoEncodeCommand.ScheduleVideoEncode,
+					job);
 			break;
 		case ScheduleAudio:
-			this.sendNotification(ScheduleAudioEncodingCommand.ScheduleAudioEncode, job);
+			this.sendNotification(
+					ScheduleAudioEncodingCommand.ScheduleAudioEncode,
+					job);
 			break;
 		case NotifySuccess:
 			this.notifySuccess(job);

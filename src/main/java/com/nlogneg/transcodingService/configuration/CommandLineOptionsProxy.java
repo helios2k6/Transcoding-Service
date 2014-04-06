@@ -23,28 +23,34 @@ public final class CommandLineOptionsProxy extends Proxy
 	/**
 	 * @return the helpOption
 	 */
-	public boolean isHelpOption() {
-		return helpOption;
+	public boolean isHelpOption()
+	{
+		return this.helpOption;
 	}
 
 	/**
-	 * @param helpOption the helpOption to set
+	 * @param helpOption
+	 *            the helpOption to set
 	 */
-	public void setHelpOption(boolean helpOption) {
+	public void setHelpOption(final boolean helpOption)
+	{
 		this.helpOption = helpOption;
 	}
 
 	/**
 	 * @return the configurationFile
 	 */
-	public String getConfigurationFile() {
-		return configurationFile;
+	public String getConfigurationFile()
+	{
+		return this.configurationFile;
 	}
 
 	/**
-	 * @param configurationFile the configurationFile to set
+	 * @param configurationFile
+	 *            the configurationFile to set
 	 */
-	public void setConfigurationFile(String configurationFile) {
+	public void setConfigurationFile(final String configurationFile)
+	{
 		this.configurationFile = configurationFile;
 	}
 }

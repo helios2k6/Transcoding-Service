@@ -23,7 +23,7 @@ public class ConfigureServerSocketCommand extends SimpleCommand
 	 * The notification to send in order to execute this command
 	 */
 	public static final String ConfigureServerSocket = "ConfigureServerSocket";
-	
+
 	private static final Logger Log = LogManager.getLogger(ConfigureServerSocketCommand.class);
 
 	@Override
@@ -43,7 +43,7 @@ public class ConfigureServerSocketCommand extends SimpleCommand
 		catch (final IOException e)
 		{
 			Log.fatal("Could not bind to socket: " + portNumber);
-			sendNotification(ExitSystemCommand.ExitSystem);
+			this.sendNotification(ExitSystemCommand.ExitSystem);
 		}
 	}
 }

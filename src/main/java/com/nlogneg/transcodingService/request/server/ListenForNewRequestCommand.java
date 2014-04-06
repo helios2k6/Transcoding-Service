@@ -22,7 +22,7 @@ public class ListenForNewRequestCommand extends SimpleCommand
 {
 
 	private static final Logger Log = LogManager.getLogger(ListenForNewRequestCommand.class);
-	
+
 	public static final String ListenForRequest = "ListenForRequest";
 
 	@Override

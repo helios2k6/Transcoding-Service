@@ -25,7 +25,7 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements Com
 	 * Notification to start schedule a multiplex command
 	 */
 	public static final String ScheduleMultiplex = "ScheduleMultiplex";
-	
+
 	private static final Logger Log = LogManager.getLogger(ScheduleMultiplexCommand.class);
 
 	@Override
@@ -48,13 +48,17 @@ public final class ScheduleMultiplexCommand extends SimpleCommand implements Com
 	public void completed(final Void result, final MultiplexJob attachment)
 	{
 		Log.info("Multiplex job completed successfully : " + attachment.getDestinationFile());
-		this.sendNotification(MasterJobController.MultiplexFileSuccess, attachment);
+		this.sendNotification(
+				MasterJobController.MultiplexFileSuccess,
+				attachment);
 	}
 
 	@Override
 	public void failed(final Throwable exc, final MultiplexJob attachment)
 	{
 		Log.error("Multiplexing job failed: " + attachment.getDestinationFile());
-		this.sendNotification(MasterJobController.MultiplexFileFailure, attachment);
+		this.sendNotification(
+				MasterJobController.MultiplexFileFailure,
+				attachment);
 	}
 }

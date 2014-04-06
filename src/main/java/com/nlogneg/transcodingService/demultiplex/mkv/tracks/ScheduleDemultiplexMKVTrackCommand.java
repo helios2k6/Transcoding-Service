@@ -24,7 +24,7 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 	 * Schedule track demultiplex job
 	 */
 	public static final String ScheduleTrackDemultiplexJob = "ScheduleTrackDemultiplexJob";
-	
+
 	private static final Logger Log = LogManager.getLogger(ScheduleDemultiplexMKVTrackCommand.class);
 
 	/*
@@ -51,13 +51,17 @@ public final class ScheduleDemultiplexMKVTrackCommand extends SimpleCommand impl
 	public void completed(final Void result, final DemultiplexMKVJob job)
 	{
 		Log.info("Track demultiplex job succeeded for: " + job.getMediaFile());
-		this.sendNotification(DemultiplexController.DemultiplexTrackSuccess, job);
+		this.sendNotification(
+				DemultiplexController.DemultiplexTrackSuccess,
+				job);
 	}
 
 	@Override
 	public void failed(final Throwable exc, final DemultiplexMKVJob job)
 	{
 		Log.info("Track demultiplex job failed for: " + job.getMediaFile());
-		this.sendNotification(DemultiplexController.DemultiplexTrackFailure, job);
+		this.sendNotification(
+				DemultiplexController.DemultiplexTrackFailure,
+				job);
 	}
 }

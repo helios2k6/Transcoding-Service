@@ -23,7 +23,7 @@ public final class ScheduleVideoEncodeCommand extends SimpleCommand implements C
 	 * Schedule video encode
 	 */
 	public static final String ScheduleVideoEncode = "ScheduleVideoEncode";
-	
+
 	private static final Logger Log = LogManager.getLogger(ScheduleVideoEncodeCommand.class);
 
 	@Override

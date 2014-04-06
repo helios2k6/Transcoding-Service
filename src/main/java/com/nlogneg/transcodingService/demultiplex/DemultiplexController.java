@@ -27,7 +27,7 @@ public class DemultiplexController extends SimpleCommand
 	 * The notification that starts this command
 	 */
 	public static final String StartDemultiplexJob = "StartDemultiplexJob";
-	
+
 	/**
 	 * The success signal for track extraction
 	 */

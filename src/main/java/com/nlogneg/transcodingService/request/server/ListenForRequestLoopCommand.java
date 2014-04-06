@@ -10,34 +10,38 @@ import com.nlogneg.transcodingService.utilities.threads.ExecutorServiceProxy;
 /**
  * A super-command that listens for requests and marshals them to another thread
  * for servicing and loops back for more listening
+ * 
  * @author Andrew
- *
+ * 
  */
 public final class ListenForRequestLoopCommand extends SimpleCommand
 {
 	@Override
-	public void execute(INotification notification)
+	public void execute(final INotification notification)
 	{
-		ServerStatusProxy status = (ServerStatusProxy)getFacade().retrieveProxy(ServerStatusProxy.PROXY_NAME);
-		
-		while(status.getIsRunning())
+		final ServerStatusProxy status = (ServerStatusProxy) this.getFacade().retrieveProxy(
+				ServerStatusProxy.PROXY_NAME);
+
+		while (status.getIsRunning())
 		{
-			//Listen for a new request
-			sendNotification(ListenForNewRequestCommand.ListenForRequest);
-			
-			//Once we get a request, spin off another thread to handle it
-			spinOffRequest();
+			// Listen for a new request
+			this.sendNotification(ListenForNewRequestCommand.ListenForRequest);
+
+			// Once we get a request, spin off another thread to handle it
+			this.spinOffRequest();
 		}
 	}
-	
+
 	private void spinOffRequest()
 	{
-		ExecutorServiceProxy proxy = (ExecutorServiceProxy)getFacade().retrieveProxy(ExecutorServiceProxy.PROXY_NAME);
-		ExecutorService service = proxy.getService();
+		final ExecutorServiceProxy proxy = (ExecutorServiceProxy) this.getFacade().retrieveProxy(
+				ExecutorServiceProxy.PROXY_NAME);
+		final ExecutorService service = proxy.getService();
 		service.submit(new Runnable()
 		{
 			@Override
-			public void run() {
+			public void run()
+			{
 			}
 		});
 	}

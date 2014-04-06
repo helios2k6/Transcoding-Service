@@ -5,13 +5,15 @@ import org.puremvc.java.multicore.patterns.command.SimpleCommand;
 
 /**
  * Controls relaying signals for all encoding jobs
+ * 
  * @author anjohnson
- *
+ * 
  */
-public class MasterJobController extends SimpleCommand{
-	
+public class MasterJobController extends SimpleCommand
+{
+
 	/**
-	 * Outgoing signal when a demultiplexing job fails 
+	 * Outgoing signal when a demultiplexing job fails
 	 */
 	public static final String DemultiplexJobFailure = "DemultiplexJobFailure";
 
@@ -19,7 +21,7 @@ public class MasterJobController extends SimpleCommand{
 	 * Outgoing signal when a demltiplexing job succeeds
 	 */
 	public static final String DemultiplexJobSuccess = "DemultiplexJobSuccess";
-	
+
 	/**
 	 * Multiplex success signal
 	 */
@@ -40,13 +42,17 @@ public class MasterJobController extends SimpleCommand{
 	 */
 	public static final String EncodingJobFailure = "EncodingJobFailure";
 
-	/* (non-Javadoc)
-	 * @see org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org.puremvc.java.multicore.interfaces.INotification)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.puremvc.java.multicore.patterns.command.SimpleCommand#execute(org
+	 * .puremvc.java.multicore.interfaces.INotification)
 	 */
 	@Override
-	public void execute(INotification notification) {
-		
+	public void execute(final INotification notification)
+	{
+
 	}
-	
-	
+
 }

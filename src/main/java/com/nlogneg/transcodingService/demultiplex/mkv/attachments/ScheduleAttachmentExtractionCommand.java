@@ -27,7 +27,7 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	 * Schedule attachment demultiplex job
 	 */
 	public static final String ScheduleAttachmentDemultiplexJob = "ScheduleAttachmentDemultiplexJob";
-	
+
 	private static final Logger Log = LogManager.getLogger(ScheduleAttachmentExtractionCommand.class);
 
 	@Override
@@ -62,7 +62,9 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	public void completed(final Void result, final DemultiplexMKVJob job)
 	{
 		Log.info("Attachment processing successful for: " + job.getMediaFile());
-		this.sendNotification(DemultiplexController.DemultiplexAttachmentSuccess, job);
+		this.sendNotification(
+				DemultiplexController.DemultiplexAttachmentSuccess,
+				job);
 	}
 
 	/*
@@ -75,6 +77,8 @@ public final class ScheduleAttachmentExtractionCommand extends SimpleCommand imp
 	public void failed(final Throwable exc, final DemultiplexMKVJob job)
 	{
 		Log.info("Attachment processing failed for: " + job.getMediaFile());
-		this.sendNotification(DemultiplexController.DemultiplexAttachmentFailure, job);
+		this.sendNotification(
+				DemultiplexController.DemultiplexAttachmentFailure,
+				job);
 	}
 }
