@@ -146,6 +146,15 @@ public final class ProtocolSocket implements Closeable, AutoCloseable
 		this.state = state;
 	}
 	
+	/**
+	 * Submit a transaction to the socket to act upon the socket
+	 * @param transaction The transaction
+	 */
+	public void submitTransaction(ProtocolTransaction transaction)
+	{
+		transaction.enactTransaction(this);
+	}
+	
 	private static Message constructMessage(String type, String payload)
 	{
 		Message message = new Message();
